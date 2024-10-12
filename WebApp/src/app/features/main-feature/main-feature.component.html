@@ -1,0 +1,85 @@
+<ng-container *ngIf="stateReceived$ | async">
+
+
+    <mat-drawer-container [hasBackdrop]="true" autosize class="example-container h-full-minus-bar">
+        <mat-drawer #drawer class="example-sidenav" mode="push" [autoFocus]="false">
+            <div class="flex flex-col">
+                <button (click)="drawer.close()" class="ml-auto mt-2 mr-2 close-drawer" mat-icon-button>
+                    <mat-icon>close</mat-icon>
+                </button>
+                <div class="flex-col flex pl-2 pr-2">
+                    <button (click)="goTo(drawer, '/private/main')" class="mt-1" mat-button>
+                            
+                        Home
+                    </button>
+                    <button (click)="goTo(drawer, '/private/main/feature1')" class="mt-1" mat-button >
+                        Feature 1
+                    </button>
+
+                    <button (click)="goTo(drawer, 'private/main/feature2')" class="mt-1" mat-button
+                            >
+                        Feature 2
+                    </button>
+                    <button (click)="goTo(drawer, 'private/main/debug')" class="mt-1" mat-button
+                    >
+                        Debug
+                    </button>
+                    <button (click)="logout()" class="mt-1" mat-button><span>Log out</span>
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-drawer>
+
+        <div class=" w-full z-40 fixed">
+            
+
+            <mat-toolbar class="w-full ">
+
+                <div class="mr-5 visible-desktop">
+                    <div class="flex gap-x-1 items-center">
+                        <div class="font-medium">SkillSwap</div>
+                    </div>
+
+                </div>
+                <button (click)="drawer.close()" [routerLinkActiveOptions]="{
+                    exact: true
+                    }" class="ml-1 visible-desktop" mat-button
+                        routerLink="/private/main" routerLinkActive="active-link">
+                    Home
+                </button>
+                <button (click)="drawer.close()" class="ml-1 visible-desktop" mat-button routerLink="/private/main/feature1"
+                        routerLinkActive="active-link">
+                    Feature 1
+                </button>
+
+                <button (click)="drawer.close()" class="ml-1 visible-desktop" mat-button routerLink="/private/main/feature2"
+                        routerLinkActive="active-link">
+                    Feature 2
+                </button>
+
+                <button (click)="drawer.close()" class="ml-1 visible-desktop" mat-button routerLink="/private/main/debug"
+                        routerLinkActive="active-link">
+                    Debug
+                </button>
+                <button (click)="logout()" class="ml-auto visible-desktop-flex" mat-icon-button>
+                    <mat-icon>logout</mat-icon>
+                </button>
+                <button (click)="drawer.toggle()" aria-label="Example icon-button with menu icon"
+                        class="visible-mobile mr-1 example-icon"
+                        mat-icon-button>
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="visible-mobile">SkillSwap</span>
+            </mat-toolbar>
+        </div>
+
+        <div id="main-content" class="content ">
+
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-container>
+</ng-container>
+<ng-container *ngIf="(stateReceived$ | async) === false">
+    <app-basic-loading-page></app-basic-loading-page>
+</ng-container>
