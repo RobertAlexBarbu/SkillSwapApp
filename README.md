@@ -15,3 +15,4 @@ Once a match is found (e.g., tutoring in exchange for graphic design), users can
 4. Notifications
 Firebase Cloud Messaging notifies users when someone is interested in their offer or sends a skill swap request.
 Users also receive notifications when a swap is confirmed.
+https://www.figma.com/design/bzTPEcMES5zScKfeXlQPE7/SkillSwapTemplate?node-id=0-1&t=BPriqg0Ib3p7e5r0-1
