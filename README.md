@@ -4,15 +4,16 @@
 
 Features
 1. User Registration and Login
-Users can sign up and log in using Firebase Authentication.
+Users can sign up and log in.
 Each user creates a profile listing the skills they can offer and the skills or services they are seeking in return.
 2. Skill/Service Listings
 Users can post the skills they are offering and the services they are seeking.
 Listings include descriptions to help others understand the offering.
 3. Matching and Requests
 Users can browse available posts and send requests to initiate a skill swap.
-Once a match is found (e.g., tutoring in exchange for graphic design), users can easily request a swap.
 4. Notifications
 Firebase Cloud Messaging notifies users when someone is interested in their offer or sends a skill swap request.
 Users also receive notifications when a swap is confirmed.
+
+Figma reppresentation
 https://www.figma.com/design/bzTPEcMES5zScKfeXlQPE7/SkillSwapTemplate?node-id=0-1&t=BPriqg0Ib3p7e5r0-1
