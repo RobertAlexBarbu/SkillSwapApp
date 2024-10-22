@@ -22,4 +22,4 @@ SkillSwap addresses the issue where people have valuable skills to share but may
 ## Figma Representation
 [SkillSwap Template](https://www.figma.com/design/bzTPEcMES5zScKfeXlQPE7/SkillSwapTemplate?node-id=0-1&t=BPriqg0Ib3p7e5r0-1)
 
-<img src="https://github.com/user-attachments/assets/cee4deb2-f7d9-441e-81ab-ab4a79f5dc3d" alt="WhatsApp Image 2024-10-22 at 14:47:05" width="500" height="600"/>
+<img src="https://github.com/user-attachments/assets/cee4deb2-f7d9-441e-81ab-ab4a79f5dc3d" alt="WhatsApp Image 2024-10-22 at 14:47:05" width="500"/>
