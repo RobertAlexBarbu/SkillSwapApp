@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
 import { FirebaseStorageService } from './firebase-storage/firebase-storage.service'
 
 @Injectable({

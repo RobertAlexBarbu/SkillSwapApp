@@ -1,0 +1,6 @@
+<div class="p-4">
+    <div>configure-page-works</div>
+    <button (click)="configure()" [class.spinner]="disabled$ | async" [disabled]="disabled$ | async" mat-flat-button>
+        Configure
+    </button>
+</div>

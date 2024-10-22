@@ -4,14 +4,16 @@ import { Injectable } from '@angular/core'
 
 export interface UserState {
     user: UserDto
-    loggedIn: boolean | null
+    loggedIn: boolean
 }
 
 const initialUserData: UserDto = {
     email: '',
     id: '',
     provider: '',
+    role: '',
     createdAt: new Date(),
+    configured: false,
 }
 
 @Injectable({
@@ -19,24 +21,27 @@ const initialUserData: UserDto = {
 })
 export class UserStore extends ComponentStore<UserState> {
     loggedIn$ = this.select((state) => state.loggedIn)
+    configured$ = this.select((state) => state.user.configured)
     user$ = this.select((state) => state.user)
-    public logIn = this.updater((state, value: UserDto) => {
+    role$ = this.select((state) => state.user.role)
+    public configure = this.updater((state, value: UserDto) => {
         return {
             user: value,
-            loggedIn: true,
-        }
-    })
-    public logOut = this.updater((state) => {
-        return {
-            user: initialUserData,
-            loggedIn: false,
+            loggedIn: state.loggedIn,
         }
     })
 
-    constructor() {
-        super({
+    logIn(value: UserDto) {
+        this.setState({
+            user: value,
+            loggedIn: true,
+        })
+    }
+
+    logOut() {
+        this.setState({
             user: initialUserData,
-            loggedIn: null,
+            loggedIn: false,
         })
     }
 }

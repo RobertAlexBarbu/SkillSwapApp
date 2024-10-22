@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router'
+import { isAuthGuard } from '../../core/guards/is-auth/is-auth.guard'
+import { isRoleGuard } from '../../core/guards/is-role/is-role.guard'
+import { Roles } from '../../shared/enums/Roles'
 
 export const mainRoutes: Routes = [
     {
@@ -34,6 +37,17 @@ export const mainRoutes: Routes = [
                 loadComponent: () =>
                     import('../debug-feature/debug-feature.component').then(
                         (m) => m.DebugFeatureComponent
+                    ),
+            },
+            {
+                path: 'admin',
+                canActivate: [
+                    isAuthGuard,
+                    isRoleGuard(Roles.Admin, '/private/main'),
+                ],
+                loadComponent: () =>
+                    import('../admin-feature/admin-feature.component').then(
+                        (m) => m.AdminFeatureComponent
                     ),
             },
         ],

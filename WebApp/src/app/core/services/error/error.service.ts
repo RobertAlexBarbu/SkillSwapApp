@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 })
 export class ErrorService {
     private readonly matSnackbar = inject(MatSnackBar)
+
     handleError(error: HttpErrorResponse) {
         console.error(error)
         let name = error.name

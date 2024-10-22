@@ -1,0 +1,19 @@
+<div class="flex items-center justify-center w-full">
+    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-52 border-2 border-dashed rounded-lg cursor-pointer dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <mat-icon class="scale-150 mb-4 text-gray-500 dark:text-gray-400">upload</mat-icon>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+<!--            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>-->
+        </div>
+        <input #fileInput id="dropzone-file" (change)="onFileInputChange($event)" type="file" class="hidden" />
+    </label>
+</div>
+
+<ng-container *ngIf="file">
+    <div class="mt-4 p-2 border-1 rounded-lg flex items-center">
+        <mat-icon class="mr-4">image</mat-icon>
+        <div >{{file.name}}</div>
+        <button (click)="deleteFile(fileInput)" class="ml-auto" mat-button>Delete<mat-icon>delete</mat-icon></button>
+    </div>
+
+</ng-container>

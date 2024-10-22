@@ -5,44 +5,63 @@
             <div class="text-lg mb-2">User data</div>
             <div>
                 Id:
-                <strong>{{user.id}}</strong>
+                <strong>{{ user.id }}</strong>
             </div>
             <div>
                 Email:
-                <strong>{{user.email}}</strong>
+                <strong>{{ user.email }}</strong>
             </div>
             <div>
                 Provider:
-                <strong>{{user.provider}}</strong>
+                <strong>{{ user.provider }}</strong>
             </div>
             <div>
                 Created At:
-                <strong>{{user.createdAt}}</strong>
+                <strong>{{ user.createdAt }}</strong>
+            </div>
+            <div>
+                Role:
+                <strong>{{ user.role }}</strong>
+            </div>
+            <div>
+                Configured:
+                <strong>{{ user.configured }}</strong>
             </div>
         </div>
     </ng-container>
     <div class="mt-8">
         <div class="text-lg ">Manage Tokens</div>
         <div>
-            <button class="mt-2" (click)="removeAccessToken()" mat-stroked-button>Remove Access/Id Token</button>
+            <button (click)="removeAccessToken()" class="mt-2" mat-stroked-button>Remove Access/Id Token</button>
         </div>
         <div>
-            <button  class="mt-2 " (click)="removeRefreshToken()" mat-stroked-button>Remove Refresh Token</button>
+            <button (click)="removeRefreshToken()" class="mt-2 " mat-stroked-button>Remove Refresh Token</button>
         </div>
     </div>
     <div class="mt-8">
         <div class="text-lg ">Test Requests</div>
         <div>
-            <button class="mt-2" (click)="makeProtectedRequest()" mat-stroked-button>Make Request to Protected Endpoint</button>
-            <div class=" mt-2 ">Result: {{protectedResult$ | async}}</div>
+            <button (click)="makeProtectedRequest()" class="mt-2" mat-stroked-button>Make Request to Protected
+                Endpoint
+            </button>
+            <div class=" mt-2 ">Result: {{ protectedResult$ | async }}</div>
         </div>
         <div>
-            <button  class="mt-2 " (click)="makeUnprotectedRequest()" mat-stroked-button>Make Request to Unprotected Endpoint</button>
-            <div class="mt-2 ">Result: {{unprotectedResult$ | async}}</div>
+            <button (click)="makeUnprotectedRequest()" class="mt-2 " mat-stroked-button>Make Request to Unprotected
+                Endpoint
+            </button>
+            <div class="mt-2 ">Result: {{ unprotectedResult$ | async }}</div>
+        </div>
+        <div>
+            <button (click)="makeAdminProtectedRequest()" class="mt-2 " mat-stroked-button>Make Request to Admin
+                Protected
+                Endpoint
+            </button>
+            <div class="mt-2 ">Result: {{ adminProtectedResult$ | async }}</div>
         </div>
     </div>
     <div class="mt-8">
         <div class="text-lg ">Access Token</div>
-        <div>{{localStorage.getItem('access')}}</div>
+        <div>{{ localStorage.getItem('access') }}</div>
     </div>
 </div>

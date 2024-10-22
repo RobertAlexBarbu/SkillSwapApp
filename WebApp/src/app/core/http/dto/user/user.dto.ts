@@ -3,4 +3,6 @@ export interface UserDto {
     id: string
     provider: string
     createdAt: Date
+    role: string
+    configured: boolean
 }

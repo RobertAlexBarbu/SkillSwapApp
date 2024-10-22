@@ -14,15 +14,18 @@ import { BehaviorSubject } from 'rxjs'
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DebugFeatureComponent {
-    private readonly userStore = inject(UserStore)
-    private readonly testService = inject(TestService)
     unprotectedResult$ = new BehaviorSubject<string>('')
     protectedResult$ = new BehaviorSubject<string>('')
+    adminProtectedResult$ = new BehaviorSubject<string>('')
+    protected readonly localStorage = localStorage
+    private readonly userStore = inject(UserStore)
     user$ = this.userStore.user$
+    private readonly testService = inject(TestService)
 
     removeAccessToken() {
         localStorage.removeItem('access')
     }
+
     removeRefreshToken() {
         localStorage.removeItem('refresh')
     }
@@ -30,7 +33,7 @@ export class DebugFeatureComponent {
     makeProtectedRequest() {
         this.protectedResult$.next('Pending...')
         this.testService.getProtected().subscribe({
-            next: (result) => {
+            next: () => {
                 this.protectedResult$.next('Success')
             },
             error: (err) => {
@@ -40,17 +43,28 @@ export class DebugFeatureComponent {
         })
     }
 
-    makeUnprotectedRequest() {
-        this.unprotectedResult$.next('Pending...')
-        this.testService.getUnprotected().subscribe({
-            next: (result) => {
-                this.unprotectedResult$.next('Success')
+    makeAdminProtectedRequest() {
+        this.adminProtectedResult$.next('Pending...')
+        this.testService.getAdminProtected().subscribe({
+            next: () => {
+                this.adminProtectedResult$.next('Success')
             },
             error: (err) => {
-                this.unprotectedResult$.next('Error')
+                this.adminProtectedResult$.next('Error')
+                console.log(err)
             },
         })
     }
 
-    protected readonly localStorage = localStorage
+    makeUnprotectedRequest() {
+        this.unprotectedResult$.next('Pending...')
+        this.testService.getUnprotected().subscribe({
+            next: () => {
+                this.unprotectedResult$.next('Success')
+            },
+            error: () => {
+                this.unprotectedResult$.next('Error')
+            },
+        })
+    }
 }

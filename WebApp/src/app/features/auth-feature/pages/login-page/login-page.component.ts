@@ -2,16 +2,13 @@ import {
     ChangeDetectionStrategy,
     Component,
     DestroyRef,
-    Host,
-    HostListener,
     inject,
-    OnInit,
 } from '@angular/core'
 import { AuthService } from '../../../../core/services/auth/auth.service'
 import { ErrorService } from '../../../../core/services/error/error.service'
 import { UserStore } from '../../../../core/stores/user.store'
 import { Router, RouterLink } from '@angular/router'
-import { BehaviorSubject, from, switchMap, throwError } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import {
     FormControl,
     FormGroup,
@@ -32,18 +29,6 @@ import { OrDividerComponent } from '../../../../shared/components/or-divider/or-
 import { DividerComponent } from '../../../../shared/components/divider/divider.component'
 import { MatInput } from '@angular/material/input'
 import { emailValidator } from '../../../../shared/validators/emailValidator'
-import { FirebaseService } from '../../../../core/services/firebase/firebase.service'
-import {
-    getAuth,
-    getRedirectResult,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signInWithRedirect,
-} from 'firebase/auth'
-import { Result } from 'postcss'
-import { UserService } from '../../../../core/http/services/user/user.service'
-import { AuthFeatureStore } from '../../stores/auth-feature.store'
-import { ProgressBarStore } from '../../../../core/stores/progress-bar.store'
 import { EnvironmentService } from '../../../../core/services/environment/environment.service'
 
 @Component({
@@ -69,13 +54,6 @@ import { EnvironmentService } from '../../../../core/services/environment/enviro
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent {
-    private readonly auth = inject(AuthService)
-    private readonly errorService = inject(ErrorService)
-    private readonly userStore = inject(UserStore)
-    private readonly router = inject(Router)
-    private readonly destroyRef = inject(DestroyRef)
-    private readonly environmentService = inject(EnvironmentService)
-
     visiblePassword$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
         false
     )
@@ -95,6 +73,12 @@ export class LoginPageComponent {
             nonNullable: true,
         }),
     })
+    private readonly auth = inject(AuthService)
+    private readonly errorService = inject(ErrorService)
+    private readonly userStore = inject(UserStore)
+    private readonly router = inject(Router)
+    private readonly destroyRef = inject(DestroyRef)
+    private readonly environmentService = inject(EnvironmentService)
 
     togglePasswordVisibility() {
         this.visiblePassword = !this.visiblePassword

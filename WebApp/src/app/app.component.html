@@ -1,6 +1,10 @@
-
 <div class="sticky top-0 z-50">
-            <mat-progress-bar  *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
-            <mat-progress-bar  *ngIf="(loading$ | async) === false" mode="determinate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="loading$ | async" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="(loading$ | async) === false" mode="determinate"></mat-progress-bar>
 </div>
-<router-outlet></router-outlet>
+<ng-container *ngIf="(spinner$ | async) === false">
+    <router-outlet></router-outlet>
+</ng-container>
+<ng-container *ngIf="(spinner$ | async)">
+    <app-basic-loading-page></app-basic-loading-page>
+</ng-container>

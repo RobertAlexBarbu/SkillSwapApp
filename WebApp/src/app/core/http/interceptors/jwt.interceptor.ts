@@ -16,19 +16,17 @@ export const jwtInterceptor: HttpInterceptorFn = (request, next) => {
     }
     return next(request).pipe(
         catchError((error) => {
-            if (error instanceof HttpErrorResponse && error.status === 401) {
+            if (
+                error instanceof HttpErrorResponse &&
+                (error.status === 401 ||
+                    error.status === 403 ||
+                    error.status === 400)
+            ) {
                 console.log(
-                    '[AUTH] Unauthorized error - Try to get a new Id/Access Token'
+                    '[AUTH] Unauthorized/Forbidden error - Try to get a new Id/Access Token'
                 )
-                let refreshToken = localStorage.getItem('refresh')
-                if (refreshToken === null) {
-                    console.log(
-                        '[AUTH] No Refresh Token Found - Logging out...'
-                    )
-                    userStore.logOut()
-                    router.navigate(['/private/auth/login'])
-                    return throwError(() => error)
-                } else {
+                const refreshToken = localStorage.getItem('refresh')
+                if (refreshToken) {
                     return getNewIdToken(refreshToken).pipe(
                         switchMap((result) => {
                             console.log('[AUTH] New Access Token received')
@@ -43,26 +41,31 @@ export const jwtInterceptor: HttpInterceptorFn = (request, next) => {
                                 `[AUTH] Remake initial request at ${request.url}`
                             )
                             return next(request)
-                        }),
-                        catchError((err) => {
-                            if (error.status === 401) {
-                                console.log(
-                                    '[AUTH] Still Unauthorized after getting new token: Logging Out... (Something went wrong when getting new Token)'
-                                )
-                                userStore.logOut()
-                                router.navigate(['/private/auth/login'])
-                            }
-                            throw new HttpErrorResponse(err)
                         })
                     )
+                } else {
+                    console.log('[AUTH] No refresh token found')
+                    return throwError(() => error)
                 }
             } else {
                 console.log(
                     'HTTP Error detected but not related to Access Token'
                 )
-                console.log(error)
+
                 return throwError(() => error)
             }
+        }),
+        catchError((error) => {
+            if (error.status === 401) {
+                console.log(
+                    '[AUTH] Still Unauthorized after getting new token: Logging Out... (Something went wrong when getting new Token)'
+                )
+                localStorage.removeItem('access')
+                localStorage.removeItem('refresh')
+                userStore.logOut()
+                router.navigate(['/private/auth/login'])
+            }
+            throw new HttpErrorResponse(error)
         })
     )
 }

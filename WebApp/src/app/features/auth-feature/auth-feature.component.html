@@ -1,8 +1,3 @@
-<ng-container *ngIf="(stateReceived$ | async)  ">
-    <router-outlet></router-outlet>
-</ng-container>
+<router-outlet></router-outlet>
 
-<ng-container *ngIf="(stateReceived$ | async) === false">
-    <app-basic-loading-page></app-basic-loading-page>
-</ng-container>
 

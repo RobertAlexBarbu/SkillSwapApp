@@ -1,5 +1,5 @@
 <div class="flex flex-col m-auto max-w-sm w-full pl-4 pr-4" onclick="">
-    <div class="text-4xl title mb-8">Log in to SkillSwap</div>
+    <div class="text-4xl title mb-8">Log in to Application</div>
     <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col">
 
         <mat-form-field>
@@ -41,7 +41,8 @@
         <div class="link w-max mt-3" routerLink="/private/auth/reset-password">Forgot your password?</div>
     </form>
     <app-or-divider></app-or-divider>
-    <button [class.spinner]="googleDisabled$ | async" [disabled]="googleDisabled$ | async" (click)="loginWithGoogle()" mat-stroked-button>
+    <button (click)="loginWithGoogle()" [class.spinner]="googleDisabled$ | async" [disabled]="googleDisabled$ | async"
+            mat-stroked-button>
         <div class="flex">
             <svg
                     class="google"

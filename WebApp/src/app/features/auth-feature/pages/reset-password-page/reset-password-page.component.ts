@@ -62,7 +62,7 @@ export class ResetPasswordPageComponent {
                 .sendPasswordResetEmail(rawForm.email)
                 .pipe(takeUntilDestroyed(this.destroyRef))
                 .subscribe({
-                    next: (result) => {
+                    next: () => {
                         this.authFeatureStore.sendPasswordResetEmail(
                             rawForm.email
                         )

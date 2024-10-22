@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { UserDto } from '../../dto/user/user.dto'
 import { EnvironmentService } from '../../../services/environment/environment.service'
-import { CreateUserDto } from '../../dto/user/create-user.dto'
 
 @Injectable({
     providedIn: 'root',
@@ -23,5 +22,9 @@ export class UserService {
 
     public createByToken(): Observable<UserDto> {
         return this.http.post<UserDto>(`${this.baseUrl}/CreateByToken`, {})
+    }
+
+    public configureByToken() {
+        return this.http.patch<UserDto>(`${this.baseUrl}/ConfigureByToken`, {})
     }
 }

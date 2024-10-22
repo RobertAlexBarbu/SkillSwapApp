@@ -13,7 +13,6 @@ import {
     signInWithRedirect,
 } from 'firebase/auth'
 import { UserService } from '../../../http/services/user/user.service'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Injectable({
     providedIn: 'root',

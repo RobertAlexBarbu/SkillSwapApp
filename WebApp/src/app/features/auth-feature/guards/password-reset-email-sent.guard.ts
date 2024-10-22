@@ -3,7 +3,7 @@ import { inject } from '@angular/core'
 import { AuthFeatureStore } from '../stores/auth-feature.store'
 import { map } from 'rxjs'
 
-export const passwordResetEmailSentGuard: CanActivateFn = (route, state) => {
+export const passwordResetEmailSentGuard: CanActivateFn = () => {
     const authFeatureStore = inject(AuthFeatureStore)
     const router = inject(Router)
     return authFeatureStore.passwordResetEmailSent$.pipe(

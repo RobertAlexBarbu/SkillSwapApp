@@ -1,4 +1,3 @@
-import { UserDto } from '../http/dto/user/user.dto'
 import { Injectable } from '@angular/core'
 import { ComponentStore } from '@ngrx/component-store'
 
@@ -11,10 +10,10 @@ export interface ProgressBarState {
 })
 export class ProgressBarStore extends ComponentStore<ProgressBarState> {
     loading$ = this.select((state) => state.loading)
-    public startLoading = this.updater((state) => {
+    public startLoading = this.updater(() => {
         return { loading: true }
     })
-    public stopLoading = this.updater((state) => {
+    public stopLoading = this.updater(() => {
         return { loading: false }
     })
 

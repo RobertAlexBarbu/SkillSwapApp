@@ -11,8 +11,8 @@ import {
     RouterLinkActive,
     RouterOutlet,
 } from '@angular/router'
-import { UserStore } from '../../core/stores/user.store'
-import { BehaviorSubject } from 'rxjs'
+import { UserState, UserStore } from '../../core/stores/user.store'
+import { Observable } from 'rxjs'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { AsyncPipe, NgIf } from '@angular/common'
 import { BasicLoadingPageComponent } from '../../shared/components/basic-loading-page/basic-loading-page.component'
@@ -21,11 +21,10 @@ import { MatIcon } from '@angular/material/icon'
 import { MatButton, MatIconButton } from '@angular/material/button'
 import { MatToolbar } from '@angular/material/toolbar'
 import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu'
-import { FirebaseService } from '../../core/services/firebase/firebase.service'
-import { getAuth } from 'firebase/auth'
 import { MatProgressBar } from '@angular/material/progress-bar'
-import { ProgressBarStore } from '../../core/stores/progress-bar.store'
 import { AuthService } from '../../core/services/auth/auth.service'
+import { IsRolePipe } from '../../shared/pipes/is-role/is-role.pipe'
+import { Roles } from '../../shared/enums/Roles'
 
 @Component({
     selector: 'app-main-feature',
@@ -47,31 +46,20 @@ import { AuthService } from '../../core/services/auth/auth.service'
         MatMenu,
         MatMenuItem,
         MatProgressBar,
+        IsRolePipe,
     ],
     templateUrl: './main-feature.component.html',
     styleUrl: './main-feature.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainFeatureComponent {
-    stateReceived$ = new BehaviorSubject<boolean>(false)
     private readonly userStore = inject(UserStore)
+    state$: Observable<UserState> = this.userStore.state$
     private readonly router = inject(Router)
     private readonly destroyRef = inject(DestroyRef)
     private readonly auth = inject(AuthService)
 
     constructor() {
-        this.userStore.loggedIn$.pipe(takeUntilDestroyed()).subscribe({
-            next: (loggedIn) => {
-                if (loggedIn !== null) {
-                    if (loggedIn) {
-                        this.stateReceived$.next(true)
-                    }
-                    if (!loggedIn) {
-                        this.router.navigate(['/private/auth'])
-                    }
-                }
-            },
-        })
         this.router.events
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((event) => {
@@ -95,8 +83,10 @@ export class MainFeatureComponent {
     }
 
     goTo(drawer: MatDrawer, path: string) {
-        this.router.navigate([path]).then((x) => {
+        this.router.navigate([path]).then(() => {
             drawer.close()
         })
     }
+
+    protected readonly Roles = Roles
 }

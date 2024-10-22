@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 })
 export class NotificationService {
     private readonly matSnackbar = inject(MatSnackBar)
+
     notify(message: string) {
         this.matSnackbar.open(message, 'Ok', { duration: 3000 })
     }

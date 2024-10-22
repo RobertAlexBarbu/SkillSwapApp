@@ -1,5 +1,5 @@
 <div class="flex flex-col m-auto max-w-sm w-full pl-4 pr-4" onclick="">
-    <div class="text-4xl title mb-8">Sign up to SkillSwap</div>
+    <div class="text-4xl title mb-8">Sign up to Application</div>
     <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col">
 
         <mat-form-field class="example-full-width">
@@ -42,7 +42,8 @@
 
 
     <app-or-divider></app-or-divider>
-    <button [class.spinner]="googleDisabled$ | async" [disabled]="googleDisabled$ | async" (click)="signUpWithGoogle()" mat-stroked-button>
+    <button (click)="signUpWithGoogle()" [class.spinner]="googleDisabled$ | async" [disabled]="googleDisabled$ | async"
+            mat-stroked-button>
         <div class="flex">
             <svg
                     class="google"

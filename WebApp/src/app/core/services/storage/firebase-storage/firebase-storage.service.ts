@@ -7,7 +7,7 @@ import {
     uploadBytes,
     UploadResult,
 } from 'firebase/storage'
-import { catchError, from, Observable, switchMap, throwError } from 'rxjs'
+import { catchError, from, Observable, throwError } from 'rxjs'
 
 @Injectable({
     providedIn: 'root',
