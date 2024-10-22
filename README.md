@@ -17,3 +17,5 @@ Users also receive notifications when a swap is confirmed.
 
 Figma reppresentation
 https://www.figma.com/design/bzTPEcMES5zScKfeXlQPE7/SkillSwapTemplate?node-id=0-1&t=BPriqg0Ib3p7e5r0-1
+
+![image](https://github.com/user-attachments/assets/eb8daac4-24e4-4b83-96cc-1dabbc21654a)
