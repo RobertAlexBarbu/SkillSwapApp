@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.Exceptions;
+using WebAPI.Domain.Enums;
 using WebAPI.Filters;
 
 namespace WebAPI.Controllers;
@@ -9,14 +10,21 @@ namespace WebAPI.Controllers;
 public class TestController : ControllerBase
 {
     [HttpGet]
-    [FirebaseAuthorizationFilter]
+    [AllowAuthenticated]
     public async Task<ActionResult> GetProtected()
+    {
+        return Ok();
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetUnprotected()
     {
         return Ok();
     }
     
     [HttpGet]
-    public async Task<ActionResult> GetUnprotected()
+    [AllowRole(Roles.Admin)]
+    public async Task<ActionResult> GetAdminProtected()
     {
         return Ok();
     }

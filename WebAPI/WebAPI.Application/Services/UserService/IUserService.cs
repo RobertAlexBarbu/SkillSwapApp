@@ -8,5 +8,9 @@ public interface IUserService
     Task<User> CreateAsync(User user);
     Task<User> GetByIdAsync(string id);
 
+    Task<User> ConfigureByIdAsync(string id);
+    
+    Task<User> MakeAdminByIdAsync(string id);
+
     User GetFromClaims(ClaimsPrincipal claimIdentity);
 }
