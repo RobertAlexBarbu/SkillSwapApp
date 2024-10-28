@@ -20,6 +20,9 @@ TestResults
 *.user
 *.sln.docstates
 
+# Firebase
+firebase.json
+
 # Build results
 [Dd]ebug/
 [Rr]elease/
