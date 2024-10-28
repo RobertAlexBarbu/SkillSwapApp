@@ -1,6 +1,7 @@
 using AutoMapper;
 using WebAPI.Domain.Entities;
 using WebAPI.DTO.User;
+using WebAPI.DTO.VerificationRequest;
 
 namespace WebAPI.Automapper;
 
@@ -10,5 +11,8 @@ public class MappingProfile : Profile
     {
         CreateMap<User, UserDto>();
         CreateMap<User, UsertDetailDto>();
+        CreateMap<VerificationRequestDto, VerificationRequest>();
+        CreateMap<VerificationRequest, VerificationRequestDto>();
+
     }
 }

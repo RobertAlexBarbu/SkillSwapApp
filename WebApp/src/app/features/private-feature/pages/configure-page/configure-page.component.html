@@ -1,6 +1,28 @@
-<div class="p-4">
-    <div>configure-page-works</div>
-    <button (click)="configure()" [class.spinner]="disabled$ | async" [disabled]="disabled$ | async" mat-flat-button>
-        Configure
-    </button>
+<div class="flex flex-col m-auto max-w-md w-full p-4 mt-16">
+    <div class="text-4xl title  mb-8">Verify your account</div>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input formControlName="studentName" matInput>
+            @if (form.controls['studentName'].hasError('required')) {
+                <mat-error>Name is required</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Student ID</mat-label>
+            <input formControlName="studentId" matInput>
+            @if (form.controls['studentId'].hasError('required')) {
+                <mat-error>Student ID is required</mat-error>
+            }
+        </mat-form-field>
+        <div class="mb-2">Student Card Photo</div>
+        <app-single-image-upload></app-single-image-upload>
+        <div class="flex">
+            <button class="mt-8 ml-auto" [class.spinner]="disabled$ | async" [disabled]="disabled$ | async" mat-flat-button>
+                Verify
+            </button>
+        </div>
+    </form>
+
+
 </div>

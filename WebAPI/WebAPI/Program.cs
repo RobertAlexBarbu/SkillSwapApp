@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using WebAPI.Application.Services.StudentVerificationService;
 using WebAPI.Application.Services.UserService;
 using WebAPI.Automapper;
 using WebAPI.Filters;
@@ -57,6 +58,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IStudentVerificationService, StudentVerificationService>();
 
 var app = builder.Build();
 

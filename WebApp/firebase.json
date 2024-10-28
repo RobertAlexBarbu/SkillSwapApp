@@ -10,7 +10,7 @@
       "region": "europe-west1"
     },
     "predeploy": [
-      "npm run build"
+      "npm run build (DOESNT WORK)"
     ]
   }
 }

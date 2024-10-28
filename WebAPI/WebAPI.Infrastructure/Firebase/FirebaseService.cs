@@ -29,7 +29,7 @@ public class FirebaseService
             if (role == null)
             {
                 Console.WriteLine("New User -> we have to add a Role claim");
-                await AddRoleClaimAsync(uid, Roles.User);
+                await AddRoleClaimAsync(uid, Roles.UnverifiedUser);
             }
             else
             {
