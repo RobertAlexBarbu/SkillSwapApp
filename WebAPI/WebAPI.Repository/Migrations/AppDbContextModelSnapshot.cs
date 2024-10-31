@@ -22,6 +22,49 @@ namespace WebAPI.Repository.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("WebAPI.Domain.Entities.Skill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("SkillCategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SkillCategoryId");
+
+                    b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("WebAPI.Domain.Entities.SkillCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SkillCategories");
+                });
+
             modelBuilder.Entity("WebAPI.Domain.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -77,6 +120,17 @@ namespace WebAPI.Repository.Migrations
                     b.ToTable("VerificationRequests");
                 });
 
+            modelBuilder.Entity("WebAPI.Domain.Entities.Skill", b =>
+                {
+                    b.HasOne("WebAPI.Domain.Entities.SkillCategory", "SkillCategory")
+                        .WithMany("Skills")
+                        .HasForeignKey("SkillCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SkillCategory");
+                });
+
             modelBuilder.Entity("WebAPI.Domain.Entities.VerificationRequest", b =>
                 {
                     b.HasOne("WebAPI.Domain.Entities.User", "user")
@@ -86,6 +140,11 @@ namespace WebAPI.Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("user");
+                });
+
+            modelBuilder.Entity("WebAPI.Domain.Entities.SkillCategory", b =>
+                {
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,7 +12,9 @@ public class AppDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
     public DbSet<VerificationRequest> VerificationRequests { get; set; }
-
+    public DbSet<Skill> Skills { get; set; }
+    public DbSet<SkillCategory> SkillCategories { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
