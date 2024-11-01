@@ -1,0 +1,66 @@
+html, body {
+  height: 100%; /* Full viewport height */
+  margin: 0; /* Remove default margin */
+}
+
+.circle-background-container {
+  position: relative;
+  width: 100%; /* Full viewport width */
+  height: 100%; /* Full viewport height */
+}
+
+/* Top-left circle */
+.half-circle-left-up {
+  position: absolute; /* Allows positioning within the container */
+  top: 0;
+  left: 0;
+  width: 350px;
+  height: 350px;
+  background-color: #FFF4CC;
+  border-radius: 0 0 350px 0;
+}
+.half-circle-right-up {
+  position: absolute; /* Allows positioning within the container */
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background-color: #FFF4CC;
+  border-radius: 0 0 0 300px;
+  opacity: 60%;
+}
+
+/* Bottom-right circle */
+.half-circle-left-bottom {
+  position: absolute; /* Allows positioning within the container */
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background-color: #FFF4CC;
+  border-radius: 0 350px 0 0;
+  opacity: 60%;
+}
+
+/* Bottom-right circle */
+.half-circle-right-bottom {
+  position: absolute; /* Allows positioning within the container */
+  bottom: 0;
+  right: 0;
+  width: 350px;
+  height: 350px;
+  background-color: #FFF4CC;
+  border-radius: 350px 0 0 0;
+}
+
+.center-container {
+  display: flex;
+  justify-content: left;
+  height: 100vh;
+  padding: 40px 40px 40px;
+}
+
+.search-bar{
+  width: 140%;
+  border: #FFC600 !important;
+}

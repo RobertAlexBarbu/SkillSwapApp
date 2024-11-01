@@ -6,20 +6,17 @@
             </button>
             <div class="flex-col flex pl-2 pr-2">
                 <button (click)="goTo(drawer, '/private/main')" class="mt-1" mat-button>
-
                     Home
                 </button>
                 <button (click)="goTo(drawer, '/private/main/feature1')" class="mt-1" mat-button>
-                    Feature 1
+                    Profile
                 </button>
 
-                <button (click)="goTo(drawer, 'private/main/feature2')" class="mt-1" mat-button
-                >
-                    Feature 2
+                <button (click)="goTo(drawer, 'private/main/feature2')" class="mt-1" mat-button>
+                    Search
                 </button>
-                <button (click)="goTo(drawer, 'private/main/debug')" class="mt-1" mat-button
-                >
-                    Debug
+                <button (click)="goTo(drawer, 'private/main/debug')" class="mt-1" mat-button>
+                    Settings
                 </button>
 
                 <ng-container *ngIf="state$ | async as userState">
@@ -39,7 +36,10 @@
         <mat-toolbar class="w-full ">
             <div class="mr-5 visible-desktop">
                 <div class="flex gap-x-1 items-center">
-                    <div class="font-medium">Application</div>
+                    <div class="font-medium">
+                      <span class="mr-1">Skill</span>
+                      <span class="text-swap">Swap</span>
+                    </div>
                 </div>
 
             </div>
@@ -52,19 +52,19 @@
             <button (click)="drawer.close()" class="ml-1 visible-desktop" mat-button
                     routerLink="/private/main/feature1"
                     routerLinkActive="active-link">
-                Feature 1
+                Search
             </button>
 
             <button (click)="drawer.close()" class="ml-1 visible-desktop" mat-button
                     routerLink="/private/main/feature2"
                     routerLinkActive="active-link">
-                Feature 2
+                Profile
             </button>
 
             <button (click)="drawer.close()" class="ml-1 visible-desktop" mat-button
                     routerLink="/private/main/debug"
                     routerLinkActive="active-link">
-                Debug
+                Settings
             </button>
             <ng-container *ngIf="state$ | async as userState">
                 <button (click)="drawer.close()" *ngIf="userState | isRole:Roles.Admin" class="ml-1 visible-desktop"
