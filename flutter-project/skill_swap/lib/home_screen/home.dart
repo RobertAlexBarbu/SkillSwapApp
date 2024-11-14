@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:skill_swap/tabScreens/favorites_sent_favorites_recieved_screen.dart';
 import 'package:skill_swap/tabScreens/like_sent_like_received_screen.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
     ViewSendViewReceivedScreen(),
     FavoritesSentFavoritesRecievedScreen(),
     LikeSentLikeReceivedScreen(),
-    UserDetailsScreen(),
+    UserDetailsScreen(userId: FirebaseAuth.instance.currentUser!.uid),
   ];
 
 
