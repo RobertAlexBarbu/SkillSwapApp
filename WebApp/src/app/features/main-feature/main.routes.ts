@@ -40,6 +40,13 @@ export const mainRoutes: Routes = [
                     ),
             },
             {
+                path: 'edit-profile',
+                loadComponent: () =>
+                  import('../edit-profile/edit-profile.component').then(
+                    (m) => m.EditProfileComponent
+                  ),
+              },
+            {
                 path: 'admin',
                 canActivate: [
                     isAuthGuard,

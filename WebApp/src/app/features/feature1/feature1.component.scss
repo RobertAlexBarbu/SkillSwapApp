@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   padding-bottom: 30px ;
+
 }
 
 .picture {
@@ -11,18 +12,83 @@
   border-radius: 50%; /* Makes it circular */
   overflow: hidden; /* Ensures content stays within the circle */
   object-fit: cover; /* Ensures the image fills the circle */
-  background-color: #FFF2C4;
+  background-color: #ded7d7;
 }
 
 .icon-container {
   display: flex;
   align-items: start;
   justify-content: right;
+  padding: 20px;
 }
 
 
 .edit-bar {
   cursor: pointer;
   margin-right: 20px;
+  margin-top: 40px;
 }
 
+.profile-container{
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.circle-background-container {
+  position: relative;
+  width: 100%; /* Full viewport width */
+  height: 100%; /* Full viewport height */
+  z-index: 0;
+}
+
+
+/* Top-left circle */
+.half-circle-left-up {
+  position: absolute; /* Allows positioning within the container */
+  top: 0;
+  left: 0;
+  width: 350px;
+  height: 350px;
+  background-color: #FFF4CC;
+  border-radius: 0 0 350px 0;
+  z-index: -1;
+}
+.half-circle-right-up {
+  position: absolute; /* Allows positioning within the container */
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background-color: #FFF4CC;
+  border-radius: 0 0 0 300px;
+  opacity: 60%;
+  z-index: -1;
+}
+/* Bottom-right circle */
+.half-circle-left-bottom {
+  position: absolute; /* Allows positioning within the container */
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background-color: #FFF4CC;
+  border-radius: 0 350px 0 0;
+  opacity: 60%;
+  z-index: -1;
+}
+
+/* Bottom-right circle */
+.half-circle-right-bottom {
+  position: absolute; /* Allows positioning within the container */
+  bottom: 0;
+  right: 0;
+  width: 350px;
+  height: 350px;
+  background-color: #FFF4CC;
+  border-radius: 350px 0 0 0;
+  z-index: -1;
+}

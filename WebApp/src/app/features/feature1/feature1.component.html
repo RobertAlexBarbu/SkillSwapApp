@@ -1,30 +1,32 @@
 
-
-
-
-<div class="profile-container">
-  <!-- Profile Header -->
-  <div class="icon-container">
-    <mat-icon class="edit-bar">edit</mat-icon>
-  </div>
-  <div class="center-container">
-    <app-single-image-upload class="picture" (onUploadChange)="onFileUpload($event)"></app-single-image-upload>
-  </div>
-  <div class=" ml-6">
-    <ng-container *ngIf="user$ |async as user">
-      <strong>{{user.email}}</strong>
-    </ng-container>
-    <p>Description</p>
-  </div>
-
-  <!-- Skill Cards -->
-  <div class="skills-container ml-6">
-    <div >
-      <h3>Skill Name</h3>
-      <p><strong>Description:</strong> </p>
-      <p><strong>Category:</strong> </p>
-      <p><strong>Services Seeking:</strong> </p>
+<div class="circle-background-container">
+  <div class="half-circle-left-up"></div>
+  <div class="half-circle-right-up"></div>
+  <div class="half-circle-left-bottom"></div>
+  <div class="half-circle-right-bottom"></div>
+  <div>
+    <!-- Profile Header -->
+    <div class="icon-container">
+      <button mat-icon-button class="edit-bar" (click)="redirectToEditPage()"><mat-icon>edit</mat-icon></button>
     </div>
+    <div class="center-container">
+      <app-single-image-upload class="picture" (onUploadChange)="onFileUpload($event)"></app-single-image-upload>
+    </div>
+    <div class="ml-6 profile-container">
+      <ng-container *ngIf="user$ |async as user">
+        <strong>{{user.email}}</strong>
+      </ng-container>
+      <p>Description</p>
+      <div >
+        <h3>Skill Name</h3>
+        <p><strong>Description:</strong> </p>
+        <p><strong>Category:</strong> </p>
+        <p><strong>Services Seeking:</strong> </p>
+      </div>
+    </div>
+
+
   </div>
 
 </div>
+
