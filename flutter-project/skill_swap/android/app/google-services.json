@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "639029668370",
+    "project_id": "swappyskills",
+    "storage_bucket": "swappyskills.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639029668370:android:446f0be6cad3431e7bc6cb",
+        "android_client_info": {
+          "package_name": "com.example.skill_swap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639029668370-g394267jqii46l76e10886bj9l8kf2rp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGfWXJx-IWQC8-VPYl9SPhdvePzRh0iug"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639029668370-g394267jqii46l76e10886bj9l8kf2rp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
