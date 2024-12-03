@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/authentication/login.dart';
 import 'package:skill_swap/controllers/authentication_controller.dart';
+import 'package:skill_swap/controllers/skills_controller.dart';
 
 void main() async {
 
@@ -13,6 +14,7 @@ void main() async {
   });
 
   Get.put(AuthenticationController());
+  Get.put(SkillsController());
   
   runApp(const MyApp());
 }

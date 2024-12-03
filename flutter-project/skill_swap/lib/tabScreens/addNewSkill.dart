@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:skill_swap/tabScreens/user_details_screen.dart';
+import 'package:skill_swap/controllers/skills_controller.dart';
 import 'package:skill_swap/widgets/custom_text_field.dart';
 
 class AddNewSkill extends StatefulWidget {
@@ -20,6 +19,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
   final List<String> categories = ["Art", "Music", "Math", "Science", "Sports", "Technology"];
   // State to keep track of selected categories
   final Map<String, bool> selectedCategories = {};
+  var skillsController = SkillsController.skillsController;
 
   @override
   void initState() {
@@ -142,6 +142,17 @@ class _AddNewSkillState extends State<AddNewSkill> {
                           if (skillNameTextEditingController.text.trim().isNotEmpty &&
                               skillDescriptionTextEditingController.text.trim().isNotEmpty &&
                               isAnyCategorySelected) {
+
+                                // Call the SkillController to create a new skill
+                                final selectedCategoriesList = selectedCategories.keys
+                                    .where((key) => selectedCategories[key] == true)
+                                    .toList();
+                                await skillsController.createSkill(
+                                  skillName: skillNameTextEditingController.text.trim(),
+                                  skillDescription: skillDescriptionTextEditingController.text.trim(),
+                                  categories: selectedCategoriesList,
+                                );
+
                             Get.back();
                           } else {
                             // Show error message if validation fails
