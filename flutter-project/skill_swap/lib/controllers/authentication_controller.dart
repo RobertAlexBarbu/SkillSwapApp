@@ -54,7 +54,7 @@ class AuthenticationController  extends GetxController{
 
 
   createNewUserAccount(File imageProfile, String name, String age, String phoneNo, 
-                       String profileHeading, String skillList, String email, String password)
+                       String profileHeading, String email, String password)
   async {
     try{
       // 1. authenticate user with email + password
@@ -76,13 +76,22 @@ class AuthenticationController  extends GetxController{
           age: int.parse(age),
           phoneNo: phoneNo,
           profileHeading: profileHeading,
-          skillList: skillList,
           publishedDateTime: DateTime.now().millisecondsSinceEpoch
       );
 
       await FirebaseFirestore.instance.collection("users")
             .doc(FirebaseAuth.instance.currentUser!.uid).set(personInstance.toJson());
             
+      FirebaseFirestore.instance.collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('skills')
+          .doc()
+          .set({
+            'skillName': '',
+            'skillDescription': '',
+            "category": '',
+            'createdAt': FieldValue.serverTimestamp(),
+          });
 
       
 

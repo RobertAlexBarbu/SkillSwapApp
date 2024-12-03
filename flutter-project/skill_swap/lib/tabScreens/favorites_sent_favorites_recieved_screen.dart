@@ -13,7 +13,7 @@ class _FavoritesSentFavoritesRecievedScreenState extends State<FavoritesSentFavo
     return Scaffold(
           body: Center(
             child: Text(
-              "_ViewSendViewReceivedScreen ",
+              "Favorite Screen ",
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 20,

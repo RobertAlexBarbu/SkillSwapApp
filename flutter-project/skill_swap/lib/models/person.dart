@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:skill_swap/models/skill.dart';
 
-class Person{
-
+class Person {
   String? uid;
   String? email;
   String? password;
@@ -9,10 +10,11 @@ class Person{
   int? age;
   String? phoneNo;
   String? profileHeading;
-  String? skillList;
   String? imageProfile;
   int? publishedDateTime;
 
+  List<Skill>? skills; // List to hold skills
+  
   Person({
     this.uid,
     this.email,
@@ -22,31 +24,35 @@ class Person{
     this.age,
     this.phoneNo,
     this.profileHeading,
-    this.skillList,
+    this.skills,
     this.publishedDateTime
   });
 
+  static Person fromDataSnapshot(DocumentSnapshot snapshot) {
+    var dataSnapshot = snapshot.data() as Map<String, dynamic>;
+    
+    var person = Person(
+      uid: dataSnapshot["uid"],
+      email: dataSnapshot["email"],
+      password: dataSnapshot["password"],
+      imageProfile: dataSnapshot["imageProfile"],
+      name: dataSnapshot["name"],
+      age: dataSnapshot["age"],
+      phoneNo: dataSnapshot["phoneNo"],
+      profileHeading: dataSnapshot["profileHeading"],
+      publishedDateTime: dataSnapshot["publishedDateTime"],
+    );
+    
+    // Load skills from Firestore
+    person.skills = [];
+    person.getSkills().then((skills) {
+      person.skills = skills;
+    });
 
-  static Person fromDataSnapshot(DocumentSnapshot snapshot)
-  {
-      var dataSnapshot = snapshot.data() as Map<String, dynamic>;
-
-      return Person(
-        uid: dataSnapshot["uid"],
-        email: dataSnapshot["email"],
-        password: dataSnapshot["password"],
-        imageProfile: dataSnapshot["imageProfile"],
-        name : dataSnapshot["name"],
-        age: dataSnapshot["age"],
-        phoneNo: dataSnapshot["phoneNo"],
-        profileHeading: dataSnapshot["profileHeading"],
-        skillList: dataSnapshot["skillList"],
-        publishedDateTime: dataSnapshot["publishedDateTime"]
-      );
-
+    return person;
   }
 
-  Map<String, dynamic> toJson()=>{
+  Map<String, dynamic> toJson() => {
     "uid": uid,
     "email": email,
     "password": password,
@@ -55,8 +61,16 @@ class Person{
     "age": age,
     "phoneNo": phoneNo,
     "profileHeading": profileHeading,
-    "skillList": skillList,
-    "publishedDateTime": publishedDateTime
+    "publishedDateTime": publishedDateTime,
   };
+
+  Future<List<Skill>> getSkills() async {
+    final skillCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('skills');
+    final snapshot = await skillCollection.get();
+    return snapshot.docs.map((doc) => Skill.fromDataSnapshot(doc)).toList();
+  }
 
 }

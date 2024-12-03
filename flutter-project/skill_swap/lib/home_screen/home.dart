@@ -35,8 +35,8 @@ class _HomeState extends State<Home> {
             });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.grey ,
-        selectedItemColor: const Color.fromARGB(255, 232, 220, 105),
+        backgroundColor:   Color.fromRGBO(255, 198, 0, 1),
+        selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
         currentIndex: screenIndex,
         items: const [

@@ -20,7 +20,6 @@ class _RegisterState extends State<Register> {
   TextEditingController nameTextEditingController = TextEditingController();
   TextEditingController ageTextEditingController = TextEditingController();
   TextEditingController phoneTextEditingController = TextEditingController();
-  TextEditingController skillListTextEditingController = TextEditingController();
   TextEditingController profileHeadinTextEditingController = TextEditingController();
   bool showProgressBar =false; 
 
@@ -243,22 +242,6 @@ class _RegisterState extends State<Register> {
                   height: 20,
               ), 
 
-              //skill list 
-              SizedBox(
-                width: MediaQuery.of(context).size.width -36,
-                height: 55,
-                child: CustomTextField(
-                  editingController: skillListTextEditingController,
-                  lableText: "Skills",
-                  iconData: Icons.face,
-                  isObsure: false,
-                ),
-              ),
-              
-              const SizedBox(
-                  height: 30,
-              ), 
-
               //create account button
               Container(
               width: MediaQuery.of(context).size.width -36,
@@ -277,7 +260,6 @@ class _RegisterState extends State<Register> {
                          passwordTextEditingController.text.trim().isNotEmpty &&
                          ageTextEditingController.text.trim().isNotEmpty &&
                          phoneTextEditingController.text.trim().isNotEmpty &&
-                         skillListTextEditingController.text.trim().isNotEmpty &&
                          profileHeadinTextEditingController.text.trim().isNotEmpty){
                         
                         setState(() {
@@ -290,7 +272,6 @@ class _RegisterState extends State<Register> {
                           ageTextEditingController.text.trim(), 
                           phoneTextEditingController.text.trim(),
                           profileHeadinTextEditingController.text.trim(),
-                          skillListTextEditingController.text.trim(),
                           emaiTextEditingController.text.trim(),
                           passwordTextEditingController.text.trim());
 

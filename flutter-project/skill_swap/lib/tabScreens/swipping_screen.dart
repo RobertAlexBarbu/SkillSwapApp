@@ -19,21 +19,27 @@ class _SwippingScreenState extends State<SwippingScreen> {
       body: Obx((){
         return PageView.builder(
         itemCount: profileController.allUsersProfileList.length,
-        controller: PageController(initialPage: 0, viewportFraction: 1),
-        scrollDirection: Axis.horizontal,
+        controller: PageController(initialPage: 0, viewportFraction: 0.5),
+        scrollDirection: Axis.vertical,
+
         itemBuilder: (context, index){
           final eachProfileInfo = profileController.allUsersProfileList[index];
 
-          return DecoratedBox(
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
             //picture
+           
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
               image: DecorationImage(
                 image: NetworkImage(
                   eachProfileInfo.imageProfile.toString(),
                 ), 
                 fit: BoxFit.cover
-              )
+              ),
             ),
+          
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -41,24 +47,25 @@ class _SwippingScreenState extends State<SwippingScreen> {
 
 
                   //filter list icon button
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: IconButton(
-                        onPressed: (){
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(top: 8),
+                  //     child: IconButton(
+                  //       onPressed: (){
 
-                        },
-                        icon: Icon(
-                          Icons.filter_list,
-                          size: 30,
-                        )
-                      ),
-                    ),
-                  ),
+                  //       },
+                  //       icon: Icon(
+                  //         Icons.filter_list,
+                  //         size: 30,
+                  //       )
+                  //     ),
+                  //   ),
+                  // ),
 
                   const Spacer(),
 
+                  //name + age
                   GestureDetector(
                     onTap: (){
 
@@ -134,12 +141,15 @@ class _SwippingScreenState extends State<SwippingScreen> {
                         ),
                       ),
                     ],
-                  )
+                  ),
 
                 ],
               ),
             ),
-          );
+          ),
+        
+          ); 
+          
         },
       );
       })

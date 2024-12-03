@@ -13,7 +13,7 @@ class _LikeSentLikeReceivedScreenState extends State<LikeSentLikeReceivedScreen>
     return Scaffold(
       body: Center(
         child: Text(
-          "Like sent like receive",
+          "Liked screen",
           style: TextStyle(
             color: Colors.grey,
             fontSize: 20,

@@ -13,7 +13,7 @@ class _ViewSendViewReceivedScreenState extends State<ViewSendViewReceivedScreen>
     return Scaffold(
       body: Center(
         child: Text(
-          "_ViewSendViewReceivedScreen ",
+          "Search screen ",
           style: TextStyle(
             color: Colors.grey,
             fontSize: 20,
