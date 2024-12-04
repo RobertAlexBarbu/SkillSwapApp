@@ -79,7 +79,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       appBar: AppBar(
        backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
         title: const Text(
-          "User Profile",
+          "Profile",
           style: TextStyle(
             color: Colors.white,
           ),
@@ -143,7 +143,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         Text(
                           name!,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -153,14 +153,32 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     const SizedBox(
                       height: 10,
                     ),
+                    //description
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            profileHeading!,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          )
+                        )  
+                      ]
+                    ),
+                    const SizedBox(height: 10,),
                     //phone nr
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Text(
-                        "Phone Nr.: ",
+                        "Contact: ",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 14,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
@@ -169,9 +187,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       Text(
                         phoneNo!,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 14,
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
                         ),
                       )
                       ],
@@ -184,50 +201,23 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Text(
-                          "Age  ",
+                          "Age:  ",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
 
                         Text(
                           age!,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 14,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
                           ),
                         )
                       ]
                     ),
                     SizedBox(height: 10,),
-                    //description
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Description: ",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          profileHeading!,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ]
-                    ),
-                    const SizedBox(height: 10,),
-                    
-
 
                   ],
                 ),
@@ -283,35 +273,43 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    skill["skillDescription"] ?? "No Description",
-                                    style: const TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 18
-                                      ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  categories.isNotEmpty
-                                      ? Wrap(
-                                          spacing: 8.0, // Horizontal space between chips
-                                          runSpacing: 4.0, // Vertical space between lines
-                                          children: categories.map<Widget>((category) {
-                                            return Text(
-                                                category,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
-                                            );
-                                          }).toList(),
-                                        )
-                                      : const Text(
-                                          "No categories selected",
-                                          style: TextStyle(
-                                            color: Color.fromARGB(137, 165, 35, 35),
-                                            fontSize: 12,
-                                          ),
+                                  Row(
+                                    children: [  
+                                      Expanded(
+                                        child: Text(
+                                          skill["skillDescription"] ?? "No Description",
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14
+                                            ),
+                                          softWrap: true,
+                                          overflow: TextOverflow.visible,
                                         ),
+                                      )
+                                    ],
+                                  ),
+                                  // Displaying categories
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Categories: ",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      Text(
+                                        categories.isNotEmpty
+                                            ? categories.join(', ') // Join categories with commas
+                                            : 'No categories selected',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
