@@ -27,8 +27,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   String? skillList='';
   String? imageProfile='';
   String? publishedDateTime='';
-
-
+// List to store skills
+  List<Map<String, dynamic>> skillsList = [];
   //slider img
   String urlImage1 = "https://firebasestorage.googleapis.com/v0/b/swappyskills.firebasestorage.app/o/Placeholder%2Fprofile_Default_image.jpg?alt=media&token=a3f4e00c-cd11-46bc-a7ff-bf9c745dff8d";
 
@@ -48,7 +48,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
             });
           }
       });
+      retrieveSkills();
     }
+  // Retrieve skills from the sub-collection
+  retrieveSkills() async {
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(widget.userId)
+        .collection("skills")
+        .get()
+        .then((querySnapshot) {
+      setState(() {
+        skillsList = querySnapshot.docs.map((doc) => doc.data()).toList();
+      });
+    });
+  }
 
 
 @override
@@ -224,52 +238,120 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Row for aligning the title and the '+' button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Skills",
-                          style: const TextStyle(
-                            fontSize: 22,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            Get.to(AddNewSkill());
-                            // Add your onPressed logic here
-               
-                          },
-                        ),
-                      ],
-                    ),
-                    // Example list of skills or content
-                    const SizedBox(height: 16), // Spacer
-                    Container(
-                      color: Colors.white.withOpacity(0.2),
-                      height: 200,
-                      child: Center(
-                        child: Text(
-                          "Add new skills",
-                          style: TextStyle(color: Colors.white),
-                        ),
+                    Text(
+                      "Skills",
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-            ),
-          
-            
-          
+                    const SizedBox(height: 10,),
 
+
+                    const SizedBox(height: 16),
               
-            
+                     // List of skills
+                    skillsList.isEmpty
+                    ? const Center(
+                        child: Text(
+                          "No skills available",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: skillsList.length,
+                        itemBuilder: (context, index) {
+                          final skill = skillsList[index];
+                          final categories = skill["categories"] ?? []; // Retrieve associated categories
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Container(
+                            padding: const EdgeInsets.all(8.0), 
+                            color: Colors.white.withOpacity(0.2),
+                            child: ListTile(
+                              title: Text(
+                                skill["skillName"] ?? "Skill Name",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold
+                                  ),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    skill["skillDescription"] ?? "No Description",
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 18
+                                      ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  categories.isNotEmpty
+                                      ? Wrap(
+                                          spacing: 8.0, // Horizontal space between chips
+                                          runSpacing: 4.0, // Vertical space between lines
+                                          children: categories.map<Widget>((category) {
+                                            return Text(
+                                                category,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                ),
+                                            );
+                                          }).toList(),
+                                        )
+                                      : const Text(
+                                          "No categories selected",
+                                          style: TextStyle(
+                                            color: Color.fromARGB(137, 165, 35, 35),
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }  
+                    ),
+                  
+                    //add new skills
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16), // Add some padding
+                      color: Colors.transparent, 
+                      width: 200,// Background for the container
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min, // Ensures the column takes up only the space needed
+                        children: [
+                          Center(
+                            child: IconButton(
+                              onPressed: () {
+                                Get.to(AddNewSkill());
+                              },
+                              icon: const Icon(
+                                Icons.add, // Use the "add" icon
+                                color: Colors.white, // Icon color
+                                size: 30, // Adjust icon size
+                              ),
+                              splashRadius: 24, // Adjust the tap area radius
+                            ),
+                          ),
+                          const Text(
+                            "Add new skills",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  
+                  ],
+                ), 
+              ),
             ]
           ),
         ),
