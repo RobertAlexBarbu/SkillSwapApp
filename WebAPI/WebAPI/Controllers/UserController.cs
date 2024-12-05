@@ -14,13 +14,13 @@ namespace WebAPI.Controllers;
 [Route("/api/[controller]/[action]")]
 public class UserController(IUserService userService, IMapper mapper, FirebaseService firebaseService) : ControllerBase
 {
-    // ByToken -> gets necessary data from decoded firebase access token claims
     [HttpPost]
-    [AllowAuthenticated]
-    public async Task<ActionResult<UserDto>> CreateByTokenAsync()
+    public async Task<ActionResult<UserDto>> CreateAsync(CreateUserDto createUserDto)
     {
-        var claimsUser = userService.GetFromClaims(User);
-        var savedUser = await userService.CreateAsync(claimsUser);
+        Console.WriteLine("Hello!!!");
+        var user = mapper.Map<User>(createUserDto);
+        var savedUser = await userService.CreateAsync(user);
+        Console.WriteLine(savedUser);
         var userDto = mapper.Map<UserDto>(savedUser);
         return Ok(userDto);
     }
@@ -33,7 +33,7 @@ public class UserController(IUserService userService, IMapper mapper, FirebaseSe
         User user;
         try
         {
-            user = await userService.GetByIdAsync(claimsUser.Id);
+            user = await userService.GetByIdAsync(claimsUser.Uid);
         }
         catch (NotFoundException e)
         {
@@ -43,25 +43,5 @@ public class UserController(IUserService userService, IMapper mapper, FirebaseSe
         var userDto = mapper.Map<UserDto>(user);
         return Ok(userDto);
     }
-
-    [HttpPatch]
-    [AllowAuthenticated]
-    public async Task<ActionResult<UserDto>> ConfigureByTokenAsync()
-    {
-        var claimsUser = userService.GetFromClaims(User);
-        var user = await userService.ConfigureByIdAsync(claimsUser.Id);
-        var userDto = mapper.Map<UserDto>(user);
-        return Ok(userDto);
-    }
     
-    [HttpPatch]
-    [AllowRole(Roles.Admin)]
-    [Route("{id}")]
-    public async Task<ActionResult<UserDto>> MakeAdminAsync(string id)
-    {
-        var user = await userService.MakeAdminByIdAsync(id);
-        await firebaseService.AddRoleClaimAsync(id, Roles.Admin);
-        var userDto = mapper.Map<UserDto>(user);
-        return Ok(userDto);
-    }
 }

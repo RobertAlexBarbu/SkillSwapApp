@@ -6,6 +6,7 @@ public class FirebaseAuthentication(RequestDelegate next, FirebaseService fireba
 {
     public async Task InvokeAsync(HttpContext context )
     {
+        Console.WriteLine("Hello!!! this is Fb mw");
         var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
         if (authHeader != null && authHeader.StartsWith("Bearer "))
         {

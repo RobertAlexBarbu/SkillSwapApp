@@ -9,6 +9,7 @@ public class ExceptionFilter : IExceptionFilter
     public void OnException(ExceptionContext context)
     {
         var e = context.Exception;
+        Console.WriteLine(e.Message);
         if (e is NotFoundException)
         {
             context.Result = new NotFoundObjectResult(new { e.Message });

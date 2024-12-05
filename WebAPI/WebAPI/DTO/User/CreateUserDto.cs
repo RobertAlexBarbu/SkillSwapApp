@@ -1,6 +1,6 @@
-namespace WebAPI.Domain.Entities;
+namespace WebAPI.DTO.User;
 
-public class User
+public class CreateUserDto
 {
     public string Uid { get; set; }
     public string Email { get; set; }
@@ -14,7 +14,6 @@ public class User
     public string PhoneNo { get; set; }
     
     public string ProfileHeading { get; set; }
-    
     
     public long PublishedDateTime { get; set; }
 }

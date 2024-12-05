@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using WebAPI.Application.Services.StudentVerificationService;
 using WebAPI.Application.Services.UserService;
 using WebAPI.Automapper;
 using WebAPI.Filters;
@@ -12,8 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<ModelStateFilter>();
-    options.Filters.Add<ExceptionFilter>();
 });
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -58,7 +55,6 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IStudentVerificationService, StudentVerificationService>();
 
 var app = builder.Build();
 
@@ -78,6 +74,6 @@ app.UseCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader();
 });
-app.UseMiddleware<FirebaseAuthentication>();
+// app.UseMiddleware<FirebaseAuthentication>();
 app.MapControllers();
 app.Run();

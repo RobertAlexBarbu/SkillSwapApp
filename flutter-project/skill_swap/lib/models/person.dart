@@ -55,7 +55,6 @@ class Person {
   Map<String, dynamic> toJson() => {
     "uid": uid,
     "email": email,
-    "password": password,
     "imageProfile": imageProfile,
     "name": name,
     "age": age,

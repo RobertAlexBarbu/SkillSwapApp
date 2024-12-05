@@ -11,8 +11,7 @@ public class MappingProfile : Profile
     {
         CreateMap<User, UserDto>();
         CreateMap<User, UsertDetailDto>();
-        CreateMap<VerificationRequestDto, VerificationRequest>();
-        CreateMap<VerificationRequest, VerificationRequestDto>();
+        CreateMap<CreateUserDto, User>();
 
     }
 }
