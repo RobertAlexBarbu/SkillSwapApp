@@ -35,10 +35,14 @@ class _AddNewSkillState extends State<AddNewSkill> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
-        title: const Text(
-          "Add Skill",
-          style: TextStyle(
-            color: Colors.white,
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: const Text(
+            "Add Skill",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),
@@ -52,11 +56,27 @@ class _AddNewSkillState extends State<AddNewSkill> {
               SizedBox(
                 width: MediaQuery.of(context).size.width -36,
                 height: 55,
-                child: CustomTextField(
-                  editingController: skillNameTextEditingController,
-                  lableText: "Name",
-                  iconData: Icons.title,
-                  isObsure: false,
+                child: TextFormField(
+                  controller: skillNameTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                          decoration: InputDecoration(
+                              constraints: const BoxConstraints(
+                                maxWidth: 360,
+                              ),
+                              filled: true,
+                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                              prefixIcon:  Icon(Icons.title,
+                                  color: Colors.orange.shade600),
+                              hintText: 'Name',
+                              hintStyle: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w400),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                              )),
+                              
+                  
                 ),
               ),
 
@@ -65,11 +85,25 @@ class _AddNewSkillState extends State<AddNewSkill> {
               SizedBox(
                 width: MediaQuery.of(context).size.width -36,
                 height: 55,
-                child: CustomTextField(
-                  editingController: skillDescriptionTextEditingController,
-                  lableText: "Description",
-                  iconData: Icons.description,
-                  isObsure: false,
+                child: TextFormField(
+                  controller: skillDescriptionTextEditingController,
+                   textAlignVertical: TextAlignVertical.center,
+                          decoration: InputDecoration(
+                              constraints: const BoxConstraints(
+                                maxWidth: 360,
+                              ),
+                              filled: true,
+                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                              prefixIcon:  Icon(Icons.description,
+                                  color: Colors.orange.shade600),
+                              hintText: 'Description',
+                              hintStyle: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w400),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none)),
+                  
                 ),
               ),
           
@@ -80,11 +114,11 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 crossAxisAlignment: CrossAxisAlignment.start, // Align everything to the left
                 children:[
                   // Align the header to the left
-                  const Text(
+                   Text(
                     "Select skill categories:",
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.grey,
+                      color: Colors.grey.shade600,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -98,7 +132,11 @@ class _AddNewSkillState extends State<AddNewSkill> {
                         Checkbox(
                           value: selectedCategories[category],
                           activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
-                          checkColor: Colors.white, // Checkmark color
+                          checkColor: Colors.white, 
+                          side: BorderSide(
+                            color: const Color.fromRGBO(255, 198, 0, 1), // Set the contour color
+                            width: 1.5,        // Set the border width
+                          ),// Checkmark color
                           onChanged: (bool? value) {
                             setState(() {
                               selectedCategories[category] = value ?? false;
@@ -107,8 +145,9 @@ class _AddNewSkillState extends State<AddNewSkill> {
                         ),
                         Text(
                           category,
-                          style: const TextStyle(
-                            color: Colors.grey,
+                          style:  TextStyle(
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w400,
                             fontSize: 16, // Adjust font size for compact layout
                           ),
                         ),
@@ -178,7 +217,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
@@ -207,7 +246,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),

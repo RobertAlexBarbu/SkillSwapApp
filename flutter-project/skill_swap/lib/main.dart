@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Skill Swap',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 232, 227, 178)
+        scaffoldBackgroundColor: Colors.white
       ),
       debugShowCheckedModeBanner: false ,
       home: const Login(), 

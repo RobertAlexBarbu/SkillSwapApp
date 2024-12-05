@@ -82,6 +82,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           "Profile",
           style: TextStyle(
             color: Colors.white,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
@@ -110,11 +111,20 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 width: MediaQuery.of(context).size.width * 0.4,  // Set the width of the image
                 height: MediaQuery.of(context).size.width * 0.4, // Set the height of the image (same as width to make it round)
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle, // Makes the container a circle
+                  shape: BoxShape.circle,
+                  // Makes the container a circle
                   border: Border.all(
-                    color: Colors.white,  // Border color
+                    color:Colors.grey.shade600,  // Border color
                     width: 2.0,          // Border width
                   ),
+                  /*boxShadow: [
+                      BoxShadow(
+                      color: Colors.grey.shade100,
+                      spreadRadius: 8.0,
+                      blurRadius: 2.0,
+                      offset: Offset(3, 3)
+                    )
+                  ],*/ 
                 ),
                 child: ClipOval(
                   child: Image.network(
@@ -144,7 +154,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           name!,
                           style: TextStyle(
                             fontSize: 20,
-                            color: Colors.white,
+                            color: Colors.grey.shade600,
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -162,7 +172,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             profileHeading!,
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.white,
+                              color: Colors.grey.shade600,
                             ),
                             softWrap: true,
                             overflow: TextOverflow.visible,
@@ -175,11 +185,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
+                         Text(
                         "Contact: ",
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white,
+                          color: Colors.grey.shade600,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -188,7 +198,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         phoneNo!,
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white,
+                          color: Colors.grey.shade600,
                         ),
                       )
                       ],
@@ -200,11 +210,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
+                         Text(
                           "Age:  ",
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.white,
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
 
@@ -212,7 +223,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           age!,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.white,
+                            color: Colors.grey.shade600,
                           ),
                         )
                       ]
@@ -230,23 +241,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   children: [
                     Text(
                       "Skills",
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 22,
-                        color: Colors.white,
+                        color: Colors.grey.shade600,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10,),
 
-
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 22),
               
                      // List of skills
                     skillsList.isEmpty
-                    ? const Center(
+                    ?  Center(
                         child: Text(
                           "No skills available",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.grey.shade600),
                         ),
                       )
                     : ListView.builder(
@@ -257,19 +266,70 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           final skill = skillsList[index];
                           final categories = skill["categories"] ?? []; // Retrieve associated categories
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
+                            padding: const EdgeInsets.only(bottom: 20.0),
                             child: Container(
-                            padding: const EdgeInsets.all(8.0), 
-                            color: Colors.white.withOpacity(0.2),
-                            child: ListTile(
-                              title: Text(
-                                skill["skillName"] ?? "Skill Name",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold
-                                  ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
                               ),
+                              padding: const EdgeInsets.all(6.0), 
+                              child: ListTile(
+                              title: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      skill["skillName"] ?? "Skill Name",
+                                      style:  TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold
+                                        ),
+                                      overflow: TextOverflow.ellipsis
+                                    ),
+                                  ),
+
+                                  //Spacer(flex: 1,),
+
+                                  /*Row(
+                                    children: [
+                                      //edit button
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                        onPressed: (){
+                                          //
+                                        },
+                                      ),
+                                        //delete button
+                                      IconButton(
+                                        icon:const Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                        onPressed: (){
+                                          //
+                                        }
+                                      )
+                                    ],
+                                  ),*/
+                                  IconButton(
+                                  icon:  Icon(
+                                    Icons.more_vert, // Three dots icon
+                                    color: Colors.grey.shade600,
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    // Handle more options logic
+                                  },
+                                ),
+                  
+                                ],
+                              ),
+
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -278,8 +338,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       Expanded(
                                         child: Text(
                                           skill["skillDescription"] ?? "No Description",
-                                          style: const TextStyle(
-                                            color: Colors.white,
+                                          style:  TextStyle(
+                                            color: Colors.grey.shade600,
                                             fontSize: 14
                                             ),
                                           softWrap: true,
@@ -291,10 +351,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   // Displaying categories
                                   Row(
                                     children: [
-                                      const Text(
+                                       Text(
                                         "Categories: ",
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.grey.shade600,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold
                                         ),
@@ -303,8 +363,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         categories.isNotEmpty
                                             ? categories.join(', ') // Join categories with commas
                                             : 'No categories selected',
-                                        style: const TextStyle(
-                                          color: Colors.white,
+                                        style:  TextStyle(
+                                          color: Colors.grey.shade600,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -320,7 +380,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   
                     //add new skills
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16), // Add some padding
+                      padding: const EdgeInsets.all(4.0), // Add some padding
                       color: Colors.transparent, 
                       width: 200,// Background for the container
                       child: Row(
@@ -331,17 +391,17 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               onPressed: () {
                                 Get.to(AddNewSkill());
                               },
-                              icon: const Icon(
+                              icon:  Icon(
                                 Icons.add, // Use the "add" icon
-                                color: Colors.white, // Icon color
+                                color: Colors.grey.shade500, // Icon color
                                 size: 30, // Adjust icon size
                               ),
                               splashRadius: 24, // Adjust the tap area radius
                             ),
                           ),
-                          const Text(
+                           Text(
                             "Add new skills",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.grey.shade600),
                           ),
                         ],
                       ),
