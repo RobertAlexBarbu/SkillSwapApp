@@ -8,6 +8,7 @@ public class AllowAuthenticated : Attribute, IAuthorizationFilter
 {
     public void OnAuthorization(AuthorizationFilterContext context)
     {
+        
         if (context.HttpContext.User?.Identity?.IsAuthenticated != true)
         {
             var message = "[AllowAuthenticatedFilter] Principal Not Authenticated";

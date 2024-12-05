@@ -11,7 +11,7 @@ public class UserService(AppDbContext context) : IUserService
 {
     public async Task<User> CreateAsync(User user)
     {
-        var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
+        var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Uid == user.Uid);
         if (existingUser == null)
         {
             context.Users.Add(user);
@@ -24,29 +24,12 @@ public class UserService(AppDbContext context) : IUserService
 
     public async Task<User> GetByIdAsync(string id)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Uid == id);
         if (user == null) throw new NotFoundException("User");
         return user;
     }
 
-    public async Task<User> ConfigureByIdAsync(string id)
-    {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
-        if (user == null) throw new NotFoundException("User");
-        user.Configured = true;
-        await context.SaveChangesAsync();
-        return user;
-    }
     
-    public async Task<User> MakeAdminByIdAsync(string id)
-    {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
-        if (user == null) throw new NotFoundException("User");
-        user.Role = Roles.Admin;
-        await context.SaveChangesAsync();
-        return user;
-    }
-
     public User GetFromClaims(ClaimsPrincipal claimIdentity)
     {
         var firebaseUidClaim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -58,10 +41,8 @@ public class UserService(AppDbContext context) : IUserService
             throw new InvalidClaimsException("[UserService.GetFromClaims] Claims are Null");
         return new User
         {
-            Id = firebaseUidClaim.Value,
+            Uid = firebaseUidClaim.Value,
             Email = emailClaim.Value,
-            Provider = providerClaim.Value,
-            Role = roleClaim.Value
         };
     }
 }

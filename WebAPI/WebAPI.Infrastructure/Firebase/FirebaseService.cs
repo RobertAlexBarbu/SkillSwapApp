@@ -25,24 +25,7 @@ public class FirebaseService
             var jsonString = decodedToken.Claims["firebase"].ToString();
             var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonString);
             var uid = decodedToken.Uid;
-            var role = GetUserRoleClaim(decodedToken);
-            if (role == null)
-            {
-                Console.WriteLine("New User -> we have to add a Role claim");
-                await AddRoleClaimAsync(uid, Roles.UnverifiedUser);
-            }
-            else
-            {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, uid),
-                    new Claim(ClaimTypes.Role, role),
-                    new Claim(ClaimTypes.Email, decodedToken.Claims["email"].ToString()),
-                    new Claim("provider", dictionary["sign_in_provider"].ToString())
-                };
-                var identity = new ClaimsIdentity(claims, "firebase"); // Authenticated Identity
-                principal = new ClaimsPrincipal(identity); 
-            }
+            Console.WriteLine($"Token: {decodedToken}");
         }
         catch (FirebaseAuthException e)
         {

@@ -9,12 +9,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:skill_swap/authentication/login.dart';
 import 'package:skill_swap/home_screen/home.dart';
 import 'package:skill_swap/models/person.dart' as personModel;
+
+import '../interceptors/jwt_interceptor.dart';
 //import 'package:image_picker/image_picker.dart';
 
 class AuthenticationController  extends GetxController{
 
   static AuthenticationController authController = Get.find();
-
+  final dio = createDio();
   late Rx<File?> pickedFile;
   late Rx<User?> firebaseCurrentUser;
 
@@ -62,6 +64,7 @@ class AuthenticationController  extends GetxController{
         email: email,
         password: password
       );
+      String? idToken = await FirebaseAuth.instance.currentUser?.getIdToken();
 
       //2. upload profile image to storage 
       String urlOfDownloadedImage = await uploadImageToStorage(imageProfile);
@@ -70,7 +73,6 @@ class AuthenticationController  extends GetxController{
       personModel.Person personInstance = personModel.Person(
           uid: FirebaseAuth.instance.currentUser!.uid,
           email: email,
-          password: password,
           imageProfile: urlOfDownloadedImage,
           name: name,
           age: int.parse(age),
@@ -79,9 +81,7 @@ class AuthenticationController  extends GetxController{
           publishedDateTime: DateTime.now().millisecondsSinceEpoch
       );
 
-      await FirebaseFirestore.instance.collection("users")
-            .doc(FirebaseAuth.instance.currentUser!.uid).set(personInstance.toJson());
-            
+      final response = await dio.post("http://10.0.2.2:5165/api/User/Create", data: personInstance.toJson());
       FirebaseFirestore.instance.collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('skills')
@@ -93,13 +93,15 @@ class AuthenticationController  extends GetxController{
             'createdAt': FieldValue.serverTimestamp(),
           });
 
-      
+      // await FirebaseFirestore.instance.collection("users")
+      //       .doc(FirebaseAuth.instance.currentUser!.uid).set(personInstance.toJson());
 
       Get.snackbar("Account created", "Congratulation your skill swap account has been created!");
       Get.to(Home());
 
     }catch(errorMsg){
-        Get.snackbar("Account creation unsuccessful", "Error ocurred: $errorMsg");
+      print(errorMsg);
+      Get.snackbar("Account creation unsuccessful", "Error ocurred: $errorMsg");
     }
 
     
@@ -118,6 +120,7 @@ class AuthenticationController  extends GetxController{
     }
     catch(errorMsg){
       Get.snackbar("Login unsuccessful", "Error occurred: $errorMsg");
+
     }
   }
 
