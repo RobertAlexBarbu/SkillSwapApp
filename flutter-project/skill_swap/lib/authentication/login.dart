@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/authentication/register.dart';
 import 'package:skill_swap/controllers/authentication_controller.dart';
-import 'package:skill_swap/widgets/custom_text_field.dart';
 
 
 class Login extends StatefulWidget {
@@ -28,48 +27,86 @@ class _LoginState extends State<Login> {
           child: Column(
             children: [
               const SizedBox(
-                height: 40,
+                height: 80,
               ),
-              Image.asset(
-                "images/logo.png",
-                width: 120,
+              //welcome to skill swap
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Welcome",
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade600
+                    ),
+                  ),
+
+                  Text(
+                    "to",
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey.shade600
+                    ),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                      "Skill ",
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade600
+                        ),
+                      ),
+                      Text(
+                      "Swap",
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.w700,
+                          color: Color.fromRGBO(255, 198, 0, 1)
+                        ),
+                      )
+                    ],
+                  ),
+                ]  
               ),
+             
               const SizedBox(
-                height: 30,
+                  height: 70,
               ),
-             const Text(
-              "Welcome to Skill Swap",
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 92, 92, 92)
-              ),
-             ),
-            const SizedBox(
-                height: 20,
-            ),
-            const Text(
-              "Please login to your account",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 92, 92, 92)
-              ),
-            ),
-            const SizedBox(
-                height: 20,
-            ), 
 
             //email
             SizedBox(
-              width: MediaQuery.of(context).size.width -36,
+              width: MediaQuery.of(context).size.width - 96,
               height: 55,
-              child: CustomTextField(
-                editingController: emaiTextEditingController,
-                lableText: "Email",
-                iconData: Icons.email_outlined,
-                isObsure: false,
-              ),
+              child: TextFormField(
+                  controller: emaiTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.email_outlined,
+                          color: Colors.orange.shade600),
+                      hintText: 'Email',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
+                ), 
             ),
             
             const SizedBox(
@@ -78,26 +115,45 @@ class _LoginState extends State<Login> {
 
             //password
             SizedBox(
-              width: MediaQuery.of(context).size.width -36,
+              width: MediaQuery.of(context).size.width -96,
               height: 55,
-              child: CustomTextField(
-                editingController: passwordTextEditingController,
-                lableText: "Password",
-                iconData: Icons.lock_open_outlined,
-                isObsure: true,
-              ),
+              child: TextFormField(
+                  controller: passwordTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: true,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.lock_open_outlined,
+                          color: Colors.orange.shade600),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
+                ),
+              
             ),
 
             const SizedBox(
-                height: 40,
+                height: 50,
             ), 
 
             //login button
             Container(
-              width: MediaQuery.of(context).size.width -36,
+              width: 120,
               height: 50,
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: Color.fromRGBO(255, 198, 0, 1),
                 borderRadius: BorderRadius.all(
                   Radius.circular(12)
                 )
@@ -127,8 +183,8 @@ class _LoginState extends State<Login> {
                     "Login",
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600
                     ),
                   ),
                 ),
@@ -136,7 +192,7 @@ class _LoginState extends State<Login> {
               ),
             
             const SizedBox(
-                height: 16,
+                height: 50,
             ), 
             
             //dont have an account / create here button
@@ -144,7 +200,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Don't have an account?",
+                  "Don't have an account? ",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
@@ -155,13 +211,27 @@ class _LoginState extends State<Login> {
                   onTap: () {
                     Get.to(Register());
                   },
-                  child: const Text(
-                    "Register here",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white
-                    ),
-                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Register ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade600
+                        ),
+                      ),
+                      Text(
+                        "here",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                  ],
+                  )
+                  
+                  
                 )
 
 

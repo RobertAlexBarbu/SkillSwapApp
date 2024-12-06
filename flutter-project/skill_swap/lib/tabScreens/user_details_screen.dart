@@ -137,10 +137,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               ),             
               
               const SizedBox(height: 30,),
-              /*const Divider(
-                  color: Colors.white,
-                  thickness: 2,
-                ),*/
               //user data
               Container(
                 padding: const EdgeInsets.all(20),

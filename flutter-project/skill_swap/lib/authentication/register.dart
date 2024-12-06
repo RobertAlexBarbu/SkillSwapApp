@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/controllers/authentication_controller.dart';
-import 'package:skill_swap/widgets/custom_text_field.dart';
 
 
 class Register extends StatefulWidget {
@@ -37,45 +36,22 @@ class _RegisterState extends State<Register> {
           child: Column(
             children: [
               const SizedBox(
-                height: 100,
+                height: 120,
               ),
 
-              
-              const Text(
-                  "Create Account",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.grey,
-                  ),
-                ),
-
-              const Text(
-                  "to get Started now",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-
-              const SizedBox(
-                height: 20,
-              ),
-               
               authenticationController.imageFile == null?  
               //choose image circle avatar
               const CircleAvatar(
-                  radius: 80,
-                  backgroundImage: AssetImage("images/logo.png"),
-                  backgroundColor: Colors.black,
+                  radius: 60,
+                  backgroundImage: AssetImage("images/profile.png"),
                 ) : Container(
-                  width:180,
-                  height:180,
+                  width:60,
+                  height:60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.grey,
                     image: DecorationImage(
-                      fit: BoxFit.fitHeight,
+                      fit: BoxFit.cover,
                       image: FileImage(
                         File(
                           authenticationController.imageFile!.path
@@ -85,6 +61,10 @@ class _RegisterState extends State<Register> {
                   ),
                 ), 
               
+              SizedBox(
+                height: 10,
+              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -126,196 +106,287 @@ class _RegisterState extends State<Register> {
               ),
 
               const SizedBox(
-                  height: 10,
+                  height: 30,
               ), 
               
-              //personal info 
-              const Text(
-                "Personal Info",
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-
-              const SizedBox( 
-                  height: 20,
-              ), 
-
               //name
               SizedBox(
-                width: MediaQuery.of(context).size.width -36,
+                width: MediaQuery.of(context).size.width - 96,
                 height: 55,
-                child: CustomTextField(
-                  editingController: nameTextEditingController,
-                  lableText: "Name",
-                  iconData: Icons.person_outline,
-                  isObsure: false,
-                  
-                )
-                 
-               
+                child: TextFormField(
+                  controller: nameTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: false,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.person_outline,
+                          color: Colors.orange.shade600),
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
+                ),
               ),
               
               const SizedBox(
-                  height: 20,
+                  height: 10,
               ), 
 
               //email
               SizedBox(
-                width: MediaQuery.of(context).size.width -36,
+                width: MediaQuery.of(context).size.width - 96,
                 height: 55,
-                child: CustomTextField(
-                  editingController: emaiTextEditingController,
-                  lableText: "Email",
-                  iconData: Icons.email_outlined,
-                  isObsure: false,
+                child: TextFormField(
+                  controller: emaiTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: false,
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.email_outlined,
+                          color: Colors.orange.shade600),
+                      hintText: 'Email',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
               
               const SizedBox(
-                  height: 20,
+                  height: 10,
               ), 
 
               //password
               SizedBox(
-                width: MediaQuery.of(context).size.width -36,
+                width: MediaQuery.of(context).size.width -96,
                 height: 55,
-                child: CustomTextField(
-                  editingController: passwordTextEditingController,
-                  lableText: "Password",
-                  iconData: Icons.lock_open_outlined,
-                  isObsure: true,
+                child: TextFormField(
+                  controller: passwordTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: true,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.lock_open_outlined,
+                          color: Colors.orange.shade600),
+                      hintText: 'Password',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
 
               const SizedBox(
-                  height: 20,
+                  height: 10,
               ), 
 
               //age
               SizedBox(
-                width: MediaQuery.of(context).size.width -36,
+                width: MediaQuery.of(context).size.width -96,
                 height: 55,
-                child: CustomTextField(
-                  editingController: ageTextEditingController,
-                  lableText: "Age",
-                  iconData: Icons.numbers,
-                  isObsure: false,
+                child: TextFormField(
+                  controller: ageTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: false,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.calendar_month,
+                          color: Colors.orange.shade600),
+                      hintText: 'Age',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
               
               const SizedBox(
-                  height: 20,
+                  height: 10,
               ), 
 
               //phone no
               SizedBox(
-                width: MediaQuery.of(context).size.width -36,
+                width: MediaQuery.of(context).size.width -96,
                 height: 55,
-                child: CustomTextField(
-                  editingController: phoneTextEditingController,
-                  lableText: "Phone",
-                  iconData: Icons.phone,
-                  isObsure: false,
+                child: TextFormField(
+                  controller: phoneTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: false,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.phone,
+                          color: Colors.orange.shade600),
+                      hintText: 'Phone Number',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
               
               const SizedBox(
-                  height: 20,
+                  height: 10,
               ), 
 
               // profile heading
               SizedBox(
-                width: MediaQuery.of(context).size.width -36,
+                width: MediaQuery.of(context).size.width -96,
                 height: 55,
-                child: CustomTextField(
-                  editingController: profileHeadinTextEditingController,
-                  lableText: "Profile heading",
-                  iconData: Icons.text_fields,
-                  isObsure: false,
+                child: TextFormField(
+                  controller: profileHeadinTextEditingController,
+                  textAlignVertical: TextAlignVertical.center,
+                  obscureText: false,
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.edit,
+                          color: Colors.orange.shade600),
+                      hintText: 'Description of you',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
               
               const SizedBox(
-                  height: 20,
+                  height: 50,
               ), 
 
               //create account button
               Container(
-              width: MediaQuery.of(context).size.width -36,
-              height: 50,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12)
-                )
-              ),
-              child: InkWell(
-                onTap: () async {
-                  if(authenticationController.imageFile != null){
-                      if(nameTextEditingController.text.trim().isNotEmpty &&
-                         emaiTextEditingController.text.trim().isNotEmpty &&
-                         passwordTextEditingController.text.trim().isNotEmpty &&
-                         ageTextEditingController.text.trim().isNotEmpty &&
-                         phoneTextEditingController.text.trim().isNotEmpty &&
-                         profileHeadinTextEditingController.text.trim().isNotEmpty){
-                        
-                        setState(() {
-                          showProgressBar = true;
-                        });
-                        
-                        await authenticationController.createNewUserAccount(
-                          authenticationController.profileImage!, 
-                          nameTextEditingController.text.trim(), 
-                          ageTextEditingController.text.trim(), 
-                          phoneTextEditingController.text.trim(),
-                          profileHeadinTextEditingController.text.trim(),
-                          emaiTextEditingController.text.trim(),
-                          passwordTextEditingController.text.trim());
+                width: 180,
+                height: 50,
+                decoration:  BoxDecoration(
+                  color: Colors.orange.shade600,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12)
+                  )
+                ),
+                child: InkWell(
+                  onTap: () async {
+                    if(authenticationController.imageFile != null){
+                        if(nameTextEditingController.text.trim().isNotEmpty &&
+                          emaiTextEditingController.text.trim().isNotEmpty &&
+                          passwordTextEditingController.text.trim().isNotEmpty &&
+                          ageTextEditingController.text.trim().isNotEmpty &&
+                          phoneTextEditingController.text.trim().isNotEmpty &&
+                          profileHeadinTextEditingController.text.trim().isNotEmpty){
+                          
+                          setState(() {
+                            showProgressBar = true;
+                          });
+                          
+                          await authenticationController.createNewUserAccount(
+                            authenticationController.profileImage!, 
+                            nameTextEditingController.text.trim(), 
+                            ageTextEditingController.text.trim(), 
+                            phoneTextEditingController.text.trim(),
+                            profileHeadinTextEditingController.text.trim(),
+                            emaiTextEditingController.text.trim(),
+                            passwordTextEditingController.text.trim());
 
-                        setState(() {
-                          showProgressBar = false ;
-                          authenticationController.imageFile = null;
-                        });
-                        
-                      }
-                      else{
-                        Get.snackbar("A field is empty", "Please fill out all fields");
-                      }
-                  }
-                  else{
-                    Get.snackbar("Image file missing", "Please pick an image");
-                  }
-
-                },
-                child: const Center(
-                  child: Text(
-                    "Create Account",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
+                          setState(() {
+                            showProgressBar = false ;
+                            authenticationController.imageFile = null;
+                          });
+                          
+                        }
+                        else{
+                          Get.snackbar("A field is empty", "Please fill out all fields");
+                        }
+                    }
+                    else{
+                      Get.snackbar("Image file missing", "Please pick an image");
+                    }
+                  },
+                  child: const Center(
+                    child: Text(
+                      "Create Account",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600
+                      ),
                     ),
                   ),
-                ),
-              )
+                )
               ),
             
             const SizedBox(
-                height: 16,
+                height: 50,
             ), 
             
             //already have an account login here
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Already have an account?",
+                 Text(
+                  "Already have an account? ",
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
+                    color: Colors.grey.shade600,
                   ),
                 ),
 
@@ -323,17 +394,26 @@ class _RegisterState extends State<Register> {
                   onTap: () {
                     Get.back();
                   },
-                  child: const Text(
-                    "Login here",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white
-                    ),
-                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Login ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade600
+                        ),
+                      ),
+                      Text(
+                        "here",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ],
+                  )
                 )
-
-
-
 
               ],
             ),
@@ -349,10 +429,9 @@ class _RegisterState extends State<Register> {
                 : Container(),
 
             const SizedBox(
-                height: 16,
+                height: 26,
             ), 
            
-     
             ],
           ),
         ),

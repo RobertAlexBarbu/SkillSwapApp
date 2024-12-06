@@ -75,8 +75,6 @@ class _AddNewSkillState extends State<AddNewSkill> {
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none,
                               )),
-                              
-                  
                 ),
               ),
 
