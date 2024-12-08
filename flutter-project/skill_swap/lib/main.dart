@@ -11,10 +11,11 @@ void main() async {
 
   await Firebase.initializeApp().then((value){
     Get.put(AuthenticationController());
+    Get.put(SkillsController());
   });
 
-  Get.put(AuthenticationController());
-  Get.put(SkillsController());
+  //Get.put(AuthenticationController());
+  //Get.put(SkillsController());
   
   runApp(const MyApp());
 }

@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Skill {
   String? skillName;
   String? skillDescription;
-  String? category;
+  List<String> categories;
   int? publishedDateTime;
 
   Skill({
     this.skillName,
     this.skillDescription,
-    this.category,
+    required this.categories,
     this.publishedDateTime
   });
 
@@ -19,7 +19,7 @@ class Skill {
     return Skill(
       skillName: dataSnapshot["skillName"],
       skillDescription: dataSnapshot["skillDescription"],
-      category: dataSnapshot["category"],
+      categories: List<String>.from(dataSnapshot["categories"] ?? []), 
       publishedDateTime: dataSnapshot["publishedDateTime"]
     );
   }
@@ -27,7 +27,7 @@ class Skill {
   Map<String, dynamic> toJson() => {
     "skillName": skillName,
     "skillDescription": skillDescription,
-    "category": category,
+    "categories": categories,
     "publishedDateTime": publishedDateTime
   };
 

@@ -94,7 +94,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
             },
             icon: Icon(
               Icons.logout,
-              size: 30,
+              size: 40,
               color: Colors.white,
             ),
           )
@@ -337,7 +337,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                           style:  TextStyle(
                                             color: Colors.grey.shade600,
                                             fontSize: 14
-                                            ),
+                                          ),
                                           softWrap: true,
                                           overflow: TextOverflow.visible,
                                         ),
@@ -357,8 +357,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       ),
                                       Text(
                                         categories.isNotEmpty
-                                            ? categories.join(', ') // Join categories with commas
-                                            : 'No categories selected',
+                                          ? categories.join(', ') // Join categories with commas
+                                          : 'No categories selected',
                                         style:  TextStyle(
                                           color: Colors.grey.shade600,
                                           fontSize: 16,

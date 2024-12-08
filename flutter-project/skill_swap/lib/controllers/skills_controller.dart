@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:skill_swap/models/skill.dart';
 
 class SkillsController extends GetxController{
   static SkillsController skillsController = Get.find();
-
+   final RxMap<String, List<Skill>> userSkillsMap = <String, List<Skill>>{}.obs;
+   
   Future<void> createSkill({
     required String skillName,
     required String skillDescription,
@@ -42,4 +44,19 @@ class SkillsController extends GetxController{
       );
     }
   }
+
+  Future<List<Skill>> fetchSkills(String uid) async {
+  final skillCollection = FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('skills');
+  final snapshot = await skillCollection.get();
+  return snapshot.docs.map((doc) => Skill.fromDataSnapshot(doc)).toList();
+}
+
+   // Get skills for a specific user
+  List<Skill> getSkills(String uid) {
+    return userSkillsMap[uid] ?? [];
+  }
+
 }

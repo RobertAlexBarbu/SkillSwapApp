@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/controllers/profile_controller.dart';
+import 'package:skill_swap/controllers/skills_controller.dart';
 import 'package:skill_swap/main.dart';
 import 'package:skill_swap/models/skill.dart';
+import 'package:skill_swap/tabScreens/see_user_profile.dart';
 
 class SwippingScreen extends StatefulWidget {
   const SwippingScreen({super.key});
@@ -14,6 +16,7 @@ class SwippingScreen extends StatefulWidget {
 class _SwippingScreenState extends State<SwippingScreen> {
 
   ProfileController profileController = Get.put(ProfileController());
+  SkillsController skillsController = Get.put(SkillsController());
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +88,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
-
+                                      Get.to(SeeUserProfile(userProfile: eachProfileInfo));
                                   },
                                   child: Column(
                                     children: [
@@ -130,36 +133,58 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                       children: [
                                         Row(
                                           children: [
-                                            if (eachProfileInfo.skills != null && eachProfileInfo.skills!.isNotEmpty)
-                                          ...[
-                                            for (var i = 0; i < (eachProfileInfo.skills!.length > 1 ? 1 : eachProfileInfo.skills!.length); i++)
-                                              Text(
-                                                "• ${eachProfileInfo.skills![i].skillName ?? "Unnamed Skill"}",
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            if (eachProfileInfo.skills!.length > 1)
-                                              Text(
-                                                "...",
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                                ]
-                                            else
-                                              Text(
-                                                "New to Skill Swap",
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
+                                            FutureBuilder<List<Skill>>(
+                                              future: skillsController.fetchSkills(eachProfileInfo.uid!),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                                  return CircularProgressIndicator(); // Show loading indicator
+                                                }
+
+                                                if (snapshot.hasError) {
+                                                  return Text(
+                                                    "Error loading skills",
+                                                    style: TextStyle(color: Colors.red, fontSize: 14),
+                                                  );
+                                                }
+
+                                                final skills = snapshot.data;
+
+                                                if (skills != null && skills.isNotEmpty) {
+                                                  return Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      for (var i = 0; i < (skills.length > 1 ? 1 : skills.length); i++)
+                                                        Text(
+                                                          "• ${skills[i].skillName ?? "Unnamed Skill"}",
+                                                          style: TextStyle(
+                                                            color: Colors.grey.shade600,
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      if (skills.length > 1)
+                                                        Text(
+                                                          "...",
+                                                          style: TextStyle(
+                                                            color: Colors.grey.shade600,
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    "New to Skill Swap",
+                                                    style: TextStyle(
+                                                      color: Colors.grey.shade600,
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 14,
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                            ),
                                           ],
                                         )
                                         

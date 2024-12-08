@@ -65,7 +65,7 @@ class AuthenticationController  extends GetxController{
         password: password
       );
       String? idToken = await FirebaseAuth.instance.currentUser?.getIdToken();
-
+      print(idToken);
       //2. upload profile image to storage 
       String urlOfDownloadedImage = await uploadImageToStorage(imageProfile);
 
@@ -93,13 +93,14 @@ class AuthenticationController  extends GetxController{
             'createdAt': FieldValue.serverTimestamp(),
           });
 
-      await FirebaseFirestore.instance.collection("users")
-             .doc(FirebaseAuth.instance.currentUser!.uid).set(personInstance.toJson());
+      // await FirebaseFirestore.instance.collection("users")
+      //       .doc(FirebaseAuth.instance.currentUser!.uid).set(personInstance.toJson());
 
       Get.snackbar("Account created", "Congratulation your skill swap account has been created!");
       Get.to(Home());
 
     }catch(errorMsg){
+      print(errorMsg);
       Get.snackbar("Account creation unsuccessful", "Error ocurred: $errorMsg");
     }
 
