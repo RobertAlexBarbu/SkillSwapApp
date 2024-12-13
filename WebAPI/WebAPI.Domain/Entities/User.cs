@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WebAPI.Domain.Entities;
 
 public class User
 {
+    [Key]
     public string Uid { get; set; }
     public string Email { get; set; }
 
@@ -15,6 +18,6 @@ public class User
     
     public string ProfileHeading { get; set; }
     
-    
     public long PublishedDateTime { get; set; }
+    public List<Skill> Skills = new List<Skill>();
 }

@@ -221,7 +221,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                                               ),
                                             ),
                                             Text(
-                                            " ${skill.categories?.join(', ') ?? "No Categories"}",
+                                            " ${skill.category ?? "No Category"}",
                                               style:  TextStyle(
                                                 color: Colors.grey.shade600,
                                                 fontSize: 16,

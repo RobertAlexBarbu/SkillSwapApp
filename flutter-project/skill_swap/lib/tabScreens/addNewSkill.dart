@@ -18,16 +18,12 @@ class _AddNewSkillState extends State<AddNewSkill> {
   // Predefined categories
   final List<String> categories = ["Art", "Music", "Math", "Science", "Sports", "Technology"];
   // State to keep track of selected categories
-  final Map<String, bool> selectedCategories = {};
+  var selectedCategory;
   var skillsController = SkillsController.skillsController;
 
   @override
   void initState() {
     super.initState();
-    // Initialize all categories as unchecked
-    for (var category in categories) {
-      selectedCategories[category] = false;
-    }
   }
 
   @override
@@ -121,38 +117,65 @@ class _AddNewSkillState extends State<AddNewSkill> {
                     ),
                   ),
                   const SizedBox(height: 10), // Add slight space below the header
-
+                //
+                //   ... categories.map((category) {
+                //   return Padding(
+                //     padding: const EdgeInsets.all(0), // Adjust spacing between checkboxes
+                //     child: Row(
+                //       children: [
+                //         Checkbox(
+                //           value: selectedCategories[category],
+                //           activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
+                //           checkColor: Colors.white,
+                //           side: BorderSide(
+                //             color: const Color.fromRGBO(255, 198, 0, 1), // Set the contour color
+                //             width: 1.5,        // Set the border width
+                //           ),// Checkmark color
+                //           onChanged: (bool? value) {
+                //             setState(() {
+                //               selectedCategories[category] = value ?? false;
+                //             });
+                //           },
+                //         ),
+                //         Text(
+                //           category,
+                //           style:  TextStyle(
+                //             color: Colors.grey.shade600,
+                //             fontWeight: FontWeight.w400,
+                //             fontSize: 16, // Adjust font size for compact layout
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   );
+                // }),
                   ... categories.map((category) {
-                  return Padding(
-                    padding: const EdgeInsets.all(0), // Adjust spacing between checkboxes
-                    child: Row(
-                      children: [
-                        Checkbox(
-                          value: selectedCategories[category],
-                          activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
-                          checkColor: Colors.white, 
-                          side: BorderSide(
-                            color: const Color.fromRGBO(255, 198, 0, 1), // Set the contour color
-                            width: 1.5,        // Set the border width
-                          ),// Checkmark color
-                          onChanged: (bool? value) {
-                            setState(() {
-                              selectedCategories[category] = value ?? false;
-                            });
-                          },
-                        ),
-                        Text(
-                          category,
-                          style:  TextStyle(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16, // Adjust font size for compact layout
+                    return Padding(
+                      padding: const EdgeInsets.all(0), // Adjust spacing between radio buttons
+                      child: Row(
+                        children: [
+                          Radio<String>(
+                            value: category,
+                            groupValue: selectedCategory, // Single selected value
+                            activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedCategory = value; // Update selected category
+                              });
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+                          Text(
+                            category,
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16, // Adjust font size for compact layout
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ]
               ),
             
@@ -174,23 +197,29 @@ class _AddNewSkillState extends State<AddNewSkill> {
                       child: InkWell(
                         onTap: () async {
                           // Check if skill name, description are not empty and at least one category is selected
-                          bool isAnyCategorySelected = selectedCategories.containsValue(true);
+                          // bool isAnyCategorySelected = selectedCategories.containsValue(true);
 
                           if (skillNameTextEditingController.text.trim().isNotEmpty &&
                               skillDescriptionTextEditingController.text.trim().isNotEmpty &&
-                              isAnyCategorySelected) {
+                              true) {
 
                                 // Call the SkillController to create a new skill
-                                final selectedCategoriesList = selectedCategories.keys
-                                    .where((key) => selectedCategories[key] == true)
-                                    .toList();
-                                await skillsController.createSkill(
-                                  skillName: skillNameTextEditingController.text.trim(),
-                                  skillDescription: skillDescriptionTextEditingController.text.trim(),
-                                  categories: selectedCategoriesList,
-                                );
+                                // final selectedCategoriesList = selectedCategories.keys
+                                //     .where((key) => selectedCategories[key] == true)
+                                //     .toList();
+                            try {
+                              await skillsController.createSkill(
+                                skillName: skillNameTextEditingController.text.trim(),
+                                skillDescription: skillDescriptionTextEditingController.text.trim(),
+                                category: selectedCategory,
+                              );
+                            } catch(er) {
 
-                            Get.back();
+                            }
+
+                                Get.back();
+
+
                           } else {
                             // Show error message if validation fails
                             String errorMessage = "";
@@ -198,8 +227,6 @@ class _AddNewSkillState extends State<AddNewSkill> {
                               errorMessage = "Please enter a skill name.";
                             } else if (skillDescriptionTextEditingController.text.trim().isEmpty) {
                               errorMessage = "Please enter a skill description.";
-                            } else if (!isAnyCategorySelected) {
-                              errorMessage = "Please select at least one category.";
                             }
                             Get.snackbar(
                               "Validation Error",
@@ -208,6 +235,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                               colorText: Colors.white,
                             );
                           }
+
                         },
                         child: const Center(
                           child: Text(

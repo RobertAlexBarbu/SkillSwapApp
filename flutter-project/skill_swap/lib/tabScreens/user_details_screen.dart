@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:skill_swap/tabScreens/addNewSkill.dart';
 
+import '../interceptors/jwt_interceptor.dart';
+
 
 class UserDetailsScreen extends StatefulWidget {
 
   String? userId;
+
 
   UserDetailsScreen({super.key, this.userId});
 
@@ -17,6 +21,7 @@ class UserDetailsScreen extends StatefulWidget {
 }
 
 class _UserDetailsScreenState extends State<UserDetailsScreen> {
+  final dio = createDio();
   String? uid='';
   String? email='';
   String? password='';
@@ -34,34 +39,57 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
 
   retrieveUserInfo() async{
-      FirebaseFirestore.instance.collection("users").doc(widget.userId).get().then((snapshot){
-          if(snapshot.exists){
-          
-            setState(() {
-              imageProfile = snapshot.data()!["imageProfile"];
-              name = snapshot.data()!["name"];
-              age = snapshot.data()!["age"].toString();
-              phoneNo = snapshot.data()!["phoneNo"];
-              profileHeading = snapshot.data()!["profileHeading"];
-             
-          
-            });
-          }
+      // FirebaseFirestore.instance.collection("users").doc(widget.userId).get().then((snapshot){
+      //     if(snapshot.exists){
+      //
+      //       setState(() {
+      //         imageProfile = snapshot.data()!["imageProfile"];
+      //         name = snapshot.data()!["name"];
+      //         age = snapshot.data()!["age"].toString();
+      //         phoneNo = snapshot.data()!["phoneNo"];
+      //         profileHeading = snapshot.data()!["profileHeading"];
+      //
+      //
+      //       });
+      //     }
+      // });
+      dio.get("http://10.0.2.2:5165/api/User/GetByUid/${widget.userId}").then((response) {
+        if (response.statusCode == 200 && response.data != null) {
+          final userData = response.data;
+
+          setState(() {
+            imageProfile = userData["imageProfile"] ?? '';
+            name = userData["name"] ?? '';
+            age = userData["age"]?.toString() ?? '';
+            phoneNo = userData["phoneNo"] ?? '';
+            profileHeading = userData["profileHeading"] ?? '';
+          });
+        } else {
+          print("User not found or error occurred");
+        }
+      }).catchError((error) {
+        print("Error fetching user data: $error");
       });
       retrieveSkills();
     }
   // Retrieve skills from the sub-collection
   retrieveSkills() async {
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(widget.userId)
-        .collection("skills")
-        .get()
-        .then((querySnapshot) {
-      setState(() {
-        skillsList = querySnapshot.docs.map((doc) => doc.data()).toList();
-      });
-    });
+    try {
+      final response = await dio.get(
+        'http://10.0.2.2:5165/api/Skill/GetAllByUserId/${widget.userId}'
+
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          skillsList = List<Map<String, dynamic>>.from(response.data);
+        });
+      } else {
+        throw Exception('Failed to fetch skills: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching skills: $error');
+    }
   }
 
 
@@ -260,7 +288,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         itemCount: skillsList.length,
                         itemBuilder: (context, index) {
                           final skill = skillsList[index];
-                          final categories = skill["categories"] ?? []; // Retrieve associated categories
+                          final category = skill["category"] ?? "";
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Container(
@@ -348,7 +376,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   Row(
                                     children: [
                                        Text(
-                                        "Categories: ",
+                                        "Category: ",
                                         style: TextStyle(
                                           color: Colors.grey.shade600,
                                           fontSize: 16,
@@ -356,9 +384,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         ),
                                       ),
                                       Text(
-                                        categories.isNotEmpty
-                                          ? categories.join(', ') // Join categories with commas
-                                          : 'No categories selected',
+                                        category != ''
+                                          ? category
+                                          : 'No category selected',
                                         style:  TextStyle(
                                           color: Colors.grey.shade600,
                                           fontSize: 16,

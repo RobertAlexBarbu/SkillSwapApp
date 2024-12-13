@@ -5,11 +5,15 @@ public class UserDto
     public string Uid { get; set; }
     public string Email { get; set; }
 
-    public DateTime CreatedAt { get; set; }
-
-    public string Provider { get; set; }
+    public string ImageProfile { get; set; }
     
-    public string Role { get; set; }
+    public string Name { get; set; }
     
-    public bool Configured { get; set; }
+    public int Age { get; set; }
+    
+    public string PhoneNo { get; set; }
+    
+    public string ProfileHeading { get; set; }
+    
+    public long PublishedDateTime { get; set; }
 }

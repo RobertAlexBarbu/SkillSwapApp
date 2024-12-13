@@ -2,7 +2,6 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Application.Exceptions;
 using WebAPI.Domain.Entities;
-using WebAPI.Domain.Enums;
 using WebAPI.Repository.Data;
 
 namespace WebAPI.Application.Services.UserService;
@@ -24,12 +23,18 @@ public class UserService(AppDbContext context) : IUserService
 
     public async Task<User> GetByIdAsync(string id)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Uid == id);
+        var user = await context.Users.Include(u => u.Skills).FirstOrDefaultAsync(u => u.Uid == id);
         if (user == null) throw new NotFoundException("User");
         return user;
     }
 
-    
+    public async Task<List<User>> GetAll()
+    {
+        var users = await context.Users.ToListAsync();
+        return users;
+    }
+
+
     public User GetFromClaims(ClaimsPrincipal claimIdentity)
     {
         var firebaseUidClaim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);

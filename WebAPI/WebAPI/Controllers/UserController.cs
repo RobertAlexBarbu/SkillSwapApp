@@ -26,22 +26,19 @@ public class UserController(IUserService userService, IMapper mapper, FirebaseSe
     }
     
     [HttpGet]
-    [AllowAuthenticated]
-    public async Task<ActionResult> GetByTokenAsync()
+    [Route("{id}")]
+    public async Task<ActionResult> GetByUidAsync(string id)
     {
-        var claimsUser = userService.GetFromClaims(User);
-        User user;
-        try
-        {
-            user = await userService.GetByIdAsync(claimsUser.Uid);
-        }
-        catch (NotFoundException e)
-        {
-            user = await userService.CreateAsync(claimsUser);
-        }
-
+        var user = await userService.GetByIdAsync(id);
         var userDto = mapper.Map<UserDto>(user);
         return Ok(userDto);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<UserDto>>> GetAllAsync()
+    {
+        var users = await userService.GetAll();
+        return Ok(users.Select(mapper.Map<UserDto>));
     }
     
 }

@@ -12,7 +12,6 @@ public class AppDbContext : DbContext
     
     public DbSet<User> Users { get; set; }
     public DbSet<Skill> Skills { get; set; }
-    public DbSet<SkillCategory> SkillCategories { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,6 +20,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()            
             .Property(e => e.Uid)
             .ValueGeneratedNever();
+        modelBuilder.Entity<Skill>().HasOne(s => s.User).WithMany(u => u.Skills).HasForeignKey(s => s.UserId);
     }
     
 }

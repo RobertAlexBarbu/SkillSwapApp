@@ -9,6 +9,7 @@ class JwtInterceptor extends Interceptor {
 
     if (idToken != null) {
       options.headers['Authorization'] = 'Bearer $idToken';
+      print(idToken);
     }
 
     super.onRequest(options, handler);
