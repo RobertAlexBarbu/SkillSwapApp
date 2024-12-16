@@ -17,6 +17,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
 
   ProfileController profileController = Get.put(ProfileController());
   SkillsController skillsController = Get.put(SkillsController());
+  List<Skill> skills = [];
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +89,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
+                                      eachProfileInfo.skills = this.skills;
                                       Get.to(SeeUserProfile(userProfile: eachProfileInfo));
                                   },
                                   child: Column(
@@ -148,7 +150,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                                 }
 
                                                 final skills = snapshot.data;
-
+                                                this.skills = skills!;
                                                 if (skills != null && skills.isNotEmpty) {
                                                   return Row(
                                                     crossAxisAlignment: CrossAxisAlignment.start,

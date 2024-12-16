@@ -7,7 +7,7 @@ import 'package:skill_swap/models/person.dart';
 class SeeUserProfile extends StatefulWidget {
   final Person userProfile;
 
-  const SeeUserProfile({Key? key, required this.userProfile}) : super(key: key);
+  const SeeUserProfile({super.key, required this.userProfile});
 
   @override
   _SeeUserProfileState createState() => _SeeUserProfileState();

@@ -25,7 +25,7 @@ class SkillsController extends GetxController{
       }
       var skill = Skill(
         skillName: skillName,
-        skillDescription: skillName,
+        skillDescription: skillDescription,
         category: category,
         userId: currentUser.uid,
         id: 0
