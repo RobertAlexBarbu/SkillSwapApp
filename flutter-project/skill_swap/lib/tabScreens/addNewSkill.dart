@@ -196,44 +196,21 @@ class _AddNewSkillState extends State<AddNewSkill> {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          // Check if skill name, description are not empty and at least one category is selected
-                          // bool isAnyCategorySelected = selectedCategories.containsValue(true);
 
                           if (skillNameTextEditingController.text.trim().isNotEmpty &&
                               skillDescriptionTextEditingController.text.trim().isNotEmpty &&
                               true) {
-
-                                // Call the SkillController to create a new skill
-                                // final selectedCategoriesList = selectedCategories.keys
-                                //     .where((key) => selectedCategories[key] == true)
-                                //     .toList();
-                            try {
                               await skillsController.createSkill(
                                 skillName: skillNameTextEditingController.text.trim(),
                                 skillDescription: skillDescriptionTextEditingController.text.trim(),
                                 category: selectedCategory,
                               );
-                            } catch(er) {
-
-                            }
-
+                              if(Get.isSnackbarOpen){
+                                Get.close(-1);
+                              } else {
                                 Get.back();
+                              }
 
-
-                          } else {
-                            // Show error message if validation fails
-                            String errorMessage = "";
-                            if (skillNameTextEditingController.text.trim().isEmpty) {
-                              errorMessage = "Please enter a skill name.";
-                            } else if (skillDescriptionTextEditingController.text.trim().isEmpty) {
-                              errorMessage = "Please enter a skill description.";
-                            }
-                            Get.snackbar(
-                              "Validation Error",
-                              errorMessage,
-                              backgroundColor: Colors.grey,
-                              colorText: Colors.white,
-                            );
                           }
 
                         },

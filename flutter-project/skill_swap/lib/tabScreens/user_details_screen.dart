@@ -412,8 +412,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         children: [
                           Center(
                             child: IconButton(
-                              onPressed: () {
-                                Get.to(AddNewSkill());
+                              onPressed: () async {
+                                await Get.to(() => AddNewSkill());
+                                retrieveUserInfo();
                               },
                               icon:  Icon(
                                 Icons.add, // Use the "add" icon
