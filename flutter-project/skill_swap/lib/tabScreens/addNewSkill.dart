@@ -55,22 +55,25 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 child: TextFormField(
                   controller: skillNameTextEditingController,
                   textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                              constraints: const BoxConstraints(
-                                maxWidth: 360,
-                              ),
-                              filled: true,
-                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              prefixIcon:  Icon(Icons.title,
-                                  color: Colors.orange.shade600),
-                              hintText: 'Name',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                              )),
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.title,
+                          color: Colors.orange.shade600),
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
 
@@ -82,21 +85,24 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 child: TextFormField(
                   controller: skillDescriptionTextEditingController,
                    textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                              constraints: const BoxConstraints(
-                                maxWidth: 360,
-                              ),
-                              filled: true,
-                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              prefixIcon:  Icon(Icons.description,
-                                  color: Colors.orange.shade600),
-                              hintText: 'Description',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none)),
+                   style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.description,
+                          color: Colors.orange.shade600),
+                      hintText: 'Description',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none)),
                   
                 ),
               ),

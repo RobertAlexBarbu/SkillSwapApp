@@ -93,6 +93,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   }
 
 
+
 @override
   void initState() {
     super.initState();
@@ -312,47 +313,160 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                     ),
                                   ),
 
-                                  //Spacer(flex: 1,),
-
-                                  /*Row(
-                                    children: [
-                                      //edit button
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                        onPressed: (){
-                                          //
-                                        },
-                                      ),
-                                        //delete button
-                                      IconButton(
-                                        icon:const Icon(
-                                          Icons.delete,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                        onPressed: (){
-                                          //
-                                        }
-                                      )
-                                    ],
-                                  ),*/
-                                  IconButton(
-                                  icon:  Icon(
+                                 
+                                 PopupMenuButton<String>(
+                                  icon: Icon(
                                     Icons.more_vert, // Three dots icon
                                     color: Colors.grey.shade600,
                                   ),
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    // Handle more options logic
+                                  color: Colors.grey.shade100,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  onSelected: (String value) {
+                                    if (value == 'edit') {
+                                      // Handle edit skill logic
+                                      print('Edit Skill selected');
+                                    } else if (value == 'delete') {
+                                      // Handle delete skill logic
+                                       // Show confirmation dialog for delete
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.grey.shade200,
+                                          title: Text(
+                                            'Confirm Deletion', 
+                                            style: TextStyle(
+                                              color: Colors.grey.shade600,
+                                              fontWeight: FontWeight.w600
+                                            ),  
+                                          ),
+                                          content: Text(
+                                            'Are you sure you want to delete this skill?',
+                                            style: TextStyle(
+                                              color: Colors.grey.shade600
+                                            ),  
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(); // Close the dialog
+                                              },
+                                              child: Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade600,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async{
+                                                // Perform delete logic here
+                                                
+                                                Navigator.of(context).pop();
+                                               
+                                                 // Close the dialog
+                                                try {
+                                                  final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
+                                                  final response = await dio.delete(
+                                                    'http://10.0.2.2:5165/api/Skill/DeleteById/$skillId', // Update the URL as per your API
+                                                  );
+
+                                                  if (response.statusCode == 200) {
+                                                    // Successfully deleted
+                                                    setState(() {
+                                                      skillsList.removeWhere((s) => s['id'] == skillId); // Update the UI
+                                                    });
+                                                    Get.snackbar(
+                                                      'Success',
+                                                      'Skill deleted successfully',
+                                                      snackPosition: SnackPosition.TOP,
+                                                      backgroundColor: Colors.green.shade200,
+                                                      colorText: Colors.black,
+                                                    );
+                                                  } else {
+                                                    throw Exception('Failed to delete skill');
+                                                  }
+                                                } catch (error) {
+                                                  Get.snackbar(
+                                                    'Error',
+                                                    'Failed to delete skill: $error',
+                                                    snackPosition: SnackPosition.BOTTOM,
+                                                    backgroundColor: Colors.red.shade200,
+                                                    colorText: Colors.black,
+                                                  );
+                                                }
+                                              },
+                                              
+                                              child: Text(
+                                                'Yes',
+                                                style: TextStyle(
+                                                  color: Colors.red.shade600,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16
+                                                ),  
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    }
                                   },
-                                ),
-                  
+                                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                                  PopupMenuItem<String>(
+                                    value: 'edit',
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                       constraints: BoxConstraints(
+                                          minWidth: 80, // Minimum width of the popup menu
+                                        ),
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.edit, color:  Color.fromRGBO(255, 198, 0, 1)),// Icon with custom color and size
+                                          SizedBox(width: 8), // Spacing between icon and text
+                                          Text(
+                                            'Edit Skill',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey.shade600, // Text color
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuItem<String>(
+                                    value: 'delete',
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                          minWidth: 80, // Minimum width of the popup menu
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.delete, color: Colors.red, size: 20), // Icon with custom color and size
+                                          SizedBox(width: 8), // Spacing between icon and text
+                                          Text(
+                                            'Delete Skill',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey.shade600, // Text color
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
+                            ],
+                          ),
 
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
