@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:skill_swap/controllers/skills_controller.dart';
+import 'package:skill_swap/models/skill.dart';
 import 'package:skill_swap/tabScreens/addNewSkill.dart';
 
 import '../interceptors/jwt_interceptor.dart';
@@ -34,6 +36,15 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   String? publishedDateTime='';
 // List to store skills
   List<Map<String, dynamic>> skillsList = [];
+
+  TextEditingController skillNameTextEditingController = TextEditingController();
+  TextEditingController skillDescriptionTextEditingController = TextEditingController();
+  // Predefined categories
+  final List<String> categories = ["Art", "Music", "Math", "Science", "Sports", "Technology"];
+  // State to keep track of selected categories
+  var selectedCategory;
+  var skillsController = SkillsController.skillsController;
+
   //slider img
   String urlImage1 = "https://firebasestorage.googleapis.com/v0/b/swappyskills.firebasestorage.app/o/Placeholder%2Fprofile_Default_image.jpg?alt=media&token=a3f4e00c-cd11-46bc-a7ff-bf9c745dff8d";
 
@@ -290,6 +301,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         itemBuilder: (context, index) {
                           final skill = skillsList[index];
                           final category = skill["category"] ?? "";
+                          
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
                             child: Container(
@@ -312,161 +324,399 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       overflow: TextOverflow.ellipsis
                                     ),
                                   ),
+                                    
+                                  PopupMenuButton<String>(
+                                    icon: Icon(
+                                      Icons.more_vert, // Three dots icon
+                                      color: Colors.grey.shade600,
+                                    ),
+                                    color: Colors.grey.shade100,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    onSelected: (String value) {
+                                      if (value == 'edit') {
+                                        // Handle edit skill logic
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            skillNameTextEditingController.text = skill["skillName"];
+                                            skillDescriptionTextEditingController.text = skill["skillDescription"];
 
-                                 
-                                 PopupMenuButton<String>(
-                                  icon: Icon(
-                                    Icons.more_vert, // Three dots icon
-                                    color: Colors.grey.shade600,
-                                  ),
-                                  color: Colors.grey.shade100,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  onSelected: (String value) {
-                                    if (value == 'edit') {
-                                      // Handle edit skill logic
-                                      print('Edit Skill selected');
-                                    } else if (value == 'delete') {
-                                      // Handle delete skill logic
-                                       // Show confirmation dialog for delete
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor: Colors.grey.shade200,
-                                          title: Text(
-                                            'Confirm Deletion', 
-                                            style: TextStyle(
-                                              color: Colors.grey.shade600,
-                                              fontWeight: FontWeight.w600
-                                            ),  
-                                          ),
-                                          content: Text(
-                                            'Are you sure you want to delete this skill?',
-                                            style: TextStyle(
-                                              color: Colors.grey.shade600
-                                            ),  
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.of(context).pop(); // Close the dialog
+                                            return StatefulBuilder(
+                                              builder: (BuildContext context, StateSetter setState) {
+                                                return AlertDialog(
+                                                  backgroundColor: Colors.grey.shade200,
+                                                  title: Center(
+                                                    child: Text(
+                                                      "Edit Skill",
+                                                      style: TextStyle(
+                                                        color: Colors.grey.shade600,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  content: SingleChildScrollView(
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(10),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          // Skill name
+                                                          SizedBox(
+                                                            width: MediaQuery.of(context).size.width - 36,
+                                                            height: 55,
+                                                            child: TextFormField(
+                                                              controller: skillNameTextEditingController,
+                                                              textAlignVertical: TextAlignVertical.center,
+                                                              style: TextStyle(
+                                                                color: Colors.grey.shade600,
+                                                              ),
+                                                              decoration: InputDecoration(
+                                                                constraints: const BoxConstraints(
+                                                                  maxWidth: 360,
+                                                                ),
+                                                                filled: true,
+                                                                fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                                                prefixIcon: Icon(
+                                                                  Icons.title,
+                                                                  color: Colors.orange.shade600,
+                                                                ),
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  borderSide: BorderSide.none,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+
+                                                          const SizedBox(height: 30),
+
+                                                          // Description
+                                                          SizedBox(
+                                                            width: MediaQuery.of(context).size.width - 36,
+                                                            height: 55,
+                                                            child: TextFormField(
+                                                              controller: skillDescriptionTextEditingController,
+                                                              textAlignVertical: TextAlignVertical.center,
+                                                              style: TextStyle(
+                                                                color: Colors.grey.shade600,
+                                                              ),
+                                                              decoration: InputDecoration(
+                                                                constraints: const BoxConstraints(
+                                                                  maxWidth: 360,
+                                                                ),
+                                                                filled: true,
+                                                                fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                                                prefixIcon: Icon(
+                                                                  Icons.description,
+                                                                  color: Colors.orange.shade600,
+                                                                ),
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(10),
+                                                                  borderSide: BorderSide.none,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+
+                                                          const SizedBox(height: 20),
+
+                                                          // Checkbox List for Categories
+                                                          Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                "Select skill categories:",
+                                                                style: TextStyle(
+                                                                  fontSize: 18,
+                                                                  color: Colors.grey.shade600,
+                                                                  fontWeight: FontWeight.w500,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(height: 10),
+                                                              ...categories.map((skillCategory) {
+                                                                return Padding(
+                                                                  padding: const EdgeInsets.all(0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Radio<String>(
+                                                                        value: skillCategory,
+                                                                        groupValue: selectedCategory,
+                                                                        activeColor: const Color.fromRGBO(255, 198, 0, 1),
+                                                                        onChanged: (String? value) {
+                                                                          setState(() {
+                                                                            selectedCategory = value!; // Update selected category dynamically
+                                                                          });
+                                                                        },
+                                                                      ),
+                                                                      Text(
+                                                                        skillCategory,
+                                                                        style: TextStyle(
+                                                                          color: Colors.grey.shade600,
+                                                                          fontWeight: FontWeight.w400,
+                                                                          fontSize: 16,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              }),
+                                                            ],
+                                                          ),
+
+                                                          const SizedBox(height: 30),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop(); // Close the dialog
+                                                      },
+                                                      child: Text(
+                                                        'Cancel',
+                                                        style: TextStyle(
+                                                          color: Colors.grey.shade600,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                     TextButton(
+  onPressed: () async {
+    try {
+      final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
+
+      // await skillsController.updateSkill(
+      //   skillId: skillId, // Pass the skill ID
+      //   skillName: skillNameTextEditingController.text, // Updated name
+      //   skillDescription: skillDescriptionTextEditingController.text, // Updated description
+      //   category: selectedCategory ?? "", // Updated category
+      // );
+
+      try {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      throw "No user is currently logged in.";
+    }
+
+    var updatedSkill = Skill(
+      skillName: skillNameTextEditingController.text,
+      skillDescription: skillDescriptionTextEditingController.text,
+      category: selectedCategory,
+      userId: currentUser.uid,
+      id: skillId, // Include the ID of the skill being updated
+    );
+
+    // Send PUT request to update skill
+    final response = await dio.put(
+      'http://10.0.2.2:5165/api/Skill/EditById/$skillId', // Adjust the URL as per your API
+      data: updatedSkill.toJson(), // Convert updated skill to JSON
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+   
+
+    if (response.statusCode == 200) {
+      // Success response
+      print('Skill updated successfully.');
+      Get.snackbar(
+        'Skill updated successfully.',
+        'Updated skill',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red.shade200,
+        colorText: Colors.black,
+      );
+       
+      
+    } else {
+      throw Exception('Failed to update skill: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error updating skill: $error');
+    
+  }
+
+     
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        'Failed to update skill: $error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade200,
+        colorText: Colors.black,
+      );
+    }
+
+  
+    // Close the dialog
+    Navigator.of(context).pop();
+    retrieveSkills();
+  },
+  child: Text(
+    'Save',
+    style: TextStyle(
+      color: Color.fromRGBO(255, 198, 0, 1),
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+    ),
+  ),
+),
+
+                                                  ],
+                                                );
                                               },
-                                              child: Text(
-                                                'Cancel',
+                                            );
+                                          },
+                                        );
+
+                                      } else if (value == 'delete') {
+                                        // Handle delete skill logic
+                                        // Show confirmation dialog for delete
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                backgroundColor: Colors.grey.shade200,
+                                                title: Text(
+                                                  'Confirm Deletion', 
+                                                  style: TextStyle(
+                                                    color: Colors.grey.shade600,
+                                                    fontWeight: FontWeight.w600
+                                                  ),  
+                                                ),
+                                                content: Text(
+                                                  'Are you sure you want to delete this skill?',
+                                                  style: TextStyle(
+                                                    color: Colors.grey.shade600
+                                                  ),  
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop(); // Close the dialog
+                                                    },
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style: TextStyle(
+                                                        color: Colors.grey.shade600,
+                                                        fontWeight: FontWeight.w500,
+                                                        fontSize: 16
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async{
+                                                      // Perform delete logic here
+                                                      
+                                                      Navigator.of(context).pop();
+                                                    
+                                                      // Close the dialog
+                                                      try {
+                                                        final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
+                                                        final response = await dio.delete(
+                                                          'http://10.0.2.2:5165/api/Skill/DeleteById/$skillId', // Update the URL as per your API
+                                                        );
+
+                                                        if (response.statusCode == 200) {
+                                                          // Successfully deleted
+                                                          setState(() {
+                                                            skillsList.removeWhere((s) => s['id'] == skillId); // Update the UI
+                                                          });
+                                                          Get.snackbar(
+                                                            'Success',
+                                                            'Skill deleted successfully',
+                                                            snackPosition: SnackPosition.TOP,
+                                                            backgroundColor: Colors.green.shade200,
+                                                            colorText: Colors.black,
+                                                          );
+                                                        } else {
+                                                          throw Exception('Failed to delete skill');
+                                                        }
+                                                      } catch (error) {
+                                                        Get.snackbar(
+                                                          'Error',
+                                                          'Failed to delete skill: $error',
+                                                          snackPosition: SnackPosition.BOTTOM,
+                                                          backgroundColor: Colors.red.shade200,
+                                                          colorText: Colors.black,
+                                                        );
+                                                      }
+                                                    },
+                                                    
+                                                    child: Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        color: Colors.red.shade600,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontSize: 16
+                                                      ),  
+                                                    ),
+                                                  ),
+                                                ],
+                                              
+                                              );
+                                            },
+                                          );
+                                        }
+                                    },
+                                    itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                                      PopupMenuItem<String>(
+                                        value: 'edit',
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          constraints: BoxConstraints(
+                                              minWidth: 80, // Minimum width of the popup menu
+                                            ),
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.edit, color:  Color.fromRGBO(255, 198, 0, 1)),// Icon with custom color and size
+                                              SizedBox(width: 8), // Spacing between icon and text
+                                              Text(
+                                                'Edit Skill',
                                                 style: TextStyle(
-                                                  color: Colors.grey.shade600,
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: 16
+                                                  color: Colors.grey.shade600, // Text color
                                                 ),
                                               ),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async{
-                                                // Perform delete logic here
-                                                
-                                                Navigator.of(context).pop();
-                                               
-                                                 // Close the dialog
-                                                try {
-                                                  final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
-                                                  final response = await dio.delete(
-                                                    'http://10.0.2.2:5165/api/Skill/DeleteById/$skillId', // Update the URL as per your API
-                                                  );
-
-                                                  if (response.statusCode == 200) {
-                                                    // Successfully deleted
-                                                    setState(() {
-                                                      skillsList.removeWhere((s) => s['id'] == skillId); // Update the UI
-                                                    });
-                                                    Get.snackbar(
-                                                      'Success',
-                                                      'Skill deleted successfully',
-                                                      snackPosition: SnackPosition.TOP,
-                                                      backgroundColor: Colors.green.shade200,
-                                                      colorText: Colors.black,
-                                                    );
-                                                  } else {
-                                                    throw Exception('Failed to delete skill');
-                                                  }
-                                                } catch (error) {
-                                                  Get.snackbar(
-                                                    'Error',
-                                                    'Failed to delete skill: $error',
-                                                    snackPosition: SnackPosition.BOTTOM,
-                                                    backgroundColor: Colors.red.shade200,
-                                                    colorText: Colors.black,
-                                                  );
-                                                }
-                                              },
-                                              
-                                              child: Text(
-                                                'Yes',
-                                                style: TextStyle(
-                                                  color: Colors.red.shade600,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16
-                                                ),  
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    }
-                                  },
-                                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                                  PopupMenuItem<String>(
-                                    value: 'edit',
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                       constraints: BoxConstraints(
-                                          minWidth: 80, // Minimum width of the popup menu
+                                            ],
+                                          ),
                                         ),
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.edit, color:  Color.fromRGBO(255, 198, 0, 1)),// Icon with custom color and size
-                                          SizedBox(width: 8), // Spacing between icon and text
-                                          Text(
-                                            'Edit Skill',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey.shade600, // Text color
-                                            ),
+                                      ),
+                                      PopupMenuItem<String>(
+                                        value: 'delete',
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                              minWidth: 80, // Minimum width of the popup menu
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  PopupMenuItem<String>(
-                                    value: 'delete',
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                          minWidth: 80, // Minimum width of the popup menu
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.delete, color: Colors.red, size: 20), // Icon with custom color and size
-                                          SizedBox(width: 8), // Spacing between icon and text
-                                          Text(
-                                            'Delete Skill',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey.shade600, // Text color
-                                            ),
+                                          alignment: Alignment.center,
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.delete, color: Colors.red, size: 20), // Icon with custom color and size
+                                              SizedBox(width: 8), // Spacing between icon and text
+                                              Text(
+                                                'Delete Skill',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey.shade600, // Text color
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
 
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
