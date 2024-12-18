@@ -89,7 +89,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
-                                      eachProfileInfo.skills = this.skills.where((skill) => skill.userId == eachProfileInfo.uid).toList();
+                                      //eachProfileInfo.skills = skills.where((skill) => skill.userId == eachProfileInfo.uid).toList();
                                       Get.to(SeeUserProfile(userProfile: eachProfileInfo));
                                   },
                                   child: Column(
@@ -151,7 +151,8 @@ class _SwippingScreenState extends State<SwippingScreen> {
 
                                                 final skills = snapshot.data;
                                                 this.skills = skills!;
-                                                if (skills != null && skills.isNotEmpty) {
+                                                eachProfileInfo.skills = this.skills;
+                                                if ( skills.isNotEmpty) {
                                                   return Row(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
