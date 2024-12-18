@@ -55,22 +55,25 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 child: TextFormField(
                   controller: skillNameTextEditingController,
                   textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                              constraints: const BoxConstraints(
-                                maxWidth: 360,
-                              ),
-                              filled: true,
-                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              prefixIcon:  Icon(Icons.title,
-                                  color: Colors.orange.shade600),
-                              hintText: 'Name',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                              )),
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.title,
+                          color: Colors.orange.shade600),
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
 
@@ -82,21 +85,24 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 child: TextFormField(
                   controller: skillDescriptionTextEditingController,
                    textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                              constraints: const BoxConstraints(
-                                maxWidth: 360,
-                              ),
-                              filled: true,
-                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              prefixIcon:  Icon(Icons.description,
-                                  color: Colors.orange.shade600),
-                              hintText: 'Description',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none)),
+                   style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.description,
+                          color: Colors.orange.shade600),
+                      hintText: 'Description',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none)),
                   
                 ),
               ),
@@ -117,38 +123,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                     ),
                   ),
                   const SizedBox(height: 10), // Add slight space below the header
-                //
-                //   ... categories.map((category) {
-                //   return Padding(
-                //     padding: const EdgeInsets.all(0), // Adjust spacing between checkboxes
-                //     child: Row(
-                //       children: [
-                //         Checkbox(
-                //           value: selectedCategories[category],
-                //           activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
-                //           checkColor: Colors.white,
-                //           side: BorderSide(
-                //             color: const Color.fromRGBO(255, 198, 0, 1), // Set the contour color
-                //             width: 1.5,        // Set the border width
-                //           ),// Checkmark color
-                //           onChanged: (bool? value) {
-                //             setState(() {
-                //               selectedCategories[category] = value ?? false;
-                //             });
-                //           },
-                //         ),
-                //         Text(
-                //           category,
-                //           style:  TextStyle(
-                //             color: Colors.grey.shade600,
-                //             fontWeight: FontWeight.w400,
-                //             fontSize: 16, // Adjust font size for compact layout
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   );
-                // }),
+       
                   ... categories.map((category) {
                     return Padding(
                       padding: const EdgeInsets.all(0), // Adjust spacing between radio buttons
@@ -181,6 +156,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
             
 
               SizedBox(height: 30,),
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between buttons
                 children: [
@@ -265,6 +241,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
           ),
         ),
       )
+    
     );
   }
 }

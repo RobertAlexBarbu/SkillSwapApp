@@ -75,6 +75,53 @@ class SkillsController extends GetxController{
     }
   }
 
+  Future<void> updateSkill({
+  required int skillId, // Add skillId to identify the skill to update
+  required String skillName,
+  required String skillDescription,
+  required String category,
+}) async {
+  try {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      throw "No user is currently logged in.";
+    }
+
+    var updatedSkill = Skill(
+      skillName: skillName,
+      skillDescription: skillDescription,
+      category: category,
+      userId: currentUser.uid,
+      id: skillId, // Include the ID of the skill being updated
+    );
+
+    // Send PUT request to update skill
+    final response = await dio.put(
+      'http://10.0.2.2:5165/api/Skill/Update/$skillId', // Adjust the URL as per your API
+      data: updatedSkill.toJson(), // Convert updated skill to JSON
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      // Success response
+      print('Skill updated successfully.');
+      
+    } else {
+      throw Exception('Failed to update skill: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error updating skill: $error');
+    
+  }
+}
+
+
+
   Future<List<Skill>> fetchSkills(String uid) async {
     try {
       print('User ID is $uid');
