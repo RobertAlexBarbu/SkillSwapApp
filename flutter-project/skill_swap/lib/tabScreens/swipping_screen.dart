@@ -89,7 +89,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
-                                      eachProfileInfo.skills = this.skills;
+                                      eachProfileInfo.skills = this.skills.where((skill) => skill.userId == eachProfileInfo.uid).toList();
                                       Get.to(SeeUserProfile(userProfile: eachProfileInfo));
                                   },
                                   child: Column(
