@@ -136,7 +136,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                         Row(
                                           children: [
                                             FutureBuilder<List<Skill>>(
-                                              future: skillsController.fetchSkills(eachProfileInfo.uid!),
+                                              future: skillsController.fetchAllSkills(),
                                               builder: (context, snapshot) {
                                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                                   return CircularProgressIndicator(); // Show loading indicator
