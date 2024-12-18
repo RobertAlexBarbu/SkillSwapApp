@@ -139,23 +139,6 @@ class SkillsController extends GetxController{
     }
 }
 
-  Future<List<Skill>> fetchAllSkills() async {
-    try {
-      final response = await dio.get('http://10.0.2.2:5165/api/Skill/GetAll');
-
-      if (response.statusCode == 200) {
-        List<dynamic> data = response.data;
-        return data.map((json) => Skill.fromJson(json)).toList();
-      } else {
-        throw Exception('Failed to fetch skills: ${response.statusCode}');
-      }
-    } catch (error) {
-      print('Error fetching skills: $error');
-      rethrow; // Re-throw the error for further handling
-    }
-  }
-
-
    // Get skills for a specific user
   List<Skill> getSkills(String uid) {
     return userSkillsMap[uid] ?? [];
