@@ -15,10 +15,28 @@ class SeeUserProfile extends StatefulWidget {
 
 class _SeeUserProfileState extends State<SeeUserProfile> {
   ProfileController profileController = Get.put(ProfileController());
+  String _swapStatus = "request"; // Initial status: "request", "requested", "swapping", "declined"
+  
+  void onRequestTap() {
+     setState(() {
+      if (_swapStatus == "request") {
+        _swapStatus = "requested"; // Change to requested
+      } else if (_swapStatus == "requested") {
+        _swapStatus = "request"; // Undo the request
+      }
+    });
+  }
+
+  void onResponseReceived(bool accepted) {
+    setState(() {
+      _swapStatus = accepted ? "swapping" : "declined";
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(255, 198, 0, 1),
@@ -59,7 +77,49 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                                   color: Colors.grey.shade600,
                                   fontWeight: FontWeight.bold,
                                 ),
-                              )
+                              ),
+                              // Swap Button
+                              SizedBox(width: 150,),
+
+                              Expanded(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: _swapStatus == "request"
+                                        ? const Color.fromRGBO(255, 198, 0, 1) // Yellow
+                                        : _swapStatus == "requested"
+                                            ? Colors.grey // Grey for requested
+                                            : _swapStatus == "swapping"
+                                                ? Colors.green // Green for swapping
+                                                : Colors.red, // Red for declined
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                  ),
+                                   child: InkWell(
+                                    onTap: _swapStatus == "request" || _swapStatus == "requested"
+                                        ? onRequestTap
+                                        : null, // Disable tap if not in "request" state
+                                    child: Center(
+                                      child: Text(
+                                        _swapStatus == "request"
+                                            ? "Request Swap"
+                                            : _swapStatus == "requested"
+                                                ? "Swap Requested"
+                                                : _swapStatus == "swapping"
+                                                    ? "Currently Swapping"
+                                                    : "Swap Declined",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            
                             ],
                           ),
                           const SizedBox(

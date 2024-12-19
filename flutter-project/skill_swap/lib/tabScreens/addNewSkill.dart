@@ -203,6 +203,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                       ),
                     ),
                   ),
+                  
                   const SizedBox(width: 16), // Spacing between buttons
                   // Cancel Button
                   Expanded(
@@ -232,6 +233,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                       ),
                     ),
                   ),
+                
                 ],
               ),
 

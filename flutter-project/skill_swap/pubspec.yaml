@@ -44,6 +44,7 @@ dependencies:
   firebase_messaging: ^15.1.5
   flutter_image_slider: ^0.0.2
   dio: ^5.0.3
+  standard_searchbar: ^2.1.1
   
  
   

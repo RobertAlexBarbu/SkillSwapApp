@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:skill_swap/tabScreens/favorites_sent_favorites_recieved_screen.dart';
-import 'package:skill_swap/tabScreens/like_sent_like_received_screen.dart';
+import 'package:skill_swap/tabScreens/notification_screen.dart';
 import 'package:skill_swap/tabScreens/search_skills.dart';
-import 'package:skill_swap/tabScreens/see_user_profile.dart';
 import 'package:skill_swap/tabScreens/swipping_screen.dart';
 import 'package:skill_swap/tabScreens/user_details_screen.dart';
-import 'package:skill_swap/tabScreens/view_send_view_received_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,7 +19,7 @@ class _HomeState extends State<Home> {
     SwippingScreen(),
     SearchSkills(),
     UserDetailsScreen(userId: FirebaseAuth.instance.currentUser!.uid),
-
+    NotificationScreen()
   ];
 
 
@@ -66,7 +63,16 @@ class _HomeState extends State<Home> {
               size: 30,
             ), 
             label: ""
-          ),  
+          ), 
+        // user detail screen button
+         BottomNavigationBarItem(
+            icon: Icon(
+              Icons.notifications,
+              size: 30,
+            ), 
+            label: ""
+          ),   
+          
          
         ],
       ),
