@@ -39,6 +39,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
   TextEditingController skillNameTextEditingController = TextEditingController();
   TextEditingController skillDescriptionTextEditingController = TextEditingController();
+  TextEditingController profileNameTextEditingController = TextEditingController();
+  TextEditingController profileDescriptionTextEditingController = TextEditingController();
+  TextEditingController profileAgeTextEditingController = TextEditingController();
+  TextEditingController profileNrPhoneTextEditingController = TextEditingController();
+
+
   // Predefined categories
   final List<String> categories = ["Art", "Music", "Math", "Science", "Sports", "Technology"];
   // State to keep track of selected categories
@@ -128,16 +134,305 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            onPressed: (){
-              FirebaseAuth.instance.signOut();
-            },
+          PopupMenuButton<String>(
             icon: Icon(
-              Icons.logout,
-              size: 40,
+              Icons.more_vert, // Three dots icon
               color: Colors.white,
             ),
-          )
+            color: Colors.grey.shade100,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            onSelected: (String value) {
+              if (value == 'edit') {
+                // Handle edit skill logic
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    profileNameTextEditingController.text = name!;
+                    profileDescriptionTextEditingController.text = profileHeading!;
+                    profileNrPhoneTextEditingController.text= phoneNo!;
+                    profileAgeTextEditingController.text = age!;
+                    return StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return AlertDialog(
+                          backgroundColor: Colors.grey.shade200,
+                          title: Center(
+                            child: Text(
+                              "Edit Profile",
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          content: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Profile name
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width - 36,
+                                    height: 55,
+                                    child: TextFormField(
+                                      controller: profileNameTextEditingController,
+                                      textAlignVertical: TextAlignVertical.center,
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      decoration: InputDecoration(
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 360,
+                                        ),
+                                        filled: true,
+                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        prefixIcon: Icon(
+                                          Icons.title,
+                                          color: Colors.orange.shade600,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  // Description
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width - 36,
+                                    height: 55,
+                                    child: TextFormField(
+                                      controller: profileDescriptionTextEditingController,
+                                      textAlignVertical: TextAlignVertical.center,
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      decoration: InputDecoration(
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 360,
+                                        ),
+                                        filled: true,
+                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        prefixIcon: Icon(
+                                          Icons.description,
+                                          color: Colors.orange.shade600,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  // Contact phone nr
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width - 36,
+                                    height: 55,
+                                    child: TextFormField(
+                                      controller: profileNrPhoneTextEditingController,
+                                      textAlignVertical: TextAlignVertical.center,
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      decoration: InputDecoration(
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 360,
+                                        ),
+                                        filled: true,
+                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        prefixIcon: Icon(
+                                          Icons.phone,
+                                          color: Colors.orange.shade600,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 30),
+                                  // Age
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width - 36,
+                                    height: 55,
+                                    child: TextFormField(
+                                      controller: profileAgeTextEditingController,
+                                      textAlignVertical: TextAlignVertical.center,
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      decoration: InputDecoration(
+                                        constraints: const BoxConstraints(
+                                          maxWidth: 360,
+                                        ),
+                                        filled: true,
+                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        prefixIcon: Icon(
+                                          Icons.calendar_month,
+                                          color: Colors.orange.shade600,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: ()  {
+                            
+                                // Close the dialog
+                                Navigator.of(context).pop();
+                                
+                              },
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(255, 198, 0, 1),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        );
+                      },
+                    );
+                  },
+                );
+
+              } else if (value == 'logout') {
+                // Handle delete skill logic
+                // Show confirmation dialog for delete
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Colors.grey.shade200,
+                        title: Text(
+                          'Confirm Logout', 
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontWeight: FontWeight.w600
+                          ),  
+                        ),
+                        content: Text(
+                          'Are you sure you want to logout?',
+                          style: TextStyle(
+                            color: Colors.grey.shade600
+                          ),  
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async{
+                              // Perform delete logic here
+                              FirebaseAuth.instance.signOut();
+                            },
+                            child: Text(
+                              'Yes',
+                              style: TextStyle(
+                                color: Colors.red.shade600,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16
+                              ),  
+                            ),
+                          ),
+                        ],
+                      
+                      );
+                    },
+                  );
+                }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              //edit
+              PopupMenuItem<String>(
+                value: 'edit',
+                child: Container(
+                  alignment: Alignment.center,
+                  constraints: BoxConstraints(
+                      minWidth: 80, // Minimum width of the popup menu
+                    ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.edit, color:  Color.fromRGBO(255, 198, 0, 1)),// Icon with custom color and size
+                      SizedBox(width: 8), // Spacing between icon and text
+                      Text(
+                        'Edit Profile',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade600, // Text color
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //logout
+              PopupMenuItem<String>(
+                value: 'logout',
+                child: Container(
+                  constraints: BoxConstraints(
+                      minWidth: 80, // Minimum width of the popup menu
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    children: [
+                      Icon(Icons.logout, color: Colors.red, size: 20), // Icon with custom color and size
+                      SizedBox(width: 8), // Spacing between icon and text
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade600, // Text color
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -157,14 +452,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     color:Colors.grey.shade600,  // Border color
                     width: 2.0,          // Border width
                   ),
-                  /*boxShadow: [
-                      BoxShadow(
-                      color: Colors.grey.shade100,
-                      spreadRadius: 8.0,
-                      blurRadius: 2.0,
-                      offset: Offset(3, 3)
-                    )
-                  ],*/ 
                 ),
                 child: ClipOval(
                   child: Image.network(
@@ -484,90 +771,90 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                     TextButton(
-  onPressed: () async {
-    try {
-      final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        try {
+                                                          final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
 
-      // await skillsController.updateSkill(
-      //   skillId: skillId, // Pass the skill ID
-      //   skillName: skillNameTextEditingController.text, // Updated name
-      //   skillDescription: skillDescriptionTextEditingController.text, // Updated description
-      //   category: selectedCategory ?? "", // Updated category
-      // );
+                                                          // await skillsController.updateSkill(
+                                                          //   skillId: skillId, // Pass the skill ID
+                                                          //   skillName: skillNameTextEditingController.text, // Updated name
+                                                          //   skillDescription: skillDescriptionTextEditingController.text, // Updated description
+                                                          //   category: selectedCategory ?? "", // Updated category
+                                                          // );
 
-      try {
-    final currentUser = FirebaseAuth.instance.currentUser;
+                                                          try {
+                                                        final currentUser = FirebaseAuth.instance.currentUser;
 
-    if (currentUser == null) {
-      throw "No user is currently logged in.";
-    }
+                                                        if (currentUser == null) {
+                                                          throw "No user is currently logged in.";
+                                                        }
 
-    var updatedSkill = Skill(
-      skillName: skillNameTextEditingController.text,
-      skillDescription: skillDescriptionTextEditingController.text,
-      category: selectedCategory,
-      userId: currentUser.uid,
-      id: skillId, // Include the ID of the skill being updated
-    );
+                                                        var updatedSkill = Skill(
+                                                          skillName: skillNameTextEditingController.text,
+                                                          skillDescription: skillDescriptionTextEditingController.text,
+                                                          category: selectedCategory,
+                                                          userId: currentUser.uid,
+                                                          id: skillId, // Include the ID of the skill being updated
+                                                        );
 
-    // Send PUT request to update skill
-    final response = await dio.put(
-      'http://10.0.2.2:5165/api/Skill/EditById/$skillId', // Adjust the URL as per your API
-      data: updatedSkill.toJson(), // Convert updated skill to JSON
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      ),
-    );
-   
+                                                        // Send PUT request to update skill
+                                                        final response = await dio.put(
+                                                          'http://10.0.2.2:5165/api/Skill/EditById/$skillId', // Adjust the URL as per your API
+                                                          data: updatedSkill.toJson(), // Convert updated skill to JSON
+                                                          options: Options(
+                                                            headers: {
+                                                              'Content-Type': 'application/json',
+                                                            },
+                                                          ),
+                                                        );
+                                                      
 
-    if (response.statusCode == 200) {
-      // Success response
-      print('Skill updated successfully.');
-      Get.snackbar(
-        'Skill updated successfully.',
-        'Updated skill',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red.shade200,
-        colorText: Colors.black,
-      );
-       
-      
-    } else {
-      throw Exception('Failed to update skill: ${response.statusCode}');
-    }
-  } catch (error) {
-    print('Error updating skill: $error');
-    
-  }
+                                                        if (response.statusCode == 200) {
+                                                          // Success response
+                                                          print('Skill updated successfully.');
+                                                          Get.snackbar(
+                                                            'Skill updated successfully.',
+                                                            'Updated skill',
+                                                            snackPosition: SnackPosition.TOP,
+                                                            backgroundColor: Colors.red.shade200,
+                                                            colorText: Colors.black,
+                                                          );
+                                                          
+                                                          
+                                                        } else {
+                                                          throw Exception('Failed to update skill: ${response.statusCode}');
+                                                        }
+                                                      } catch (error) {
+                                                        print('Error updating skill: $error');
+                                                        
+                                                      }
 
-     
-    } catch (error) {
-      Get.snackbar(
-        'Error',
-        'Failed to update skill: $error',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade200,
-        colorText: Colors.black,
-      );
-    }
+                                                        
+                                                        } catch (error) {
+                                                          Get.snackbar(
+                                                            'Error',
+                                                            'Failed to update skill: $error',
+                                                            snackPosition: SnackPosition.BOTTOM,
+                                                            backgroundColor: Colors.red.shade200,
+                                                            colorText: Colors.black,
+                                                          );
+                                                        }
 
-  
-    // Close the dialog
-    Navigator.of(context).pop();
-    retrieveSkills();
-  },
-  child: Text(
-    'Save',
-    style: TextStyle(
-      color: Color.fromRGBO(255, 198, 0, 1),
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-    ),
-  ),
-),
+                                                      
+                                                        // Close the dialog
+                                                        Navigator.of(context).pop();
+                                                        retrieveSkills();
+                                                      },
+                                                      child: Text(
+                                                        'Save',
+                                                        style: TextStyle(
+                                                          color: Color.fromRGBO(255, 198, 0, 1),
+                                                          fontWeight: FontWeight.w600,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
 
                                                   ],
                                                 );
@@ -715,6 +1002,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       ),
                                     ],
                                   ),
+                                
                                 ],
                               ),
 
