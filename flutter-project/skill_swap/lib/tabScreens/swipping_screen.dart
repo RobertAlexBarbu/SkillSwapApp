@@ -23,7 +23,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor:  Colors.green.shade200,
         automaticallyImplyLeading: false,
         title: Center(
           child: const Text(
@@ -43,9 +43,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
               child: ListView.builder(
                 itemCount: profileController.allUsersProfileList.length,
                 controller: PageController(initialPage: 0, viewportFraction: 0.18),
-              
-                //scrollDirection: Axis.vertical,
-
+           
                 itemBuilder: (context, index){
                   final eachProfileInfo = profileController.allUsersProfileList[index];
 
@@ -89,7 +87,6 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: (){
-                                      //eachProfileInfo.skills = skills.where((skill) => skill.userId == eachProfileInfo.uid).toList();
                                       Get.to(SeeUserProfile(userProfile: eachProfileInfo));
                                   },
                                   child: Column(

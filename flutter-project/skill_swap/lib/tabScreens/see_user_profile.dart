@@ -39,7 +39,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor: Colors.green.shade200,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -66,6 +66,50 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                       padding: const EdgeInsets.all(20),
                       child: Column(
                         children: [
+                           Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                               Container(
+                                height: 40,
+                                width: 140, // Set a specific width for the button
+                                decoration: BoxDecoration(
+                                  color: _swapStatus == "request"
+                                      ? const Color.fromRGBO(255, 198, 0, 1) // Yellow
+                                      : _swapStatus == "requested"
+                                          ? Colors.grey // Grey for requested
+                                          : _swapStatus == "swapping"
+                                              ? Colors.green // Green for swapping
+                                              : Colors.red, // Red for declined
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                child: InkWell(
+                                  onTap: _swapStatus == "request" || _swapStatus == "requested"
+                                      ? onRequestTap
+                                      : null, // Disable tap if not in "request" state
+                                  child: Center(
+                                    child: Text(
+                                      _swapStatus == "request"
+                                          ? "Request Swap"
+                                          : _swapStatus == "requested"
+                                              ? "Swap Requested"
+                                              : _swapStatus == "swapping"
+                                                  ? "Currently Swapping"
+                                                  : "Swap Declined",
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                             ],
+                           ),
+                            
                           //name
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -78,48 +122,6 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              // Swap Button
-                              SizedBox(width: 150,),
-
-                              Expanded(
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: _swapStatus == "request"
-                                        ? const Color.fromRGBO(255, 198, 0, 1) // Yellow
-                                        : _swapStatus == "requested"
-                                            ? Colors.grey // Grey for requested
-                                            : _swapStatus == "swapping"
-                                                ? Colors.green // Green for swapping
-                                                : Colors.red, // Red for declined
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                  ),
-                                   child: InkWell(
-                                    onTap: _swapStatus == "request" || _swapStatus == "requested"
-                                        ? onRequestTap
-                                        : null, // Disable tap if not in "request" state
-                                    child: Center(
-                                      child: Text(
-                                        _swapStatus == "request"
-                                            ? "Request Swap"
-                                            : _swapStatus == "requested"
-                                                ? "Swap Requested"
-                                                : _swapStatus == "swapping"
-                                                    ? "Currently Swapping"
-                                                    : "Swap Declined",
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            
                             ],
                           ),
                           const SizedBox(

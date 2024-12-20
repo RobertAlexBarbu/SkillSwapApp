@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
             });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor:   Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor:   Colors.green.shade200,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
         currentIndex: screenIndex,

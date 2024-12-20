@@ -12,7 +12,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor:  Colors.green.shade200,
         automaticallyImplyLeading: false,
         title: Center(
           child: const Text(

@@ -16,7 +16,7 @@ class _SearchSkillsState extends State<SearchSkills> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
+       backgroundColor:  Colors.green.shade200,
         title: const Text(
           "Search profile",
           style: TextStyle(

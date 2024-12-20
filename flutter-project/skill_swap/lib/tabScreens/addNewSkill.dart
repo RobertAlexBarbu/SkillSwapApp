@@ -30,7 +30,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor:  Colors.green.shade200,
         automaticallyImplyLeading: false,
         title: Center(
           child: const Text(
@@ -164,8 +164,8 @@ class _AddNewSkillState extends State<AddNewSkill> {
                   Expanded(
                     child: Container(
                       height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(255, 198, 0, 1),
+                      decoration:  BoxDecoration(
+                        color: Colors.green.shade200,
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
                         ),
@@ -209,8 +209,8 @@ class _AddNewSkillState extends State<AddNewSkill> {
                   Expanded(
                     child: Container(
                       height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(255, 198, 0, 1),
+                      decoration:  BoxDecoration(
+                        color: Colors.grey.shade500,
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
                         ),

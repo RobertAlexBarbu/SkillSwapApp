@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/models/skill.dart';
 
@@ -81,46 +82,91 @@ class SkillsController extends GetxController{
   required String skillDescription,
   required String category,
 }) async {
-  try {
-    final currentUser = FirebaseAuth.instance.currentUser;
+   try {
+      final currentUser = FirebaseAuth.instance.currentUser;
 
-    if (currentUser == null) {
-      throw "No user is currently logged in.";
-    }
+      if (currentUser == null) {
+        throw "No user is currently logged in.";
+      }
 
-    var updatedSkill = Skill(
-      skillName: skillName,
-      skillDescription: skillDescription,
-      category: category,
-      userId: currentUser.uid,
-      id: skillId, // Include the ID of the skill being updated
-    );
+      var updatedSkill = Skill(
+        skillName: skillName,
+        skillDescription: skillDescription,
+        category: category,
+        userId: currentUser.uid,
+        id: skillId, // Include the ID of the skill being updated
+      );
 
-    // Send PUT request to update skill
-    final response = await dio.put(
-      'http://10.0.2.2:5165/api/Skill/Update/$skillId', // Adjust the URL as per your API
-      data: updatedSkill.toJson(), // Convert updated skill to JSON
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      // Success response
-      print('Skill updated successfully.');
-      
-    } else {
-      throw Exception('Failed to update skill: ${response.statusCode}');
-    }
-  } catch (error) {
-    print('Error updating skill: $error');
+      // Send PUT request to update skill
+      final response = await dio.put(
+        'http://10.0.2.2:5165/api/Skill/EditById/$skillId', // Adjust the URL as per your API
+        data: updatedSkill.toJson(), // Convert updated skill to JSON
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
     
-  }
+
+      if (response.statusCode == 200) {
+        // Success response
+        print('Skill updated successfully.');
+        Get.snackbar(
+          'Skill updated successfully.',
+          'Updated skill',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green.shade200,
+          colorText: Colors.grey.shade600,
+        );
+        
+        
+      } else {
+        throw Exception('Failed to update skill: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error updating skill: $error');
+      Get.snackbar(
+        'Error',
+        'Failed to update skill: $error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade200,
+        colorText: Colors.grey.shade600,
+      );
+    }
 }
 
+  Future<void> deleteSkill({
+    required int skillId
+  }) async {
+    try {
+                                                       
+      final response = await dio.delete(
+        'http://10.0.2.2:5165/api/Skill/DeleteById/$skillId', // Update the URL as per your API
+      );
 
+      if (response.statusCode == 200) {
+        // Successfully deleted
+        Get.snackbar(
+          'Success',
+          'Skill deleted successfully',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.green.shade200,
+          colorText: Colors.grey.shade600,
+        );
+      } else {
+        throw Exception('Failed to delete skill');
+      }
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        'Failed to delete skill: $error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade200,
+        colorText: Colors.grey.shade600,
+      );
+    }
+  }
 
   Future<List<Skill>> fetchSkills(String uid) async {
     try {
@@ -137,7 +183,9 @@ class SkillsController extends GetxController{
       print('Error fetching skills: $error');
       rethrow; // Re-throw the error for further handling
     }
-}
+  }
+  
+
 
    // Get skills for a specific user
   List<Skill> getSkills(String uid) {
