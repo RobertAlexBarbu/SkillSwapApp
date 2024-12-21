@@ -59,6 +59,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<ISkillSwapRequestService, SkillSwapRequestService>();
 builder.Services.AddSingleton<FirebaseService>();
 
 var app = builder.Build();

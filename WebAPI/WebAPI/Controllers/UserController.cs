@@ -40,5 +40,14 @@ public class UserController(IUserService userService, IMapper mapper, FirebaseSe
         var users = await userService.GetAll();
         return Ok(users.Select(mapper.Map<UserDto>));
     }
+
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<ActionResult> EditByUidAsync(string id, EditUserDto editUserDto)
+    {
+        var user = mapper.Map<User>(editUserDto);
+        await userService.EditByIdAsync(id, user);
+        return Ok();
+    }
     
 }

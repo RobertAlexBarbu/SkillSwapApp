@@ -58,20 +58,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
 
   retrieveUserInfo() async{
-      // FirebaseFirestore.instance.collection("users").doc(widget.userId).get().then((snapshot){
-      //     if(snapshot.exists){
-      //
-      //       setState(() {
-      //         imageProfile = snapshot.data()!["imageProfile"];
-      //         name = snapshot.data()!["name"];
-      //         age = snapshot.data()!["age"].toString();
-      //         phoneNo = snapshot.data()!["phoneNo"];
-      //         profileHeading = snapshot.data()!["profileHeading"];
-      //
-      //
-      //       });
-      //     }
-      // });
       dio.get("http://10.0.2.2:5165/api/User/GetByUid/${widget.userId}").then((response) {
         if (response.statusCode == 200 && response.data != null) {
           final userData = response.data;

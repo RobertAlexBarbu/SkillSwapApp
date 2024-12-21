@@ -50,4 +50,23 @@ public class UserService(AppDbContext context) : IUserService
             Email = emailClaim.Value,
         };
     }
+
+    public async Task EditByIdAsync(string id, User user)
+    {
+        var toBeEdited = await context.Users.FirstOrDefaultAsync(u => u.Uid == id);
+        if (toBeEdited != null)
+        {
+            toBeEdited.Name = user.Name;
+            toBeEdited.PhoneNo = user.PhoneNo;
+            toBeEdited.ProfileHeading = user.ProfileHeading;
+            toBeEdited.Age = user.Age;
+            await context.SaveChangesAsync();
+            return;
+        }
+        else
+        {
+            throw new NotFoundException("User");
+        }
+
+    }
 }

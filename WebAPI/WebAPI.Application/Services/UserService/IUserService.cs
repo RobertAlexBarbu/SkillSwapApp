@@ -10,4 +10,6 @@ public interface IUserService
 
     Task<List<User>> GetAll();
     User GetFromClaims(ClaimsPrincipal claimIdentity);
+
+    Task EditByIdAsync(string id, User user);
 }

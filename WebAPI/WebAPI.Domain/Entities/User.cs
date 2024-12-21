@@ -20,4 +20,6 @@ public class User
     
     public long PublishedDateTime { get; set; }
     public List<Skill> Skills = new List<Skill>();
+    public List<SkillSwapRequest> CreatedSkillSwapRequests= new List<SkillSwapRequest>();
+    public List<SkillSwapRequest> ReceivedSkillSwapRequests= new List<SkillSwapRequest>();
 }
