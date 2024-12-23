@@ -11,6 +11,7 @@ class Person {
   String? profileHeading;
   String? imageProfile;
   int? publishedDateTime;
+  String? fcmToken;
   List<Skill>? skills; // List to hold skills
   
   Person({
@@ -23,7 +24,8 @@ class Person {
     this.phoneNo,
     this.profileHeading,
     this.skills,
-    this.publishedDateTime
+    this.publishedDateTime,
+    this.fcmToken
   });
 
   // static Person fromDataSnapshot(DocumentSnapshot snapshot) {
@@ -60,6 +62,7 @@ class Person {
     "imageProfile": imageProfile,
     "publishedDateTime": publishedDateTime,
     'skills': skills?.map((skill) => skill.toJson()).toList(),
+    "fcmToken": fcmToken
   };
 
   // Future<List<Skill>> getSkills() async {

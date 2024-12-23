@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -69,6 +70,10 @@ class AuthenticationController extends GetxController {
       print(idToken);
 
       String urlOfDownloadedImage = await uploadImageToStorage(imageProfile);
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+      // Get the device's FCM token
+      String? token = await messaging.getToken();
 
       personModel.Person personInstance = personModel.Person(
           uid: FirebaseAuth.instance.currentUser!.uid,
@@ -78,7 +83,12 @@ class AuthenticationController extends GetxController {
           age: int.parse(age),
           phoneNo: phoneNo,
           profileHeading: profileHeading,
-          publishedDateTime: DateTime.now().millisecondsSinceEpoch);
+          publishedDateTime: DateTime.now().millisecondsSinceEpoch,
+          fcmToken: token
+      );
+
+
+
 
       final response = await dio.post("http://10.0.2.2:5165/api/User/Create",
           data: personInstance.toJson());

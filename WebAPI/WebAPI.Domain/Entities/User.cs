@@ -18,6 +18,8 @@ public class User
     
     public string ProfileHeading { get; set; }
     
+    public string FCMToken { get; set; }
+    
     public long PublishedDateTime { get; set; }
     public List<Skill> Skills = new List<Skill>();
     public List<SkillSwapRequest> CreatedSkillSwapRequests= new List<SkillSwapRequest>();
