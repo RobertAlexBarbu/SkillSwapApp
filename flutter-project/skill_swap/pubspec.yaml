@@ -41,7 +41,7 @@ dependencies:
   firebase_auth: ^5.3.3
   cloud_firestore: ^5.5.0
   firebase_storage: ^12.3.6
-  firebase_messaging: ^15.1.5
+  firebase_messaging: ^15.1.6
   flutter_image_slider: ^0.0.2
   dio: ^5.0.3
   standard_searchbar: ^2.1.1
