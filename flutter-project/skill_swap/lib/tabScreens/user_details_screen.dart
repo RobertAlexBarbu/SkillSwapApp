@@ -6,7 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:skill_swap/controllers/profile_controller.dart';
 import 'package:skill_swap/controllers/skills_controller.dart';
+import 'package:skill_swap/models/person.dart';
 import 'package:skill_swap/models/skill.dart';
 import 'package:skill_swap/tabScreens/addNewSkill.dart';
 
@@ -52,6 +54,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   // State to keep track of selected categories
   var selectedCategory;
   var skillsController = SkillsController.skillsController;
+  var profileController = ProfileController.profileController;
 
   //slider img
   String urlImage1 = "https://firebasestorage.googleapis.com/v0/b/swappyskills.firebasestorage.app/o/Placeholder%2Fprofile_Default_image.jpg?alt=media&token=a3f4e00c-cd11-46bc-a7ff-bf9c745dff8d";
@@ -289,11 +292,16 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: ()  {
-                            
-                                // Close the dialog
-                                Navigator.of(context).pop();
+                              onPressed: () async  {
+                                await profileController.updateProfile(
+                                   profileName:  profileNameTextEditingController.text,
+                                   profileDescription: profileDescriptionTextEditingController.text,
+                                   profilePhoneNr: profileNrPhoneTextEditingController.text,
+                                   age: int.parse(profileAgeTextEditingController.text)
+                                );
                                 
+                                retrieveUserInfo();
+                                Navigator.of(context).pop();
                               },
                               child: Text(
                                 'Save',
