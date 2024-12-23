@@ -25,7 +25,8 @@ public class ExceptionFilter : IExceptionFilter
         }
         else
         {
-            context.Result = new BadRequestObjectResult(new { e.Message });
+            var message = "[ExceptionFilter] " + e.Message;
+            context.Result = new BadRequestObjectResult(new { message });
         }
     }
 }

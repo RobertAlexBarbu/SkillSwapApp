@@ -2,16 +2,24 @@ using Microsoft.EntityFrameworkCore;
 using WebAPI.Application.Exceptions;
 using WebAPI.Domain.Entities;
 using WebAPI.Domain.Enums;
+using WebAPI.Infrastructure.Firebase;
 using WebAPI.Repository.Data;
 
 namespace WebAPI.Application.Services.SkillService;
 
-public class SkillSwapRequestService(AppDbContext context) : ISkillSwapRequestService
+public class SkillSwapRequestService(AppDbContext context, FirebaseService fb) : ISkillSwapRequestService
 {
     public async Task CreateSkillSwapRequestAsync(SkillSwapRequest skillSwapRequest)
     {
         context.SkillSwapRequests.Add(skillSwapRequest);
         await context.SaveChangesAsync();
+        var receiver = await context.Users.FirstOrDefaultAsync(u => u.Uid == skillSwapRequest.ReceiverId);
+        var requester = await context.Users.FirstOrDefaultAsync(u => u.Uid == skillSwapRequest.RequesterId);
+        if (receiver != null && requester != null)
+        {
+            await fb.SendPushNotificationAsync(receiver.FCMToken, "SkillSwap Request:", $"{requester.Name} wants to swap skills");
+        }
+        
     }
 
     public async Task AcceptSkillSwapRequestByIdAsync(int skillSwapRequestId)
