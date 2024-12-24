@@ -1,11 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/controllers/swap_request_controller.dart';
 import 'package:skill_swap/interceptors/jwt_interceptor.dart';
 import 'package:skill_swap/models/Status.dart';
 import 'package:skill_swap/models/swap_request.dart';
+import 'package:skill_swap/tabScreens/see_user_profile.dart';
 
 class NotificationScreen extends StatefulWidget {
   final String userId; // Pass the logged-in user's ID
@@ -17,46 +17,102 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   SwapRequestController swapRequestController = Get.put(SwapRequestController());
-  List<SwapRequest> _notifications = [];
+  List<SwapRequest> _requestNotifications = [];
   final dio = createDio();
   late Timer _timer;
-   
+
   @override
   void initState() {
     super.initState();
-    _fetchInitialNotifications();
+    _fetchSwapRequests();
     _startPolling();
   }
 
-   // Method to start polling for new notifications every 5 seconds
+  // Method to start polling for new notifications every 5 seconds
   void _startPolling() {
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      _fetchInitialNotifications();
+      _fetchSwapRequests();
     });
   }
 
-  Future<void> _fetchInitialNotifications() async {
-  final url = 'http://10.0.2.2:5165/SkillSwapRequest/GetReceivedRequestsByUserId/${widget.userId}';
+  // Fetch swap requests from the backend
+  Future<void> _fetchSwapRequests() async {
+    final url = 'http://10.0.2.2:5165/SkillSwapRequest/GetReceivedRequestsByUserId/${widget.userId}';
   
-  try {
-    final response = await dio.get(url);
+    try {
+      final response = await dio.get(url);
 
-    if (response.statusCode == 200) {
-      print('Response data: ${response.data}');
-      List<dynamic> data = response.data;
-      setState(() {
-        _notifications = data
-            .map((json) => SwapRequest.fromJson(json))
-            .where((request) => request.status == Status.pending)
-            .toList()
-            .cast<SwapRequest>();
-      });
+      if (response.statusCode == 200) {
+        print('Response data: ${response.data}');
+        List<dynamic> data = response.data;
+        setState(() {
+          _requestNotifications = data
+              .map((json) => SwapRequest.fromJson(json))
+              .where((request) => request.status == Status.pending)
+              .toList();
+        });
+      }
+    } catch (e) {
+      print('Error fetching notifications: $e');
     }
-  } catch (e) {
-    print('Error fetching notifications: $e');
   }
-}
+  
+  // Method to handle the accept action
+  Future<void> _acceptRequest(SwapRequest request) async {
+   try{
+      try {
+        final response = await dio.post('http://10.0.2.2:5165/SkillSwapRequest/AcceptSkillSwapRequest/${request.id}');
+        if (response.statusCode == 201 || response.statusCode == 200) {
+          print('Swap accepted successfully.');
+          setState(() {
+            _requestNotifications.remove(request);
+          });
+        } else {
+          throw Exception('Failed to accept swap: ${response.statusCode}');
+        }
+      } catch (error) {
+        print('Error accepting swap: $error');
+        
+      }
+    } catch (e) {
+        Get.snackbar(
+        "Error Accepting Skill",
+        "An error occurred while accepting the skill: $e",
+      );
+    }
+  }
 
+  // Method to handle the decline action
+  Future<void> _declineRequest(SwapRequest request) async {
+      request.status = Status.declined;
+    try{
+      try {
+        final response = await dio.post('http://10.0.2.2:5165/SkillSwapRequest/RejectSkillSwapRequest/${request.id}');
+        if (response.statusCode == 201 || response.statusCode == 200) {
+          print('Swap declined successfully.');
+          setState(() {
+            _requestNotifications.remove(request);
+          });
+        } else {
+          throw Exception('Failed to decline swap: ${response.statusCode}');
+        }
+      } catch (error) {
+        print('Error declining swap: $error');
+        
+      }
+    } catch (e) {
+        Get.snackbar(
+        "Error Accepting Skill",
+        "An error occurred while accepting the skill: $e",
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,34 +124,62 @@ class _NotificationScreenState extends State<NotificationScreen> {
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
-      body: _notifications.isEmpty
+      body: _requestNotifications.isEmpty
           ? const Center(child: Text('No pending notifications'))
           : ListView.builder(
-              itemCount: _notifications.length,
+              itemCount: _requestNotifications.length,
               itemBuilder: (context, index) {
-                final request = _notifications[index];
+                final request = _requestNotifications[index];
                 return Card(
-                color: Colors.yellow.shade100,
-                margin: const EdgeInsets.all(8),
-                child: ListTile(
-                  title: Text(
-                    request.title,  // Hardcoded title
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade600,
+                  color: Colors.yellow.shade100,
+                  margin: const EdgeInsets.all(8),
+                  child: ListTile(
+                    title: Text(
+                      request.title,  
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade600,
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    "${request.requester?.name} wants to exchange ${request.offeredSkill?.skillName} for ${request.requestedSkill?.skillName}",   // Hardcoded body
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
+                    subtitle: Text(
+                      "${request.requester?.name} wants to exchange ${request.offeredSkill?.skillName} for ${request.requestedSkill?.skillName}",   // Notification body
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                      ),
                     ),
+                    trailing: request.status == Status.pending
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.check, color: Colors.green),
+                                onPressed: () {
+                                  _acceptRequest(request);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.cancel, color: Colors.red),
+                                onPressed: () {
+                                  _declineRequest(request);
+                                },
+                              ),
+
+                              TextButton(
+                                onPressed: () {
+                                  //_viewProfile(request); // Navigate to profile screen
+                                },
+                                child: const Text(
+                                  'See profile',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          )
+                        : null, // If the status is not pending, no buttons are shown
                   ),
-                  
-                ),
-              );
-        },
-      ),
+                );
+              },
+            ),
     );
   }
 }
