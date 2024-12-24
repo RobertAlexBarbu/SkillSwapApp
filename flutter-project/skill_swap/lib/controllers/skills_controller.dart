@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +8,8 @@ import '../interceptors/jwt_interceptor.dart';
 
 class SkillsController extends GetxController{
   static SkillsController skillsController = Get.find();
-   final RxMap<String, List<Skill>> userSkillsMap = <String, List<Skill>>{}.obs;
-    final dio = createDio();
+  final RxMap<String, List<Skill>> userSkillsMap = <String, List<Skill>>{}.obs;
+  final dio = createDio();
    
   Future<void> createSkill({
     required String skillName,

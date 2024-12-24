@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:skill_swap/authentication/login.dart';
 import 'package:skill_swap/controllers/authentication_controller.dart';
 import 'package:skill_swap/controllers/skills_controller.dart';
+import 'package:skill_swap/controllers/swap_request_controller.dart';
 
 void main() async {
 
@@ -13,12 +14,11 @@ void main() async {
   await Firebase.initializeApp().then((value){
     Get.put(AuthenticationController());
     Get.put(SkillsController());
+    Get.put(SwapRequestController());
   });
 
   await setupFirebaseMessaging();
-  //Get.put(AuthenticationController());
-  //Get.put(SkillsController());
-  
+ 
   runApp(const MyApp());
 }
 

@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skill_swap/controllers/profile_controller.dart';
+import 'package:skill_swap/models/Status.dart';
+import 'package:skill_swap/models/notifications.dart';
 import 'package:skill_swap/models/person.dart';
+import 'package:skill_swap/models/swap_request.dart';
 
 class SeeUserProfile extends StatefulWidget {
   final Person userProfile;
@@ -14,24 +18,29 @@ class SeeUserProfile extends StatefulWidget {
 }
 
 class _SeeUserProfileState extends State<SeeUserProfile> {
+
   ProfileController profileController = Get.put(ProfileController());
-  String _swapStatus = "request"; // Initial status: "request", "requested", "swapping", "declined"
-  
+  Status _swapStatus = Status.request; 
   void onRequestTap() {
-     setState(() {
-      if (_swapStatus == "request") {
-        _swapStatus = "requested"; // Change to requested
-      } else if (_swapStatus == "requested") {
-        _swapStatus = "request"; // Undo the request
+    print("Tapped: Current Status - $_swapStatus");
+    setState(() {
+      if (_swapStatus == Status.request) {
+        _swapStatus = Status.requested; // Change to requested
+      } else if (_swapStatus == Status.requested) {
+        _swapStatus = Status.request; // Undo the request
       }
     });
+
   }
+
+  
 
   void onResponseReceived(bool accepted) {
     setState(() {
-      _swapStatus = accepted ? "swapping" : "declined";
+      _swapStatus = accepted ? Status.swapping : Status.declined;
     });
   }
+
 
 
   @override
@@ -71,30 +80,32 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                             children: [
                                Container(
                                 height: 40,
-                                width: 140, // Set a specific width for the button
+                                width: 140,
                                 decoration: BoxDecoration(
-                                  color: _swapStatus == "request"
+                                  color: _swapStatus == Status.request
                                       ? const Color.fromRGBO(255, 198, 0, 1) // Yellow
-                                      : _swapStatus == "requested"
+                                      : _swapStatus == Status.requested
                                           ? Colors.grey // Grey for requested
-                                          : _swapStatus == "swapping"
+                                          : _swapStatus == Status.swapping
                                               ? Colors.green // Green for swapping
                                               : Colors.red, // Red for declined
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(10),
                                   ),
                                 ),
+
                                 child: InkWell(
-                                  onTap: _swapStatus == "request" || _swapStatus == "requested"
-                                      ? onRequestTap
-                                      : null, // Disable tap if not in "request" state
+                                  onTap: (_swapStatus == Status.request || _swapStatus == Status.requested)
+                                    ? onRequestTap
+                                    : null, // Disable tap if not in "request" or "requested" state
+                                // Disable tap if not in "request" state
                                   child: Center(
                                     child: Text(
-                                      _swapStatus == "request"
+                                      _swapStatus == Status.request
                                           ? "Request Swap"
-                                          : _swapStatus == "requested"
+                                          : _swapStatus == Status.requested
                                               ? "Swap Requested"
-                                              : _swapStatus == "swapping"
+                                              : _swapStatus == Status.swapping
                                                   ? "Currently Swapping"
                                                   : "Swap Declined",
                                       style: const TextStyle(
@@ -105,7 +116,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
                                     ),
                                   ),
                                 ),
-                              ),
+                              )
 
                              ],
                            ),

@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
     SwippingScreen(),
     SearchSkills(),
     UserDetailsScreen(userId: FirebaseAuth.instance.currentUser!.uid),
-    NotificationScreen()
+    NotificationScreen(userId: FirebaseAuth.instance.currentUser!.uid,)
   ];
 
 
