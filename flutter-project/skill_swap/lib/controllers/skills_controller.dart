@@ -10,6 +10,8 @@ class SkillsController extends GetxController{
   static SkillsController skillsController = Get.find();
   final RxMap<String, List<Skill>> userSkillsMap = <String, List<Skill>>{}.obs;
   final dio = createDio();
+
+  
    
   Future<void> createSkill({
     required String skillName,

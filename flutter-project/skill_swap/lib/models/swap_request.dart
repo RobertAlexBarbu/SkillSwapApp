@@ -4,14 +4,14 @@ import 'package:skill_swap/models/person.dart';
 import 'package:skill_swap/models/skill.dart';
 
 class SwapRequest {
-  String? requesterID;
+  String requesterID;
   String? receiverID;
   int? id;
   int? requestedSkillId;
   int? offeredSkillId;
   Status? status;
   int? createdAt;
-  Person? requester; 
+  Person requester; 
   Skill? requestedSkill;
   Skill? offeredSkill;
 
@@ -20,13 +20,13 @@ class SwapRequest {
 
   SwapRequest({
     this.id,
-    this.requesterID,
+    required this.requesterID,
     this.receiverID,
     this.requestedSkillId,
     this.offeredSkillId,
     this.status,
     this.createdAt,
-    this.requester,  
+    required this.requester,  
     this.offeredSkill,
     this.requestedSkill
   });
@@ -34,7 +34,7 @@ class SwapRequest {
   factory SwapRequest.fromJson(Map<String, dynamic> json) {
     return SwapRequest(
       id: json['id'] as int?,
-      requesterID: json['requesterId'] as String?,
+      requesterID: json['requesterId'] as String,
       receiverID: json['receiverId'] as String?,
       requestedSkillId: json['requestedSkillId'] != null
           ? int.tryParse(json['requestedSkillId'].toString())
@@ -46,9 +46,7 @@ class SwapRequest {
           ? StatusExtension.fromString(json['status'] as String)
           : Status.pending,
       createdAt: _convertToTimestamp(json['createdAt']),
-      requester: json['requester'] != null
-          ? Person.fromJson(json['requester'])  // Deserialize requester into a Person object
-          : null,
+      requester: Person.fromJson(json['requester'] as Map<String, dynamic>), // Assume non-null
       offeredSkill: json['offeredSkill'] != null
           ? Skill.fromJson(json['offeredSkill'])  // Deserialize requester into a Person object
           : null,

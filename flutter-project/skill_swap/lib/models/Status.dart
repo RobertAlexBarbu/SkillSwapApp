@@ -4,5 +4,6 @@ enum Status {
   swapping,
   declined,
   pending,
+  rejected,
   accepted
 }

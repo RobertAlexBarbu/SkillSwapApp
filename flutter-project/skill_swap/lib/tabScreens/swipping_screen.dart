@@ -197,24 +197,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                                 ),
                               ],
                             ),
-                            
-                            //filter list icon button
-                            // Align(
-                            //   alignment: Alignment.topRight,
-                            //   child: Padding(
-                            //     padding: const EdgeInsets.only(top: 8),
-                            //     child: IconButton(
-                            //       onPressed: (){
-
-                            //       },
-                            //       icon: Icon(
-                            //         Icons.filter_list,
-                            //         size: 30,
-                            //       )
-                            //     ),
-                            //   ),
-                            // ),
-
+              
                             //name + skills list
                             
 

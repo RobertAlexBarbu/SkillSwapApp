@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:skill_swap/controllers/swap_request_controller.dart';
 import 'package:skill_swap/interceptors/jwt_interceptor.dart';
 import 'package:skill_swap/models/Status.dart';
+import 'package:skill_swap/models/person.dart';
+import 'package:skill_swap/models/skill.dart';
 import 'package:skill_swap/models/swap_request.dart';
 import 'package:skill_swap/tabScreens/see_user_profile.dart';
 
@@ -16,6 +18,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  List<Map<String, dynamic>> skillsList = [];
   SwapRequestController swapRequestController = Get.put(SwapRequestController());
   List<SwapRequest> _requestNotifications = [];
   final dio = createDio();
@@ -43,7 +46,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       final response = await dio.get(url);
 
       if (response.statusCode == 200) {
-        print('Response data: ${response.data}');
+        //print('Response data: ${response.data}');
         List<dynamic> data = response.data;
         setState(() {
           _requestNotifications = data
@@ -81,6 +84,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
       );
     }
   }
+  
+Future<List<Skill>?> retrieveSkills(String uid) async {
+  try {
+    final response = await dio.get('http://10.0.2.2:5165/api/Skill/GetAllByUserId/$uid');
+    if (response.statusCode == 200) {
+      final List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(response.data);
+      return data.map((skillJson) => Skill.fromJson(skillJson)).toList();
+    } else {
+      throw Exception('Failed to fetch skills: ${response.statusCode}');
+    }
+  } catch (error) {
+    print('Error fetching skills: $error');
+    return null; // Return null in case of an error
+  }
+}
+
 
   // Method to handle the decline action
   Future<void> _declineRequest(SwapRequest request) async {
@@ -165,8 +184,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               ),
 
                               TextButton(
-                                onPressed: () {
-                                  //_viewProfile(request); // Navigate to profile screen
+                                onPressed: ()  async{
+                                  request.requester.skills =  await retrieveSkills(request.requesterID);
+                                  Get.to(SeeUserProfile(userProfile: request.requester));
                                 },
                                 child: const Text(
                                   'See profile',
