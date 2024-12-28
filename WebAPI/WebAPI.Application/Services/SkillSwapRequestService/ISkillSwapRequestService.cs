@@ -10,4 +10,6 @@ public interface ISkillSwapRequestService
     Task<List<SkillSwapRequest>> GetReceivedSkillSwapRequestsByUserId(string userId);
     Task<List<SkillSwapRequest>> GetCreatedSkillSwapRequestsByUserId(string userId);
 
+    Task<List<SkillSwapRequest>> GetAcceptedSkillSwapRequetsByUserId(string userId);
+
 }

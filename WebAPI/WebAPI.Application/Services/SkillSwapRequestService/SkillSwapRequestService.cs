@@ -24,11 +24,15 @@ public class SkillSwapRequestService(AppDbContext context, FirebaseService fb) :
 
     public async Task AcceptSkillSwapRequestByIdAsync(int skillSwapRequestId)
     {
-        var skillSwapRequest = await context.SkillSwapRequests.FirstOrDefaultAsync(s => s.Id == skillSwapRequestId);
+        var skillSwapRequest = await context.SkillSwapRequests
+            .Include(s => s.Requester)
+            .Include(s => s.Receiver)
+            .FirstOrDefaultAsync(s => s.Id == skillSwapRequestId);
         if (skillSwapRequest != null)
         {
             skillSwapRequest.Status = SkillSwapRequestStatus.Accepted;
             await context.SaveChangesAsync();
+            await fb.SendPushNotificationAsync(skillSwapRequest.Requester.FCMToken, "SkillSwap Request:", $"{skillSwapRequest.Receiver.Name} accepted your skill swap request");
             return;
         }
         else
@@ -66,6 +70,18 @@ public class SkillSwapRequestService(AppDbContext context, FirebaseService fb) :
     public async Task<List<SkillSwapRequest>> GetCreatedSkillSwapRequestsByUserId(string userId)
     {
         var skillSwapRequests = await context.SkillSwapRequests.Where(s => s.RequesterId == userId)
+            .Include(s => s.OfferedSkill)
+            .Include(s => s.RequestedSkill)
+            .Include(s => s.Receiver)
+            .Include(s => s.Requester)
+            .ToListAsync();
+        return skillSwapRequests;
+    }
+
+    public async Task<List<SkillSwapRequest>> GetAcceptedSkillSwapRequetsByUserId(string userId)
+    {
+        var skillSwapRequests = await context.SkillSwapRequests.Where(s =>
+            (s.RequesterId == userId || s.ReceiverId == userId) && s.Status == SkillSwapRequestStatus.Accepted)
             .Include(s => s.OfferedSkill)
             .Include(s => s.RequestedSkill)
             .Include(s => s.Receiver)

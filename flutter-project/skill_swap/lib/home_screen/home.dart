@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:skill_swap/tabScreens/acceptedRequestsScreen.dart';
 import 'package:skill_swap/tabScreens/notification_screen.dart';
 import 'package:skill_swap/tabScreens/search_skills.dart';
 import 'package:skill_swap/tabScreens/swipping_screen.dart';
@@ -19,7 +20,8 @@ class _HomeState extends State<Home> {
     SwippingScreen(),
     SearchSkills(),
     UserDetailsScreen(userId: FirebaseAuth.instance.currentUser!.uid),
-    NotificationScreen(userId: FirebaseAuth.instance.currentUser!.uid,)
+    NotificationScreen(userId: FirebaseAuth.instance.currentUser!.uid,),
+    AcceptedRequestsScreen(userId: FirebaseAuth.instance.currentUser!.uid,)
   ];
 
 
@@ -69,11 +71,18 @@ class _HomeState extends State<Home> {
             icon: Icon(
               Icons.notifications,
               size: 30,
-            ), 
+            ),
             label: ""
-          ),   
-          
-         
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.check,
+                size: 30,
+              ),
+              label: ""
+          ),
+
+
         ],
       ),
       body: tabScreensList[screenIndex],

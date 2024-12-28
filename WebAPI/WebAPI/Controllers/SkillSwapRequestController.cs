@@ -68,5 +68,14 @@ public class SkillSwapRequestController(IMapper mapper, ISkillSwapRequestService
         return Ok(skillSwapRequestDtos);
     }
     
+    [HttpGet]
+    [Route("{userId}")]
+    public async Task<ActionResult<List<SkillSwapRequestDto>>> GetAcceptedRequestsByUserId(string userId)
+    {
+        var skillSwapRequests = await skillSwapRequestService.GetAcceptedSkillSwapRequetsByUserId(userId);
+        var skillSwapRequestDtos = skillSwapRequests.Select(mapper.Map<SkillSwapRequestDto>).ToList();
+        return Ok(skillSwapRequestDtos);
+    }
+    
     
 }
