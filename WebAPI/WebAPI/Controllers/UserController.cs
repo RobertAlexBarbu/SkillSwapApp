@@ -50,4 +50,12 @@ public class UserController(IUserService userService, IMapper mapper, FirebaseSe
         return Ok();
     }
     
+    [HttpPut]
+    [Route("{id}")]
+    public async Task<ActionResult> EditProfileImageAsync(string id, EditProfileImageDto editProfileImageDto)
+    {
+        await userService.EditProfileImageAsync( editProfileImageDto.NewProfileImageUrl, id);
+        return Ok();
+    }
+    
 }

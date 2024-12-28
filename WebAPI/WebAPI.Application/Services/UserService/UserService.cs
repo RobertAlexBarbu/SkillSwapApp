@@ -69,4 +69,15 @@ public class UserService(AppDbContext context) : IUserService
         }
 
     }
+
+    public async Task EditProfileImageAsync(string profileImageValue, string userId)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Uid == userId);
+        if (user != null)
+        {
+            user.ImageProfile = profileImageValue;
+            await context.SaveChangesAsync();
+            return;
+        }
+    }
 }
