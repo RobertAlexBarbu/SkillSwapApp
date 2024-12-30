@@ -515,11 +515,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   onPressed: () async
                   {
                     await authenticationController.updateImageFromGalery(context);
-                    setState(() {
-                      authenticationController.imageFile;
-                    });
-
-                  
+                    retrieveUserInfo();
+                
                   }, 
                   icon: const Icon(
                     Icons.image_outlined,
@@ -531,6 +528,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     onPressed: () {
                       AuthenticationController.authController.updateImageFromPhoneCamera(context);
                       retrieveUserInfo();
+                      
                     },
                     icon: const Icon(
                       Icons.camera_alt_outlined,
