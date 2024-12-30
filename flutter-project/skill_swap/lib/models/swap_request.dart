@@ -12,6 +12,7 @@ class SwapRequest {
   Status? status;
   int? createdAt;
   Person requester; 
+  Person receiver;
   Skill? requestedSkill;
   Skill? offeredSkill;
 
@@ -27,6 +28,7 @@ class SwapRequest {
     this.status,
     this.createdAt,
     required this.requester,  
+    required this.receiver,
     this.offeredSkill,
     this.requestedSkill
   });
@@ -47,6 +49,7 @@ class SwapRequest {
           : Status.pending,
       createdAt: _convertToTimestamp(json['createdAt']),
       requester: Person.fromJson(json['requester'] as Map<String, dynamic>), // Assume non-null
+      receiver: Person.fromJson(json['receiver'] as Map<String, dynamic>), // Assume non-null
       offeredSkill: json['offeredSkill'] != null
           ? Skill.fromJson(json['offeredSkill'])  // Deserialize requester into a Person object
           : null,
@@ -66,6 +69,7 @@ class SwapRequest {
       'status': status?.name,
       'createdAt': createdAt,
       'requester': requester?.toJson(),  // Convert requester back to JSON if needed
+      'receiver': receiver?.toJson(),  
     };
   }
 

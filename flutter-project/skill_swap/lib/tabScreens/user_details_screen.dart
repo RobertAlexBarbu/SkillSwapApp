@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:skill_swap/controllers/authentication_controller.dart';
 import 'package:skill_swap/controllers/profile_controller.dart';
 import 'package:skill_swap/controllers/skills_controller.dart';
 import 'package:skill_swap/models/person.dart';
@@ -55,6 +56,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   var selectedCategory;
   var skillsController = SkillsController.skillsController;
   var profileController = ProfileController.profileController;
+  var authenticationController = AuthenticationController.authController;
 
   //slider img
   String urlImage1 = "https://firebasestorage.googleapis.com/v0/b/swappyskills.firebasestorage.app/o/Placeholder%2Fprofile_Default_image.jpg?alt=media&token=a3f4e00c-cd11-46bc-a7ff-bf9c745dff8d";
@@ -97,6 +99,56 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       }
     } catch (error) {
       print('Error fetching skills: $error');
+    }
+  }
+
+  // Function to update profile picture
+  Future<void> _updateProfilePicture(String? image) async {
+    if (image == null) return;
+
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Confirm Profile Picture Change"),
+        content: const Text("Are you sure you want to change the profile picture?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text("No"),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text("Yes"),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      try {
+       
+
+        final response = await dio.post(
+          "http://10.0.2.2:5165/api/User/EditProfileImage/${widget.userId}",
+          data: image,
+        );
+
+        if (response.statusCode == 200) {
+          setState(() {
+            imageProfile = response.data["imageProfile"];
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Profile picture updated successfully!")),
+          );
+        } else {
+          throw Exception('Failed to update profile picture.');
+        }
+      } catch (e) {
+        print('Error updating profile picture: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to update profile picture.")),
+        );
+      }
     }
   }
 
@@ -454,9 +506,42 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     height: double.infinity, // Ensures the image takes up the full height
                   ),
                 ),
-              ),             
-              
-              const SizedBox(height: 30,),
+              ),       
+              SizedBox(height: 20,),      
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                  onPressed: () async
+                  {
+                    await authenticationController.updateImageFromGalery(context);
+                    setState(() {
+                      authenticationController.imageFile;
+                    });
+
+                  
+                  }, 
+                  icon: const Icon(
+                    Icons.image_outlined,
+                    color: Colors.grey,
+                    size: 30,
+                    )
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      AuthenticationController.authController.updateImageFromPhoneCamera(context);
+                      retrieveUserInfo();
+                    },
+                    icon: const Icon(
+                      Icons.camera_alt_outlined,
+                      color: Colors.grey,
+                      size: 30,
+                    )
+                  ),
+                ],
+              ),
+                    
+              const SizedBox(height: 20,),
               //user data
               Container(
                 padding: const EdgeInsets.all(20),

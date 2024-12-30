@@ -46,8 +46,8 @@ class _AcceptedRequestsScreenState extends State<AcceptedRequestsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.green.shade200,
         automaticallyImplyLeading: false,
-        title: Center(
-          child: const Text(
+        title: const Center(
+          child: Text(
             "Accepted Requests",
             style: TextStyle(
               color: Colors.white,
@@ -59,29 +59,37 @@ class _AcceptedRequestsScreenState extends State<AcceptedRequestsScreen> {
       body: _acceptedRequests.isEmpty
           ? const Center(child: Text('No accepted requests yet'))
           : ListView.builder(
-        itemCount: _acceptedRequests.length,
-        itemBuilder: (context, index) {
-          final request = _acceptedRequests[index];
-          return Card(
-            color: Color(0xFFFFEEB2),
-            margin: const EdgeInsets.all(8),
-            child: ListTile(
+              itemCount: _acceptedRequests.length,
+              itemBuilder: (context, index) {
+                final request = _acceptedRequests[index];
 
-              title: Text(
+                // Check if the logged-in user is the receiver or the sender
+                final isUserReceiver = request.receiver?.uid == widget.userId;
+                final message = isUserReceiver
+                    ? "You accepted ${request.requester?.name}'s request to exchange ${request.offeredSkill?.skillName} for ${request.requestedSkill?.skillName}."
+                    : "${request.receiver?.name} accepted your request to exchange ${request.offeredSkill?.skillName} for ${request.requestedSkill?.skillName}.";
 
-                request.title,
-                style: const TextStyle(fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              subtitle: Text(
-                "You have accepted ${request.requester?.name}'s request to exchange ${request.offeredSkill?.skillName} for ${request.requestedSkill?.skillName}.",
-                  style: const TextStyle(
-                  color: Colors.black),
-              ),
+                return Card(
+                  color: const Color(0xFFFFEEB2),
+                  margin: const EdgeInsets.all(8),
+                  child: ListTile(
+                    title: Text(
+                      request.title,
+                      style:  TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                    subtitle: Text(
+                      message,
+                      style:  TextStyle(
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
