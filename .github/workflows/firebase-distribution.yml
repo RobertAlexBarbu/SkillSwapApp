@@ -19,7 +19,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.24.5"  # Specify the version of Flutter you're using
-
+          
+      - name: Navigate to Flutter project directory
+        run: cd flutter-project/skill_swap  # Navigate to the skill_swap directory
+      
       - name: Install Dependencies
         run: flutter pub get
 
@@ -45,7 +48,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.x.x"  # Specify the version of Flutter you're using
+          flutter-version: "3.24.5"  # Specify the version of Flutter you're using
 
       - name: Install CocoaPods (for iOS)
         run: |
