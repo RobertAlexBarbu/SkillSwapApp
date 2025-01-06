@@ -90,7 +90,7 @@ class AuthenticationController extends GetxController {
 
 
 
-      final response = await dio.post("http://10.0.2.2:5165/api/User/Create",
+      final response = await dio.post("https://skillswapp-api.azurewebsites.net/api/User/Create",
           data: personInstance.toJson());
 
       // FirebaseFirestore.instance

@@ -61,7 +61,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
 
   retrieveUserInfo() async{
-      dio.get("http://10.0.2.2:5165/api/User/GetByUid/${widget.userId}").then((response) {
+      dio.get("https://skillswapp-api.azurewebsites.net/api/User/GetByUid/${widget.userId}").then((response) {
         if (response.statusCode == 200 && response.data != null) {
           final userData = response.data;
 
@@ -84,7 +84,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   retrieveSkills() async {
     try {
       final response = await dio.get(
-        'http://10.0.2.2:5165/api/Skill/GetAllByUserId/${widget.userId}'
+        'https://skillswapp-api.azurewebsites.net/api/Skill/GetAllByUserId/${widget.userId}'
 
       );
 

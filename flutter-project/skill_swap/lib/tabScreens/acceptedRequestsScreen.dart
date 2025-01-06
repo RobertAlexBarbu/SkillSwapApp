@@ -24,7 +24,7 @@ class _AcceptedRequestsScreenState extends State<AcceptedRequestsScreen> {
 
   // Fetch accepted swap requests from the backend
   Future<void> _fetchAcceptedRequests() async {
-    final url = 'http://10.0.2.2:5165/SkillSwapRequest/GetAcceptedRequestsByUserId/${widget.userId}';
+    final url = 'https://skillswapp-api.azurewebsites.net/SkillSwapRequest/GetAcceptedRequestsByUserId/${widget.userId}';
 
     try {
       final response = await dio.get(url);

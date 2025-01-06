@@ -34,7 +34,7 @@ class SkillsController extends GetxController{
       );
       try {
         final response = await dio.post(
-          'http://10.0.2.2:5165/api/Skill/Create',
+          'https://skillswapp-api.azurewebsites.net/api/Skill/Create',
           data: skill.toJson(),
           options: Options(
             headers: {
@@ -100,7 +100,7 @@ class SkillsController extends GetxController{
 
       // Send PUT request to update skill
       final response = await dio.put(
-        'http://10.0.2.2:5165/api/Skill/EditById/$skillId', // Adjust the URL as per your API
+        'https://skillswapp-api.azurewebsites.net/api/Skill/EditById/$skillId', // Adjust the URL as per your API
         data: updatedSkill.toJson(), // Convert updated skill to JSON
         options: Options(
           headers: {
@@ -143,7 +143,7 @@ class SkillsController extends GetxController{
     try {
                                                        
       final response = await dio.delete(
-        'http://10.0.2.2:5165/api/Skill/DeleteById/$skillId', // Update the URL as per your API
+        'https://skillswapp-api.azurewebsites.net/api/Skill/DeleteById/$skillId', // Update the URL as per your API
       );
 
       if (response.statusCode == 200) {
@@ -172,7 +172,7 @@ class SkillsController extends GetxController{
   Future<List<Skill>> fetchSkills(String uid) async {
     try {
       print('User ID is $uid');
-      final response = await dio.get('http://10.0.2.2:5165/api/Skill/GetAllByUserId/$uid');
+      final response = await dio.get('https://skillswapp-api.azurewebsites.net/api/Skill/GetAllByUserId/$uid');
 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;

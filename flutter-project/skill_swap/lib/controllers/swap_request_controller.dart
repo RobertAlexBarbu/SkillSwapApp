@@ -33,7 +33,7 @@ class SwapRequestController extends GetxController {
 
   // Fetch new notifications from the backend
   Future<void> fetchNewNotifications() async {
-    final url = 'http://10.0.2.2:5165/SkillSwapRequest/GetReceivedRequestsByUserId/USER_ID'; // Replace with actual userId
+    final url = 'https://skillswapp-api.azurewebsites.net/SkillSwapRequest/GetReceivedRequestsByUserId/USER_ID'; // Replace with actual userId
     try {
       final response = await dio.get(url);
       if (response.statusCode == 200) {

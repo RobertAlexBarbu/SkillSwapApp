@@ -40,7 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   // Fetch swap requests from the backend
   Future<void> _fetchSwapRequests() async {
-    final url = 'http://10.0.2.2:5165/SkillSwapRequest/GetReceivedRequestsByUserId/${widget.userId}';
+    final url = 'https://skillswapp-api.azurewebsites.net/SkillSwapRequest/GetReceivedRequestsByUserId/${widget.userId}';
   
     try {
       final response = await dio.get(url);
@@ -64,7 +64,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Future<void> _acceptRequest(SwapRequest request) async {
    try{
       try {
-        final response = await dio.post('http://10.0.2.2:5165/SkillSwapRequest/AcceptSkillSwapRequest/${request.id}');
+        final response = await dio.post('https://skillswapp-api.azurewebsites.net/SkillSwapRequest/AcceptSkillSwapRequest/${request.id}');
         if (response.statusCode == 201 || response.statusCode == 200) {
           print('Swap accepted successfully.');
           setState(() {
@@ -87,7 +87,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   
 Future<List<Skill>?> retrieveSkills(String uid) async {
   try {
-    final response = await dio.get('http://10.0.2.2:5165/api/Skill/GetAllByUserId/$uid');
+    final response = await dio.get('https://skillswapp-api.azurewebsites.net/api/Skill/GetAllByUserId/$uid');
     if (response.statusCode == 200) {
       final List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(response.data);
       return data.map((skillJson) => Skill.fromJson(skillJson)).toList();
@@ -106,7 +106,7 @@ Future<List<Skill>?> retrieveSkills(String uid) async {
       request.status = Status.declined;
     try{
       try {
-        final response = await dio.post('http://10.0.2.2:5165/SkillSwapRequest/RejectSkillSwapRequest/${request.id}');
+        final response = await dio.post('https://skillswapp-api.azurewebsites.net/SkillSwapRequest/RejectSkillSwapRequest/${request.id}');
         if (response.statusCode == 201 || response.statusCode == 200) {
           print('Swap declined successfully.');
           setState(() {

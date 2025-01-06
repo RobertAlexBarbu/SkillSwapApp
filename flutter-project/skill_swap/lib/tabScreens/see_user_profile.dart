@@ -49,7 +49,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
     _swapStatus = Status.requested;
   });
 
-  final url = 'http://10.0.2.2:5165/SkillSwapRequest/CreateSkillSwapRequest';
+  final url = 'https://skillswapp-api.azurewebsites.net/SkillSwapRequest/CreateSkillSwapRequest';
   final dio = createDio();
 
   try {
@@ -95,7 +95,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
     try {
       final id = FirebaseAuth.instance.currentUser?.uid;
       final response = await dio.get(
-        'http://10.0.2.2:5165/api/Skill/GetAllByUserId/$id'
+        'https://skillswapp-api.azurewebsites.net/api/Skill/GetAllByUserId/$id'
       );
       if (response.statusCode == 200) {
         setState(() {

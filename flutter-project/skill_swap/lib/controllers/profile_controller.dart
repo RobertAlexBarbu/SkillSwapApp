@@ -25,7 +25,7 @@ class ProfileController extends GetxController{
   void fetchProfiles() async {
     try {
       // Make a POST request to the API endpoint
-      final response = await dio.get("http://10.0.2.2:5165/api/User/GetAll");
+      final response = await dio.get("https://skillswapp-api.azurewebsites.net/api/User/GetAll");
 
       // Extract data from the response
       if (response.statusCode == 200 && response.data is List) {
@@ -73,7 +73,7 @@ class ProfileController extends GetxController{
 
       // Send PUT request to update profile
       final response = await dio.put(
-        'http://10.0.2.2:5165/api/User/EditByUid/$userId', // Adjust the URL as per your API
+        'https://skillswapp-api.azurewebsites.net/api/User/EditByUid/$userId', // Adjust the URL as per your API
         data: updatedProfile.toJson(), // Convert updated skill to JSON
         options: Options(
           headers: {
