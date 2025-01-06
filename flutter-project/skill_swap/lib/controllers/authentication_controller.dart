@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:skill_swap/authentication/login.dart';
@@ -41,6 +43,130 @@ class AuthenticationController extends GetxController {
 
     pickedFile = Rx<File?>(File(imageFile!.path));
   }
+
+updateImageFromPhoneCamera(BuildContext context) async {
+  imageFile = await ImagePicker().pickImage(source: ImageSource.camera);
+  updateImage(context);
+}
+
+updateImageFromGalery(BuildContext context) async {
+  imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  updateImage(context);
+}
+
+updateImage(BuildContext context) async {
+  if (imageFile != null) {
+    final confirm = await showDialog<bool>(
+      context: context, // Pass the context explicitly
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.grey.shade200, // Set a background color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Add rounded corners
+        ),
+        title: Text(
+          "Confirm Profile Picture Change",
+          style: TextStyle(
+            color: Colors.grey.shade600, // Title text color
+            fontWeight: FontWeight.bold, // Make the title bold
+            fontSize: 20, // Increase font size
+          ),
+        ),
+        content: Text(
+          "Are you sure you want to change the profile picture?",
+          style: TextStyle(
+            color: Colors.grey.shade600, // Content text color
+            fontSize: 16, // Content font size
+          ),
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.grey.shade300, // Button background color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), // Rounded button corners
+              ),
+            ),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(
+              "Cancel",
+              style: TextStyle(
+                color: Colors.grey.shade600, // Button text color
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.green.shade200, // Button background color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), // Rounded button corners
+              ),
+            ),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(
+              "Yes",
+              style: TextStyle(
+                color: Colors.grey.shade600, // Button text color
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      try {
+        // Convert image to File
+        pickedFile = Rx<File?>(File(imageFile!.path));
+        // Upload to Firebase Storage
+        String downloadURL = await uploadImageToStorage(pickedFile.value!);
+        // Prepare data for backend
+        final String? userId = FirebaseAuth.instance.currentUser?.uid;
+        if (userId != null) {
+          final response = await dio.put(
+            "http://10.0.2.2:5165/api/User/EditProfileImage/$userId",
+            data: {
+              "newProfileImageUrl": downloadURL, // Pass the URL to the backend
+            },
+            options: Options(
+              headers: {
+                'Content-Type': 'application/json',
+              },
+        ),
+          );
+
+          if (response.statusCode == 200) {
+            Get.snackbar(
+              "Success",
+              "Profile picture updated successfully!",
+            );
+          } else {
+            throw Exception("Failed to update the profile picture on backend.");
+          }
+        } else {
+          throw Exception("User is not authenticated.");
+        }
+      } catch (e) {
+        print("Error: $e");
+        Get.snackbar(
+          "Error",
+          "Failed to update profile picture: $e",
+        );
+      }
+    } else {
+      Get.snackbar(
+        "Cancelled",
+        "Profile picture update cancelled.",
+      );
+    }
+  } else {
+    Get.snackbar(
+      "No Image Selected",
+      "Please select a valid image to proceed.",
+    );
+  }
+}
 
   Future<String> uploadImageToStorage(File imageFile) async {
     Reference referenceStorage = FirebaseStorage.instance
