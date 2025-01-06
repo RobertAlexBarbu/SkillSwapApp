@@ -23,11 +23,12 @@ jobs:
       - name: Install CocoaPods (for iOS)
         run: |
           sudo gem install cocoapods
-          pod install --project-directory=flutter/skill_swap/
+          pod install --project-directory=flutter-project/skill_swap
+
           
       - name: Install Dependencies
         run: flutter pub get
-        working-directory: flutter/skill_swap
+        working-directory: flutter-project/skill_swap
 
       - name: Build iOS
         run: flutter build ios --release --no-codesign  # Skip code-signing for testing purposes
@@ -38,4 +39,4 @@ jobs:
           appId: "1:639029668370:ios:ab7ac9d59f98e7167bc6cb"
           token: ${{ secrets.FIREBASE_TOKEN }}  # Using GitHub Secrets for better security
           groups: testers  # You can change this to your Firebase tester group
-          file: flutter/skill_swap/build/ios/ipa/*.ipa
+          file: flutter-project/skill_swap/build/ios/ipa/*.ipa
