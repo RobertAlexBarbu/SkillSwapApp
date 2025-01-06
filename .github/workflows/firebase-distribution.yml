@@ -37,7 +37,7 @@ jobs:
           appId: "1:639029668370:android:446f0be6cad3431e7bc6cb"
           token: "1//03M01fESVMdfBCgYIARAAGAMSNwF-L9IrbUXM7V5BKR4AW7nJOH_8HzKFor0CHFAqSv7StaxJ2kwW0bgOleDmQXjaGkME07Aeqjs"
           groups: testers  # You can change this to your Firebase tester group
-          file: build/app/outputs/flutter-apk/app-release.apk
+          file: flutter-project/skill_swap/build/app/outputs/flutter-apk/app-release.apk
 
   # --- iOS Build and Firebase Distribution ---
   build-ios:
