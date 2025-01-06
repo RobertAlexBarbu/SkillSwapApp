@@ -38,35 +38,4 @@ jobs:
           token: "1//03M01fESVMdfBCgYIARAAGAMSNwF-L9IrbUXM7V5BKR4AW7nJOH_8HzKFor0CHFAqSv7StaxJ2kwW0bgOleDmQXjaGkME07Aeqjs"
           file: flutter-project/skill_swap/build/app/outputs/flutter-apk/app-release.apk
 
-  # --- iOS Build and Firebase Distribution ---
-  build-ios:
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.24.5"  # Specify the version of Flutter you're using
-
-      - name: Install CocoaPods (for iOS)
-        run: |
-          sudo gem install cocoapods
-          pod install --project-directory=ios
-
-      - name: Install Dependencies
-        run: flutter pub get
-
-      - name: Build iOS
-        run: flutter build ios --release --no-codesign  # Skip code-signing for testing purposes
-
-      - name: Upload IPA to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
-        with:
-          appId: "1:639029668370:ios:ab7ac9d59f98e7167bc6cb"
-          token: "1//03M01fESVMdfBCgYIARAAGAMSNwF-L9IrbUXM7V5BKR4AW7nJOH_8HzKFor0CHFAqSv7StaxJ2kwW0bgOleDmQXjaGkME07Aeqjs"
-          groups: testers  # You can change this to your Firebase tester group
-          file: build/ios/ipa/*.ipa
-
+ 
