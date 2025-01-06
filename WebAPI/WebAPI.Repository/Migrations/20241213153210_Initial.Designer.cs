@@ -11,7 +11,7 @@ using WebAPI.Repository.Data;
 namespace WebAPI.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241203014634_Initial")]
+    [Migration("20241213153210_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -32,44 +32,32 @@ namespace WebAPI.Repository.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SkillCategoryId")
-                        .HasColumnType("integer");
+                    b.Property<string>("SkillDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("SkillName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("SkillCategoryId");
-
-                    b.ToTable("Skills");
-                });
-
-            modelBuilder.Entity("WebAPI.Domain.Entities.SkillCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("SkillCategories");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.User", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("Uid")
                         .HasColumnType("text");
 
                     b.Property<int>("Age")
@@ -98,27 +86,23 @@ namespace WebAPI.Repository.Migrations
                     b.Property<long>("PublishedDateTime")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("SkillList")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
+                    b.HasKey("Uid");
 
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.Skill", b =>
                 {
-                    b.HasOne("WebAPI.Domain.Entities.SkillCategory", "SkillCategory")
+                    b.HasOne("WebAPI.Domain.Entities.User", "User")
                         .WithMany("Skills")
-                        .HasForeignKey("SkillCategoryId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SkillCategory");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebAPI.Domain.Entities.SkillCategory", b =>
+            modelBuilder.Entity("WebAPI.Domain.Entities.User", b =>
                 {
                     b.Navigation("Skills");
                 });

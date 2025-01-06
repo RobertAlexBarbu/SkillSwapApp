@@ -15,5 +15,7 @@ public class CreateUserDto
     
     public string ProfileHeading { get; set; }
     
+    public string FCMToken { get; set; }
+    
     public long PublishedDateTime { get; set; }
 }

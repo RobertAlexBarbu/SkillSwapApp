@@ -18,23 +18,19 @@ class _AddNewSkillState extends State<AddNewSkill> {
   // Predefined categories
   final List<String> categories = ["Art", "Music", "Math", "Science", "Sports", "Technology"];
   // State to keep track of selected categories
-  final Map<String, bool> selectedCategories = {};
+  var selectedCategory;
   var skillsController = SkillsController.skillsController;
 
   @override
   void initState() {
     super.initState();
-    // Initialize all categories as unchecked
-    for (var category in categories) {
-      selectedCategories[category] = false;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor:  Colors.green.shade200,
         automaticallyImplyLeading: false,
         title: Center(
           child: const Text(
@@ -59,22 +55,25 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 child: TextFormField(
                   controller: skillNameTextEditingController,
                   textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                              constraints: const BoxConstraints(
-                                maxWidth: 360,
-                              ),
-                              filled: true,
-                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              prefixIcon:  Icon(Icons.title,
-                                  color: Colors.orange.shade600),
-                              hintText: 'Name',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
-                              )),
+                  style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.title,
+                          color: Colors.orange.shade600),
+                      hintText: 'Name',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                      )),
                 ),
               ),
 
@@ -86,21 +85,24 @@ class _AddNewSkillState extends State<AddNewSkill> {
                 child: TextFormField(
                   controller: skillDescriptionTextEditingController,
                    textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                              constraints: const BoxConstraints(
-                                maxWidth: 360,
-                              ),
-                              filled: true,
-                              fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              prefixIcon:  Icon(Icons.description,
-                                  color: Colors.orange.shade600),
-                              hintText: 'Description',
-                              hintStyle: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w400),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none)),
+                   style: TextStyle(
+                    color: Colors.grey.shade600,
+                  ),
+                  decoration: InputDecoration(
+                      constraints: const BoxConstraints(
+                        maxWidth: 360,
+                      ),
+                      filled: true,
+                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                      prefixIcon:  Icon(Icons.description,
+                          color: Colors.orange.shade600),
+                      hintText: 'Description',
+                      hintStyle: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w400),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none)),
                   
                 ),
               ),
@@ -121,43 +123,40 @@ class _AddNewSkillState extends State<AddNewSkill> {
                     ),
                   ),
                   const SizedBox(height: 10), // Add slight space below the header
-
+       
                   ... categories.map((category) {
-                  return Padding(
-                    padding: const EdgeInsets.all(0), // Adjust spacing between checkboxes
-                    child: Row(
-                      children: [
-                        Checkbox(
-                          value: selectedCategories[category],
-                          activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
-                          checkColor: Colors.white, 
-                          side: BorderSide(
-                            color: const Color.fromRGBO(255, 198, 0, 1), // Set the contour color
-                            width: 1.5,        // Set the border width
-                          ),// Checkmark color
-                          onChanged: (bool? value) {
-                            setState(() {
-                              selectedCategories[category] = value ?? false;
-                            });
-                          },
-                        ),
-                        Text(
-                          category,
-                          style:  TextStyle(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16, // Adjust font size for compact layout
+                    return Padding(
+                      padding: const EdgeInsets.all(0), // Adjust spacing between radio buttons
+                      child: Row(
+                        children: [
+                          Radio<String>(
+                            value: category,
+                            groupValue: selectedCategory, // Single selected value
+                            activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedCategory = value; // Update selected category
+                              });
+                            },
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+                          Text(
+                            category,
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16, // Adjust font size for compact layout
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ]
               ),
             
 
               SizedBox(height: 30,),
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between buttons
                 children: [
@@ -165,49 +164,31 @@ class _AddNewSkillState extends State<AddNewSkill> {
                   Expanded(
                     child: Container(
                       height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(255, 198, 0, 1),
+                      decoration:  BoxDecoration(
+                        color: Colors.green.shade200,
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
                         ),
                       ),
                       child: InkWell(
                         onTap: () async {
-                          // Check if skill name, description are not empty and at least one category is selected
-                          bool isAnyCategorySelected = selectedCategories.containsValue(true);
 
                           if (skillNameTextEditingController.text.trim().isNotEmpty &&
                               skillDescriptionTextEditingController.text.trim().isNotEmpty &&
-                              isAnyCategorySelected) {
+                              true) {
+                              await skillsController.createSkill(
+                                skillName: skillNameTextEditingController.text.trim(),
+                                skillDescription: skillDescriptionTextEditingController.text.trim(),
+                                category: selectedCategory,
+                              );
+                              if(Get.isSnackbarOpen){
+                                Get.close(-1);
+                              } else {
+                                Get.back();
+                              }
 
-                                // Call the SkillController to create a new skill
-                                final selectedCategoriesList = selectedCategories.keys
-                                    .where((key) => selectedCategories[key] == true)
-                                    .toList();
-                                await skillsController.createSkill(
-                                  skillName: skillNameTextEditingController.text.trim(),
-                                  skillDescription: skillDescriptionTextEditingController.text.trim(),
-                                  categories: selectedCategoriesList,
-                                );
-
-                            Get.back();
-                          } else {
-                            // Show error message if validation fails
-                            String errorMessage = "";
-                            if (skillNameTextEditingController.text.trim().isEmpty) {
-                              errorMessage = "Please enter a skill name.";
-                            } else if (skillDescriptionTextEditingController.text.trim().isEmpty) {
-                              errorMessage = "Please enter a skill description.";
-                            } else if (!isAnyCategorySelected) {
-                              errorMessage = "Please select at least one category.";
-                            }
-                            Get.snackbar(
-                              "Validation Error",
-                              errorMessage,
-                              backgroundColor: Colors.grey,
-                              colorText: Colors.white,
-                            );
                           }
+
                         },
                         child: const Center(
                           child: Text(
@@ -222,13 +203,14 @@ class _AddNewSkillState extends State<AddNewSkill> {
                       ),
                     ),
                   ),
+                  
                   const SizedBox(width: 16), // Spacing between buttons
                   // Cancel Button
                   Expanded(
                     child: Container(
                       height: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(255, 198, 0, 1),
+                      decoration:  BoxDecoration(
+                        color: Colors.grey.shade500,
                         borderRadius: BorderRadius.all(
                           Radius.circular(12),
                         ),
@@ -251,6 +233,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                       ),
                     ),
                   ),
+                
                 ],
               ),
 
@@ -260,6 +243,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
           ),
         ),
       )
+    
     );
   }
 }

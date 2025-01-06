@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:skill_swap/tabScreens/favorites_sent_favorites_recieved_screen.dart';
-import 'package:skill_swap/tabScreens/like_sent_like_received_screen.dart';
+import 'package:skill_swap/tabScreens/acceptedRequestsScreen.dart';
+import 'package:skill_swap/tabScreens/notification_screen.dart';
+import 'package:skill_swap/tabScreens/search_skills.dart';
 import 'package:skill_swap/tabScreens/swipping_screen.dart';
 import 'package:skill_swap/tabScreens/user_details_screen.dart';
-import 'package:skill_swap/tabScreens/view_send_view_received_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,10 +18,10 @@ class _HomeState extends State<Home> {
   int screenIndex = 0;
   List tabScreensList = [
     SwippingScreen(),
-    ViewSendViewReceivedScreen(),
-    FavoritesSentFavoritesRecievedScreen(),
-    LikeSentLikeReceivedScreen(),
+    SearchSkills(),
     UserDetailsScreen(userId: FirebaseAuth.instance.currentUser!.uid),
+    NotificationScreen(userId: FirebaseAuth.instance.currentUser!.uid,),
+    AcceptedRequestsScreen(userId: FirebaseAuth.instance.currentUser!.uid,)
   ];
 
 
@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
             });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor:   Color.fromRGBO(255, 198, 0, 1),
+        backgroundColor:   Colors.green.shade200,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
         currentIndex: screenIndex,
@@ -49,34 +49,15 @@ class _HomeState extends State<Home> {
             ),
             label: ""
           ),
-
-          // view screen button
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.remove_red_eye,
-              size: 30,
-            ), 
-            label: ""
-          ), 
-
-          // favourite screen button
-           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.star,
-              size: 30,
-            ), 
-            label: ""
-          ),  
-
-         // like sent like recieved screen button
+          // search  button
          BottomNavigationBarItem(
             icon: Icon(
-              Icons.favorite,
+              Icons.search_outlined,
               size: 30,
+              
             ), 
             label: ""
           ),  
-
         // user detail screen button
          BottomNavigationBarItem(
             icon: Icon(
@@ -84,8 +65,24 @@ class _HomeState extends State<Home> {
               size: 30,
             ), 
             label: ""
-          ),  
-         
+          ), 
+        // user detail screen button
+         BottomNavigationBarItem(
+            icon: Icon(
+              Icons.notifications,
+              size: 30,
+            ),
+            label: ""
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.check,
+                size: 30,
+              ),
+              label: ""
+          ),
+
+
         ],
       ),
       body: tabScreensList[screenIndex],

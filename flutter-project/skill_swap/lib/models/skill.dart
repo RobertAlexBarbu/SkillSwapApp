@@ -4,33 +4,38 @@ class Skill {
   String? skillName;
   String? skillDescription;
   String? category;
+  String? userId;
+  int? id;
   int? publishedDateTime;
 
   Skill({
     this.skillName,
     this.skillDescription,
     this.category,
-    this.publishedDateTime
+    this.userId,
+    this.id,
+    this.publishedDateTime,
   });
 
-  static Skill fromDataSnapshot(DocumentSnapshot snapshot){
-    var dataSnapshot = snapshot.data() as Map<String, dynamic>;
-
+  factory Skill.fromJson(Map<String, dynamic> json) {
     return Skill(
-      skillName: dataSnapshot["skillName"],
-      skillDescription: dataSnapshot["skillDescription"],
-      category: dataSnapshot["category"],
-      publishedDateTime: dataSnapshot["publishedDateTime"]
+      skillName: json['skillName'] as String?,
+      skillDescription: json['skillDescription'] as String?,
+      category: json['category'] as String?,
+      userId: json['userId'] as String?,
+      id: json['id'] as int?,
+      publishedDateTime: json['publishedDateTime'] as int?,
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    "skillName": skillName,
-    "skillDescription": skillDescription,
-    "category": category,
-    "publishedDateTime": publishedDateTime
-  };
-
-
-
+  Map<String, dynamic> toJson() {
+    return {
+      'skillName': skillName,
+      'skillDescription': skillDescription,
+      'category': category,
+      'userId': userId,
+      'id': id,
+      'publishedDateTime': publishedDateTime,
+    };
+  }
 }

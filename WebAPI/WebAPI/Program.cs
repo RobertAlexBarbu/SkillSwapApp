@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using WebAPI.Application.Services.SkillService;
 using WebAPI.Application.Services.UserService;
 using WebAPI.Automapper;
+using WebAPI.Domain.Entities;
 using WebAPI.Filters;
 using WebAPI.Infrastructure.Firebase;
 using WebAPI.Middlewares;
@@ -11,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
+    options.Filters.Add<ModelStateFilter>();
+    options.Filters.Add<ExceptionFilter>();
 });
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -19,7 +23,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSingleton<FirebaseService>();
 builder.Services.AddSwaggerGen(c =>
     {
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -55,6 +58,9 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<ISkillSwapRequestService, SkillSwapRequestService>();
+builder.Services.AddSingleton<FirebaseService>();
 
 var app = builder.Build();
 
