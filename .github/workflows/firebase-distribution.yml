@@ -29,8 +29,8 @@ jobs:
       - name: Upload APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
+          appId: ${{ 1:639029668370:android:446f0be6cad3431e7bc6cb }}
+          token: ${{ 1//03M01fESVMdfBCgYIARAAGAMSNwF-L9IrbUXM7V5BKR4AW7nJOH_8HzKFor0CHFAqSv7StaxJ2kwW0bgOleDmQXjaGkME07Aeqjs }}
           groups: testers  # You can change this to your Firebase tester group
           file: build/app/outputs/flutter-apk/app-release.apk
 
@@ -61,8 +61,8 @@ jobs:
       - name: Upload IPA to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
-          token: ${{ secrets.FIREBASE_TOKEN }}
+          appId: ${{ 1:639029668370:ios:ab7ac9d59f98e7167bc6cb }}
+          token: ${{ 1//03M01fESVMdfBCgYIARAAGAMSNwF-L9IrbUXM7V5BKR4AW7nJOH_8HzKFor0CHFAqSv7StaxJ2kwW0bgOleDmQXjaGkME07Aeqjs }}
           groups: testers  # You can change this to your Firebase tester group
           file: build/ios/ipa/*.ipa
 
