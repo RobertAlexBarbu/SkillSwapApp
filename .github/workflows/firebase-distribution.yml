@@ -1,0 +1,68 @@
+name: Flutter CI/CD to Firebase
+
+on:
+  push:
+    branches:
+      - flutter
+      - main
+
+jobs:
+  # --- Android Build and Firebase Distribution ---
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x.x"  # Specify the version of Flutter you're using
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers  # You can change this to your Firebase tester group
+          file: build/app/outputs/flutter-apk/app-release.apk
+
+  # --- iOS Build and Firebase Distribution ---
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.x.x"  # Specify the version of Flutter you're using
+
+      - name: Install CocoaPods (for iOS)
+        run: |
+          sudo gem install cocoapods
+          pod install --project-directory=ios
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign  # Skip code-signing for testing purposes
+
+      - name: Upload IPA to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_IOS }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: testers  # You can change this to your Firebase tester group
+          file: build/ios/ipa/*.ipa
+
