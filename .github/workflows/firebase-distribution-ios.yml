@@ -23,7 +23,7 @@ jobs:
       - name: Install CocoaPods (for iOS)
         run: |
           sudo gem install cocoapods
-          pod install --project-directory=flutter-project/skill_swap
+          pod install --project-directory=flutter-project/skill_swap/ios
 
           
       - name: Install Dependencies
