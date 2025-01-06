@@ -22,23 +22,14 @@ jobs:
           
       - name: Navigate to Flutter project directory
         run: cd flutter-project/skill_swap  # Navigate to the skill_swap directory
-
-      - name: Print working directory
-        run: pwd
-
-      - name: Check if pubspec.yaml exists
-        run: |
-          if [ ! -f pubspec.yaml ]; then
-            echo "Error: pubspec.yaml not found!" && exit 1
-          else
-            echo "pubspec.yaml found."
-          fi
       
       - name: Install Dependencies
         run: flutter pub get
+        working-directory: flutter-project/skill_swap
 
       - name: Build APK
         run: flutter build apk --release
+        working-directory: flutter-project/skill_swap
 
       - name: Upload APK to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
