@@ -28,15 +28,16 @@ class _AddNewSkillState extends State<AddNewSkill> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Colors.green.shade200,
+        backgroundColor:  theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         title: Center(
-          child: const Text(
+          child: Text(
             "Add Skill",
             style: TextStyle(
-              color: Colors.white,
+              color: theme.primaryColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -56,23 +57,12 @@ class _AddNewSkillState extends State<AddNewSkill> {
                   controller: skillNameTextEditingController,
                   textAlignVertical: TextAlignVertical.center,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
                       prefixIcon:  Icon(Icons.title,
-                          color: Colors.orange.shade600),
-                      hintText: 'Name',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: "Name",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
                       )),
                 ),
               ),
@@ -89,20 +79,11 @@ class _AddNewSkillState extends State<AddNewSkill> {
                     color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
                       prefixIcon:  Icon(Icons.description,
-                          color: Colors.orange.shade600),
-                      hintText: 'Description',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: "Description",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none)),
+                      )),
                   
                 ),
               ),
@@ -118,7 +99,6 @@ class _AddNewSkillState extends State<AddNewSkill> {
                     "Select skill categories:",
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.grey.shade600,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -132,7 +112,7 @@ class _AddNewSkillState extends State<AddNewSkill> {
                           Radio<String>(
                             value: category,
                             groupValue: selectedCategory, // Single selected value
-                            activeColor: const Color.fromRGBO(255, 198, 0, 1), // Customize selected color
+                            activeColor: theme.primaryColor, // Customize selected color
                             onChanged: (String? value) {
                               setState(() {
                                 selectedCategory = value; // Update selected category
@@ -142,8 +122,6 @@ class _AddNewSkillState extends State<AddNewSkill> {
                           Text(
                             category,
                             style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontWeight: FontWeight.w400,
                               fontSize: 16, // Adjust font size for compact layout
                             ),
                           ),
@@ -158,81 +136,53 @@ class _AddNewSkillState extends State<AddNewSkill> {
               SizedBox(height: 30,),
               
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between buttons
+                mainAxisAlignment: MainAxisAlignment.end, // Space between buttons
                 children: [
-                  // Save Button
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      decoration:  BoxDecoration(
-                        color: Colors.green.shade200,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
-                      child: InkWell(
-                        onTap: () async {
 
-                          if (skillNameTextEditingController.text.trim().isNotEmpty &&
-                              skillDescriptionTextEditingController.text.trim().isNotEmpty &&
-                              true) {
-                              await skillsController.createSkill(
-                                skillName: skillNameTextEditingController.text.trim(),
-                                skillDescription: skillDescriptionTextEditingController.text.trim(),
-                                category: selectedCategory,
-                              );
-                              if(Get.isSnackbarOpen){
-                                Get.close(-1);
-                              } else {
-                                Get.back();
-                              }
-
-                          }
-
-                        },
-                        child: const Center(
-                          child: Text(
-                            "Save",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  
-                  const SizedBox(width: 16), // Spacing between buttons
                   // Cancel Button
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      decoration:  BoxDecoration(
-                        color: Colors.grey.shade500,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12),
-                        ),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          // Add cancel logic here
-                          Get.back();
-                        },
-                        child: const Center(
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
+                  TextButton(
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 20,
                       ),
                     ),
+                    onPressed: () {
+                      // Add cancel logic here
+                      Get.back();
+                    },
                   ),
+
+                  // Save Button
+                  TextButton(
+                  onPressed: () async {
+
+      if (skillNameTextEditingController.text.trim().isNotEmpty &&
+      skillDescriptionTextEditingController.text.trim().isNotEmpty &&
+      true) {
+      await skillsController.createSkill(
+      skillName: skillNameTextEditingController.text.trim(),
+      skillDescription: skillDescriptionTextEditingController.text.trim(),
+      category: selectedCategory,
+      );
+      if(Get.isSnackbarOpen){
+      Get.close(-1);
+      } else {
+      Get.back();
+      }
+
+      }
+
+      },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    ),
+
+
                 
                 ],
               ),

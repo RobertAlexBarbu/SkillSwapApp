@@ -15,6 +15,8 @@ public class AppDbContext : DbContext
     
     public DbSet<SkillSwapRequest> SkillSwapRequests { get; set; }
     
+    public DbSet<SkillSwapRequestMessage> SkillSwapRequestMessages { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

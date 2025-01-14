@@ -59,15 +59,16 @@ class _SearchSkillsState extends State<SearchSkills> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green.shade200,
+        backgroundColor: theme.scaffoldBackgroundColor,
         automaticallyImplyLeading: false,
         title: Center(
-          child: const Text(
+          child: Text(
             "Search Skills",
             style: TextStyle(
-              color: Colors.white,
+              color: theme.primaryColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -87,7 +88,7 @@ class _SearchSkillsState extends State<SearchSkills> {
           ),
           Expanded(
             child: filteredProfiles.isEmpty
-                ? const Center(child: Text("No profiles found"))
+                ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
               itemCount: filteredProfiles.length,
               itemBuilder: (context, index) {
@@ -95,7 +96,7 @@ class _SearchSkillsState extends State<SearchSkills> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
-                        person.imageProfile ?? "https://via.placeholder.com/150"),
+                        person.imageProfile ?? "https://via.placeholder.com/10"),
                   ),
                   title: Text(person.name ?? "Unnamed"),
                   subtitle: Text(

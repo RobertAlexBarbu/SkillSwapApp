@@ -21,7 +21,7 @@ class SeeUserProfile extends StatefulWidget {
 class _SeeUserProfileState extends State<SeeUserProfile> {
 
   ProfileController profileController = Get.put(ProfileController());
-  Status _swapStatus = Status.request; 
+  Status _swapStatus = Status.request;
   final dio = createDio();
   int? _selectedUserSkillId;
   int? _selectedMySkillId;
@@ -65,8 +65,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
       Get.snackbar(
         "Success",
         "Skill swap request sent!",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
+
       );
     } else {
       throw Exception("Failed to create request. Server responded with ${response.statusCode}.");
@@ -79,7 +78,6 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
     Get.snackbar(
       "Error",
       "Could not send the request. Please try again later.",
-      backgroundColor: Colors.red,
       colorText: Colors.white,
     );
   }
@@ -90,7 +88,7 @@ class _SeeUserProfileState extends State<SeeUserProfile> {
       _swapStatus = accepted ? Status.swapping : Status.declined;
     });
   }
-  
+
   retrieveSkills() async {
     try {
       final id = FirebaseAuth.instance.currentUser?.uid;
@@ -117,13 +115,13 @@ void _showCreateSwapDialog(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15), // Rounded corners for the dialog
         ),
-        backgroundColor: Colors.grey.shade100,
+
         title: Text(
           'Create Swap Request',
           style: TextStyle(
             fontSize: 22, // Increase the font size of the title
             fontWeight: FontWeight.bold,
-            color: Colors.grey.shade600,
+
           ),
         ),
         contentPadding: EdgeInsets.all(20), // Padding inside the dialog
@@ -141,7 +139,7 @@ void _showCreateSwapDialog(BuildContext context) {
                     style: TextStyle(
                       fontSize: 18, // Increase the font size
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade600,
+
                     ),
                   ),
                   // Dropdown for your skills to offer
@@ -153,7 +151,7 @@ void _showCreateSwapDialog(BuildContext context) {
                           : skillsList.firstWhere((skill) => skill['id'] == _selectedMySkillId)['skillName'],
                       style: TextStyle(
                         fontSize: 16, // Font size for the hint
-                        color: Colors.grey.shade600,
+
                       ),
                     ),
                     items: skillsList.map((skill) {
@@ -161,7 +159,7 @@ void _showCreateSwapDialog(BuildContext context) {
                         value: skill['id'],
                         child: Text(
                           skill['skillName'],  // Show the skill name in the dropdown
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
                       );
                     }).toList(),
@@ -173,11 +171,11 @@ void _showCreateSwapDialog(BuildContext context) {
                     isExpanded: true, // Expand the dropdown to fill width
                     icon: Icon(
                       Icons.arrow_drop_down, // Dropdown icon
-                      color: Colors.grey.shade600, // Icon color
+
                     ),
-                    dropdownColor: Colors.white, // Background color of the dropdown menu
+
                     style: TextStyle( // Text style for the button
-                      color: Colors.grey.shade600,
+
                       fontSize: 16,
                     ),
                     underline: Container(), // Remove the underline
@@ -191,7 +189,7 @@ void _showCreateSwapDialog(BuildContext context) {
                     style: TextStyle(
                       fontSize: 18, // Increase the font size
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade600,
+
                     ),
                   ),
                   DropdownButton<int>(
@@ -202,7 +200,7 @@ void _showCreateSwapDialog(BuildContext context) {
                           : widget.userProfile.skills!.firstWhere((skill) => skill.id == _selectedUserSkillId).skillName!,
                       style: TextStyle(
                         fontSize: 16, // Font size for the hint
-                        color: Colors.grey.shade600,
+
                       ),
                     ),
                     items: widget.userProfile.skills!.map((skill) {
@@ -210,7 +208,7 @@ void _showCreateSwapDialog(BuildContext context) {
                         value: skill.id,
                         child: Text(
                           skill.skillName!,
-                          style: TextStyle(fontSize: 16), // Style for the items in the dropdown
+                          style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
                       );
                     }).toList(),
@@ -222,11 +220,11 @@ void _showCreateSwapDialog(BuildContext context) {
                     isExpanded: true, // Expand the dropdown to fill width
                     icon: Icon(
                       Icons.arrow_drop_down, // Dropdown icon
-                      color: Colors.grey.shade600, // Icon color
+
                     ),
-                    dropdownColor: Colors.white, // Background color of the dropdown menu
+
                     style: TextStyle( // Text style for the button
-                      color: Colors.grey.shade600,
+
                       fontSize: 16,
                     ),
                     underline: Container(), // Remove the underline
@@ -251,7 +249,6 @@ void _showCreateSwapDialog(BuildContext context) {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.red, // Red color for cancel button
               ),
             ),
           ),
@@ -261,7 +258,6 @@ void _showCreateSwapDialog(BuildContext context) {
               Navigator.of(context).pop(); // Close the dialog
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green, // Button color
               padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25), // Padding for button
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10), // Rounded button corners
@@ -281,27 +277,39 @@ void _showCreateSwapDialog(BuildContext context) {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green.shade200,
+        backgroundColor: theme.scaffoldBackgroundColor
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 60),
+
             Center(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.symmetric(horizontal: 0),
                 child: Column(
                   children: [
                     // Display profile picture
-                    ClipOval(
-                      child: Image.network(
-                        widget.userProfile.imageProfile.toString(),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
+                    Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: theme.primaryColor,  // Border color
+                          width: 4.0,          // Border width
+                        ),
+                      ),
+                      child: ClipOval(
+                        child: Image.network(
+                          widget.userProfile.imageProfile.toString(),
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                        ),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -316,7 +324,7 @@ void _showCreateSwapDialog(BuildContext context) {
                                 ElevatedButton(
                                   onPressed: () => _showCreateSwapDialog(context),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green.shade200, // Text color
+                                    backgroundColor: theme.primaryColor, // Text color
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10), // Rounded corners
                                     ),
@@ -326,7 +334,7 @@ void _showCreateSwapDialog(BuildContext context) {
                                     style: TextStyle(
                                       fontSize: 16, // Font size
                                       fontWeight: FontWeight.bold, // Font weight
-                                      color: Colors.grey.shade600
+                                      color: Colors.white
                                     ),
                                   ),
                                 )
@@ -341,7 +349,7 @@ void _showCreateSwapDialog(BuildContext context) {
                                 widget.userProfile.name ?? "Unknown Name",
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.grey.shade600,
+
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -359,12 +367,12 @@ void _showCreateSwapDialog(BuildContext context) {
                                   widget.userProfile.profileHeading ?? "Unknown Description",
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.grey.shade600,
+
                                   ),
                                   softWrap: true,
                                   overflow: TextOverflow.visible,
                                 )
-                              )  
+                              )
                             ]
                           ),
                           const SizedBox(height: 10,),
@@ -376,7 +384,7 @@ void _showCreateSwapDialog(BuildContext context) {
                               "Contact: ",
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey.shade600,
+
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -385,7 +393,7 @@ void _showCreateSwapDialog(BuildContext context) {
                               widget.userProfile.phoneNo ?? "Unknown Contact",
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey.shade600,
+
                               ),
                             )
                             ],
@@ -401,7 +409,7 @@ void _showCreateSwapDialog(BuildContext context) {
                                 "Age:  ",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey.shade600,
+
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -410,17 +418,17 @@ void _showCreateSwapDialog(BuildContext context) {
                                 "Age: ${widget.userProfile.age ?? 'Unknown Age'}",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey.shade600,
+
                                 ),
                               )
                             ]
                           ),
                           SizedBox(height: 10,),
-                          
+
                         ],
                       ),
                     ),
-                  
+
                     Container(
                       padding: const EdgeInsets.all(20),
                       child: Column(
@@ -430,7 +438,6 @@ void _showCreateSwapDialog(BuildContext context) {
                             "Skills",
                             style:  TextStyle(
                               fontSize: 22,
-                              color: Colors.grey.shade600,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -441,7 +448,7 @@ void _showCreateSwapDialog(BuildContext context) {
                           ?  Center(
                               child: Text(
                                 "No skills available",
-                                style: TextStyle(color: Colors.grey.shade600),
+                                style: TextStyle(),
                               ),
                             )
                           : ListView.builder(
@@ -452,87 +459,96 @@ void _showCreateSwapDialog(BuildContext context) {
                                 final skill =  widget.userProfile.skills![index];
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 20.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
+                                  child:
+                                  Card(
+                                    shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
-                                      color: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
                                     ),
-                                    padding: const EdgeInsets.all(6.0), 
-                                    child: ListTile(
-                                    title: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            " ${skill.skillName}",
-                                            style:  TextStyle(
-                                              color: Colors.grey.shade600,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold
-                                              ),
-                                            overflow: TextOverflow.ellipsis
-                                          ),
-                                        ),
+                                    elevation: 4,
+                                    child:                                   Container(
 
-                                      ],
-                                    ),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12),
 
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [  
+                                      ),
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: ListTile(
+                                        title: Row(
+                                          children: [
                                             Expanded(
                                               child: Text(
-                                                " ${skill.skillDescription}",
-                                                style:  TextStyle(
-                                                  color: Colors.grey.shade600,
-                                                  fontSize: 14
-                                                ),
-                                                softWrap: true,
-                                                overflow: TextOverflow.visible,
+                                                  " ${skill.skillName}",
+                                                  style:  TextStyle(
+
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                  overflow: TextOverflow.ellipsis
                                               ),
-                                            )
+                                            ),
+
                                           ],
                                         ),
-                                        // Displaying categories
-                                        Row(
+
+                                        subtitle: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "Categories: ",
-                                              style: TextStyle(
-                                                color: Colors.grey.shade600,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold
-                                              ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    " ${skill.skillDescription}",
+                                                    style:  TextStyle(
+
+                                                        fontSize: 14
+                                                    ),
+                                                    softWrap: true,
+                                                    overflow: TextOverflow.visible,
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                            Text(
-                                            " ${skill.category ?? "No Category"}",
-                                              style:  TextStyle(
-                                                color: Colors.grey.shade600,
-                                                fontSize: 16,
-                                              ),
+                                            // Displaying categories
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Categories: ",
+                                                  style: TextStyle(
+
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
+                                                ),
+                                                Text(
+                                                  " ${skill.category ?? "No Category"}",
+                                                  style:  TextStyle(
+
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                  )
+
                               );
-                      }  
+                      }
                     ),
-                  
+
                         ],
-                      ), 
+                      ),
                     ),
 
                   ],
                 ),
               ),
-            ),  
+            ),
           ],
         ),
       ),
-    );  
+    );
   }
 }

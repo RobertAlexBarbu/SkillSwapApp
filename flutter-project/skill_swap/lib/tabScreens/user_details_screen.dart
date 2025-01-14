@@ -160,15 +160,16 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       //app bar
+
       appBar: AppBar(
-       backgroundColor:  Colors.green.shade200,
-        title: const Text(
+       backgroundColor:  theme.scaffoldBackgroundColor,
+        title:Text(
           "Profile",
           style: TextStyle(
-            color: Colors.white,
+            color: theme.primaryColor,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -178,9 +179,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           PopupMenuButton<String>(
             icon: Icon(
               Icons.more_vert, // Three dots icon
-              color: Colors.white,
+
             ),
-            color: Colors.grey.shade100,
+
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -197,12 +198,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     return StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState) {
                         return AlertDialog(
-                          backgroundColor: Colors.grey.shade200,
                           title: Center(
                             child: Text(
                               "Edit Profile",
                               style: TextStyle(
-                                color: Colors.grey.shade600,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -217,26 +216,19 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width - 36,
                                     height: 55,
-                                    child: TextFormField(
+                                    child: TextField(
                                       controller: profileNameTextEditingController,
                                       textAlignVertical: TextAlignVertical.center,
                                       style: TextStyle(
-                                        color: Colors.grey.shade600,
                                       ),
                                       decoration: InputDecoration(
-                                        constraints: const BoxConstraints(
-                                          maxWidth: 360,
-                                        ),
-                                        filled: true,
-                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        labelText: "Name",
+                                        border: OutlineInputBorder(),
                                         prefixIcon: Icon(
                                           Icons.title,
-                                          color: Colors.orange.shade600,
+                                          color: theme.primaryColor
                                         ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
-                                        ),
+
                                       ),
                                     ),
                                   ),
@@ -245,25 +237,17 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width - 36,
                                     height: 55,
-                                    child: TextFormField(
+                                    child: TextField(
                                       controller: profileDescriptionTextEditingController,
                                       textAlignVertical: TextAlignVertical.center,
                                       style: TextStyle(
-                                        color: Colors.grey.shade600,
                                       ),
                                       decoration: InputDecoration(
-                                        constraints: const BoxConstraints(
-                                          maxWidth: 360,
-                                        ),
-                                        filled: true,
-                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        labelText: "Description",
+                                        border: OutlineInputBorder(),
                                         prefixIcon: Icon(
-                                          Icons.description,
-                                          color: Colors.orange.shade600,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
+                                            Icons.description,
+                                            color: theme.primaryColor
                                         ),
                                       ),
                                     ),
@@ -277,21 +261,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       controller: profileNrPhoneTextEditingController,
                                       textAlignVertical: TextAlignVertical.center,
                                       style: TextStyle(
-                                        color: Colors.grey.shade600,
+
                                       ),
                                       decoration: InputDecoration(
-                                        constraints: const BoxConstraints(
-                                          maxWidth: 360,
-                                        ),
-                                        filled: true,
-                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        labelText: "Phone",
+                                        border: OutlineInputBorder(),
                                         prefixIcon: Icon(
-                                          Icons.phone,
-                                          color: Colors.orange.shade600,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
+                                            Icons.phone,
+                                            color: theme.primaryColor
                                         ),
                                       ),
                                     ),
@@ -305,21 +282,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       controller: profileAgeTextEditingController,
                                       textAlignVertical: TextAlignVertical.center,
                                       style: TextStyle(
-                                        color: Colors.grey.shade600,
+
                                       ),
                                       decoration: InputDecoration(
-                                        constraints: const BoxConstraints(
-                                          maxWidth: 360,
-                                        ),
-                                        filled: true,
-                                        fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                        labelText: "Age",
+                                        border: OutlineInputBorder(),
                                         prefixIcon: Icon(
-                                          Icons.calendar_month,
-                                          color: Colors.orange.shade600,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: BorderSide.none,
+                                            Icons.calendar_month,
+                                            color: theme.primaryColor
                                         ),
                                       ),
                                     ),
@@ -337,7 +307,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               child: Text(
                                 'Cancel',
                                 style: TextStyle(
-                                  color: Colors.grey.shade600,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                 ),
@@ -358,7 +327,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               child: Text(
                                 'Save',
                                 style: TextStyle(
-                                  color: Color.fromRGBO(255, 198, 0, 1),
+
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
@@ -379,18 +348,15 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        backgroundColor: Colors.grey.shade200,
                         title: Text(
                           'Confirm Logout', 
                           style: TextStyle(
-                            color: Colors.grey.shade600,
                             fontWeight: FontWeight.w600
                           ),  
                         ),
                         content: Text(
                           'Are you sure you want to logout?',
                           style: TextStyle(
-                            color: Colors.grey.shade600
                           ),  
                         ),
                         actions: [
@@ -401,7 +367,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             child: Text(
                               'Cancel',
                               style: TextStyle(
-                                color: Colors.grey.shade600,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16
                               ),
@@ -415,7 +380,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             child: Text(
                               'Yes',
                               style: TextStyle(
-                                color: Colors.red.shade600,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16
                               ),  
@@ -439,14 +403,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     ),
                   child: Row(
                     children: [
-                      Icon(Icons.edit, color:  Color.fromRGBO(255, 198, 0, 1)),// Icon with custom color and size
+                      Icon(Icons.edit, color:  theme.primaryColor),// Icon with custom color and size
                       SizedBox(width: 8), // Spacing between icon and text
                       Text(
                         'Edit Profile',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade600, // Text color
                         ),
                       ),
                     ],
@@ -463,14 +426,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   alignment: Alignment.center,
                   child: Row(
                     children: [
-                      Icon(Icons.logout, color: Colors.red, size: 20), // Icon with custom color and size
+                      Icon(Icons.logout, color: theme.primaryColor, size: 20), // Icon with custom color and size
                       SizedBox(width: 8), // Spacing between icon and text
                       Text(
                         'Logout',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade600, // Text color
                         ),
                       ),
                     ],
@@ -483,18 +445,18 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.only(left: 10, right: 10, bottom:20, top: 20),
           child: Column(
             children: [
               //profile picture
               Container(
-                width: MediaQuery.of(context).size.width * 0.4,  
-                height: MediaQuery.of(context).size.width * 0.4, 
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: MediaQuery.of(context).size.width * 0.6,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   // Makes the container a circle
                   border: Border.all(
-                    color:Colors.grey.shade600, 
+                    color: theme.primaryColor,
                     width: 2.0,         
                   ),
                 ),
@@ -520,7 +482,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                   }, 
                   icon: const Icon(
                     Icons.image_outlined,
-                    color: Colors.grey,
+
                     size: 30,
                     )
                   ),
@@ -532,7 +494,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     },
                     icon: const Icon(
                       Icons.camera_alt_outlined,
-                      color: Colors.grey,
+
                       size: 30,
                     )
                   ),
@@ -542,7 +504,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               const SizedBox(height: 20,),
               //user data
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     //name
@@ -553,7 +515,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           name!,
                           style: TextStyle(
                             fontSize: 20,
-                            color: Colors.grey.shade600,
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -571,7 +532,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                             profileHeading!,
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.grey.shade600,
                             ),
                             softWrap: true,
                             overflow: TextOverflow.visible,
@@ -588,7 +548,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         "Contact: ",
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade600,
+
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -597,7 +557,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         phoneNo!,
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey.shade600,
+
                         ),
                       )
                       ],
@@ -613,7 +573,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           "Age:  ",
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey.shade600,
+
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -622,7 +582,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           age!,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey.shade600,
                           ),
                         )
                       ]
@@ -634,7 +593,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               ),
 
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -642,7 +601,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       "Skills",
                       style:  TextStyle(
                         fontSize: 22,
-                        color: Colors.grey.shade600,
+
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -654,7 +613,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     ?  Center(
                         child: Text(
                           "No skills available",
-                          style: TextStyle(color: Colors.grey.shade600),
+                          style: TextStyle(),
                         ),
                       )
                     : ListView.builder(
@@ -667,33 +626,37 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
-                              ),
-                              padding: const EdgeInsets.all(6.0), 
-                              child: ListTile(
+                            child:
+                          Card(
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 4,
+                          child:
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+
+                            ),
+                            padding: const EdgeInsets.all(6.0),
+                            child: ListTile(
                               title: Row(
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      skill["skillName"] ?? "Skill Name",
-                                      style:  TextStyle(
-                                        color: Colors.grey.shade600,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold
+                                        skill["skillName"] ?? "Skill Name",
+                                        style:  TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold
                                         ),
-                                      overflow: TextOverflow.ellipsis
+                                        overflow: TextOverflow.ellipsis
                                     ),
                                   ),
-                                    //edit/delete skills
+                                  //edit/delete skills
                                   PopupMenuButton<String>(
                                     icon: Icon(
                                       Icons.more_vert, // Three dots icon
-                                      color: Colors.grey.shade600,
                                     ),
-                                    color: Colors.grey.shade100,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -708,12 +671,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                             return StatefulBuilder(
                                               builder: (BuildContext context, StateSetter setState) {
                                                 return AlertDialog(
-                                                  backgroundColor: Colors.grey.shade200,
+
                                                   title: Center(
                                                     child: Text(
                                                       "Edit Skill",
                                                       style: TextStyle(
-                                                        color: Colors.grey.shade600,
+
                                                         fontWeight: FontWeight.w600,
                                                       ),
                                                     ),
@@ -733,21 +696,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                                 controller: skillNameTextEditingController,
                                                                 textAlignVertical: TextAlignVertical.center,
                                                                 style: TextStyle(
-                                                                  color: Colors.grey.shade600,
                                                                 ),
                                                                 decoration: InputDecoration(
-                                                                  constraints: const BoxConstraints(
-                                                                    maxWidth: 360,
-                                                                  ),
-                                                                  filled: true,
-                                                                  fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                                                  labelText: 'Name',
+                                                                  border: OutlineInputBorder(),
                                                                   prefixIcon: Icon(
                                                                     Icons.title,
-                                                                    color: Colors.orange.shade600,
-                                                                  ),
-                                                                  border: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),
-                                                                    borderSide: BorderSide.none,
+                                                                    color: theme.primaryColor,
+
                                                                   ),
                                                                 ),
                                                               ),
@@ -761,28 +717,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                                 controller: skillDescriptionTextEditingController,
                                                                 textAlignVertical: TextAlignVertical.center,
                                                                 style: TextStyle(
-                                                                  color: Colors.grey.shade600,
                                                                 ),
                                                                 decoration: InputDecoration(
-                                                                  constraints: const BoxConstraints(
-                                                                    maxWidth: 360,
-                                                                  ),
-                                                                  filled: true,
-                                                                  fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+                                                                  labelText: 'Description',
+                                                                  border: OutlineInputBorder(),
                                                                   prefixIcon: Icon(
                                                                     Icons.description,
-                                                                    color: Colors.orange.shade600,
-                                                                  ),
-                                                                  border: OutlineInputBorder(
-                                                                    borderRadius: BorderRadius.circular(10),
-                                                                    borderSide: BorderSide.none,
+                                                                    color: theme.primaryColor,
+
                                                                   ),
                                                                 ),
                                                               ),
                                                             ),
-                                                      
+
                                                             const SizedBox(height: 20),
-                                                      
+
                                                             // Checkbox List for Categories
                                                             Column(
                                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -791,7 +740,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                                   "Select skill categories:",
                                                                   style: TextStyle(
                                                                     fontSize: 18,
-                                                                    color: Colors.grey.shade600,
                                                                     fontWeight: FontWeight.w500,
                                                                   ),
                                                                 ),
@@ -804,7 +752,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                                         Radio<String>(
                                                                           value: skillCategory,
                                                                           groupValue: selectedCategory,
-                                                                          activeColor: const Color.fromRGBO(255, 198, 0, 1),
+                                                                          activeColor: theme.primaryColor,
                                                                           onChanged: (String? value) {
                                                                             setState(() {
                                                                               selectedCategory = value!; // Update selected category dynamically
@@ -814,7 +762,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                                         Text(
                                                                           skillCategory,
                                                                           style: TextStyle(
-                                                                            color: Colors.grey.shade600,
                                                                             fontWeight: FontWeight.w400,
                                                                             fontSize: 16,
                                                                           ),
@@ -825,7 +772,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                                 }),
                                                               ],
                                                             ),
-                                                      
+
                                                             const SizedBox(height: 30),
                                                           ],
                                                         ),
@@ -841,7 +788,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                           height: 40,
                                                           width: 80,
                                                           decoration:  BoxDecoration(
-                                                            color: Colors.grey,
                                                             borderRadius: BorderRadius.all(
                                                               Radius.circular(8),
                                                             ),
@@ -853,51 +799,46 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                             child: Text(
                                                               'Cancel',
                                                               style: TextStyle(
-                                                              fontSize: 18,
-                                                              color: Colors.white,
-                                                              fontWeight: FontWeight.w400,
-                                                            ),
+                                                                fontSize: 18,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      SizedBox(width: 30,),
-                                                      //save skill update
-                                                      Container(
-                                                        height: 40,
-                                                        width: 80,
-                                                        decoration:  BoxDecoration(
-                                                          color: Colors.green.shade200,
-                                                          borderRadius: BorderRadius.all(
-                                                            Radius.circular(8),
+                                                        SizedBox(width: 30,),
+                                                        //save skill update
+                                                        Container(
+                                                          height: 40,
+                                                          width: 80,
+                                                          decoration:  BoxDecoration(
+                                                            borderRadius: BorderRadius.all(
+                                                              Radius.circular(8),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        child: TextButton(
-                                                          onPressed: () async {
-                                                            final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
-                                                            await skillsController.updateSkill(
-                                                              skillId: skillId, // Pass the skill ID
-                                                              skillName: skillNameTextEditingController.text, // Updated name
-                                                              skillDescription: skillDescriptionTextEditingController.text, // Updated description
-                                                              category: selectedCategory ?? "", // Updated category
+                                                          child: TextButton(
+                                                            onPressed: () async {
+                                                              final skillId = skill['id']; // Replace 'id' with the key for the skill's ID
+                                                              await skillsController.updateSkill(
+                                                                skillId: skillId, // Pass the skill ID
+                                                                skillName: skillNameTextEditingController.text, // Updated name
+                                                                skillDescription: skillDescriptionTextEditingController.text, // Updated description
+                                                                category: selectedCategory ?? "", // Updated category
                                                               );
-                                                            // Close the dialog
-                                                            Navigator.of(context).pop();
-                                                            retrieveSkills();
-                                                          },
-                                                          child: Text(
-                                                            'Save',
-                                                            style: TextStyle(
-                                                            fontSize: 18,
-                                                            color: Colors.white,
-                                                            fontWeight: FontWeight.w400,
-                                                          ),
+                                                              // Close the dialog
+                                                              Navigator.of(context).pop();
+                                                              retrieveSkills();
+                                                            },
+                                                            child: Text(
+                                                              'Save',
+                                                              style: TextStyle(
+                                                                fontSize: 18,
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
                                                       ],
                                                     ),
                                                   ],
-                                                
+
                                                 );
                                               },
                                             );
@@ -907,60 +848,55 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       } else if (value == 'delete') {
                                         // Handle delete skill logic
                                         // Show confirmation dialog for delete
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                backgroundColor: Colors.grey.shade200,
-                                                title: Text(
-                                                  'Confirm Deletion', 
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade600,
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                'Confirm Deletion',
+                                                style: TextStyle(
                                                     fontWeight: FontWeight.w600
-                                                  ),  
                                                 ),
-                                                content: Text(
-                                                  'Are you sure you want to delete this skill?',
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade600
-                                                  ),  
+                                              ),
+                                              content: Text(
+                                                'Are you sure you want to delete this skill?',
+                                                style: TextStyle(
                                                 ),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop(); // Close the dialog
-                                                    },
-                                                    child: Text(
-                                                      'Cancel',
-                                                      style: TextStyle(
-                                                        color: Colors.grey.shade600,
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop(); // Close the dialog
+                                                  },
+                                                  child: Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
                                                         fontWeight: FontWeight.w500,
                                                         fontSize: 16
-                                                      ),
                                                     ),
                                                   ),
-                                                  TextButton(
-                                                    onPressed: () async{
-                                                      final skillId = skill['id'];
-                                                      await skillsController.deleteSkill(skillId: skillId);
-                                                      Navigator.of(context).pop();
-                                                      retrieveSkills();
-                                                    },
-                                                    child: Text(
-                                                      'Yes',
-                                                      style: TextStyle(
-                                                        color: Colors.red.shade600,
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async{
+                                                    final skillId = skill['id'];
+                                                    await skillsController.deleteSkill(skillId: skillId);
+                                                    Navigator.of(context).pop();
+                                                    retrieveSkills();
+                                                  },
+                                                  child: Text(
+                                                    'Yes',
+                                                    style: TextStyle(
                                                         fontWeight: FontWeight.w600,
                                                         fontSize: 16
-                                                      ),  
                                                     ),
                                                   ),
-                                                ],
-                                              
-                                              );
-                                            },
-                                          );
-                                        }
+                                                ),
+                                              ],
+
+                                            );
+                                          },
+                                        );
+                                      }
                                     },
                                     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
                                       PopupMenuItem<String>(
@@ -968,18 +904,17 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         child: Container(
                                           alignment: Alignment.center,
                                           constraints: BoxConstraints(
-                                              minWidth: 80, // Minimum width of the popup menu
-                                            ),
+                                            minWidth: 80, // Minimum width of the popup menu
+                                          ),
                                           child: Row(
                                             children: [
-                                              Icon(Icons.edit, color:  Color.fromRGBO(255, 198, 0, 1)),// Icon with custom color and size
+                                              Icon(Icons.edit, color:  theme.primaryColor),// Icon with custom color and size
                                               SizedBox(width: 8), // Spacing between icon and text
                                               Text(
                                                 'Edit Skill',
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Colors.grey.shade600, // Text color
                                                 ),
                                               ),
                                             ],
@@ -990,19 +925,18 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                         value: 'delete',
                                         child: Container(
                                           constraints: BoxConstraints(
-                                              minWidth: 80, // Minimum width of the popup menu
+                                            minWidth: 80, // Minimum width of the popup menu
                                           ),
                                           alignment: Alignment.center,
                                           child: Row(
                                             children: [
-                                              Icon(Icons.delete, color: Colors.red, size: 20), // Icon with custom color and size
+                                              Icon(Icons.delete, color: theme.primaryColor, size: 20), // Icon with custom color and size
                                               SizedBox(width: 8), // Spacing between icon and text
                                               Text(
                                                 'Delete Skill',
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Colors.grey.shade600, // Text color
                                                 ),
                                               ),
                                             ],
@@ -1011,7 +945,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                
+
                                 ],
                               ),
 
@@ -1019,13 +953,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    children: [  
+                                    children: [
                                       Expanded(
                                         child: Text(
                                           skill["skillDescription"] ?? "No Description",
                                           style:  TextStyle(
-                                            color: Colors.grey.shade600,
-                                            fontSize: 14
+                                              fontSize: 14
                                           ),
                                           softWrap: true,
                                           overflow: TextOverflow.visible,
@@ -1036,20 +969,18 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   // Displaying categories
                                   Row(
                                     children: [
-                                       Text(
+                                      Text(
                                         "Category: ",
                                         style: TextStyle(
-                                          color: Colors.grey.shade600,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold
                                         ),
                                       ),
                                       Text(
                                         category != ''
-                                          ? category
-                                          : 'No category selected',
+                                            ? category
+                                            : 'No category selected',
                                         style:  TextStyle(
-                                          color: Colors.grey.shade600,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -1059,6 +990,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               ),
                             ),
                           ),
+                          ),
+
+
                         );
                       }  
                     ),
@@ -1079,7 +1013,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                               },
                               icon:  Icon(
                                 Icons.add, // Use the "add" icon
-                                color: Colors.grey.shade500, // Icon color
                                 size: 30, // Adjust icon size
                               ),
                               splashRadius: 24, // Adjust the tap area radius
@@ -1087,7 +1020,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           ),
                            Text(
                             "Add new skills",
-                            style: TextStyle(color: Colors.grey.shade600),
                           ),
                         ],
                       ),

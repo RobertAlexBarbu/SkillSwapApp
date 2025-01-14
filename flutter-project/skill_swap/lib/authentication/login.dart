@@ -21,62 +21,72 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
               const SizedBox(
-                height: 80,
+                height: 140,
               ),
               //welcome to skill swap
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Welcome",
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade600
-                    ),
-                  ),
-
-                  Text(
-                    "to",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey.shade600
-                    ),
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                      "Skill ",
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade600
-                        ),
-                      ),
-                      Text(
-                      "Swap",
-                        style: TextStyle(
+                  // Text(
+                  //   "Welcome",
+                  //   style: TextStyle(
+                  //     fontSize: 36,
+                  //     fontWeight: FontWeight.w500,
+                  //
+                  //   ),
+                  // ),
+                  // Text(
+                  //   "to",
+                  //   style: TextStyle(
+                  //     fontSize: 32,
+                  //     fontWeight: FontWeight.w500,
+                  //
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50),
+                    child:                   Text(
+                      "Welcome to SkillSwap",
+                      style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.w700,
-                          color: Color.fromRGBO(255, 198, 0, 1)
-                        ),
-                      )
-                    ],
-                  ),
+                          color: theme.primaryColor
+                      ),
+                    ),
+                  )
+
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     // Text(
+                  //     // "Skill ",
+                  //     //   style: TextStyle(
+                  //     //     fontSize: 36,
+                  //     //     fontWeight: FontWeight.w500,
+                  //     //   ),
+                  //     // ),
+                  //     Text(
+                  //     "Welcome to Skill Swap",
+                  //       style: TextStyle(
+                  //         fontSize: 36,
+                  //         fontWeight: FontWeight.w700,
+                  //         color: theme.primaryColor
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
                 ]  
               ),
              
               const SizedBox(
-                  height: 70,
+                  height: 30,
               ),
 
             //email
@@ -88,23 +98,17 @@ class _LoginState extends State<Login> {
                   textAlignVertical: TextAlignVertical.center,
                   keyboardType: TextInputType.emailAddress,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
+
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
+
                       prefixIcon:  Icon(Icons.email_outlined,
-                          color: Colors.orange.shade600),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Email',
+
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ), 
             ),
@@ -122,23 +126,17 @@ class _LoginState extends State<Login> {
                   textAlignVertical: TextAlignVertical.center,
                   obscureText: true,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
+
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.lock_open_outlined,
-                          color: Colors.orange.shade600),
-                      hintText: 'Password',
+                          color: theme.primaryColor),
+                      labelText: 'Password',
                       hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
                           fontWeight: FontWeight.w400),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               
@@ -152,8 +150,8 @@ class _LoginState extends State<Login> {
             Container(
               width: 120,
               height: 50,
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(255, 198, 0, 1),
+              decoration: BoxDecoration(
+                color: theme.primaryColor,
                 borderRadius: BorderRadius.all(
                   Radius.circular(12)
                 )
@@ -182,8 +180,8 @@ class _LoginState extends State<Login> {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                      fontSize: 20,
                       color: Colors.white,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600
                     ),
                   ),

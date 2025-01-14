@@ -12,4 +12,8 @@ public interface ISkillSwapRequestService
 
     Task<List<SkillSwapRequest>> GetAcceptedSkillSwapRequetsByUserId(string userId);
 
+    Task<SkillSwapRequestMessage> CreateMessage(SkillSwapRequestMessage skillSwapRequestMessage);
+
+    Task<List<SkillSwapRequestMessage>> GetMessagesBySwapRequestId(int swapRequestId);
+
 }

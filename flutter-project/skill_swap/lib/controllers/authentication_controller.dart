@@ -59,14 +59,14 @@ updateImage(BuildContext context) async {
     final confirm = await showDialog<bool>(
       context: context, // Pass the context explicitly
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.grey.shade200, // Set a background color
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15), // Add rounded corners
         ),
         title: Text(
           "Confirm Profile Picture Change",
           style: TextStyle(
-            color: Colors.grey.shade600, // Title text color
+
             fontWeight: FontWeight.bold, // Make the title bold
             fontSize: 20, // Increase font size
           ),
@@ -74,14 +74,14 @@ updateImage(BuildContext context) async {
         content: Text(
           "Are you sure you want to change the profile picture?",
           style: TextStyle(
-            color: Colors.grey.shade600, // Content text color
+
             fontSize: 16, // Content font size
           ),
         ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.grey.shade300, // Button background color
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10), // Rounded button corners
               ),
@@ -90,14 +90,14 @@ updateImage(BuildContext context) async {
             child: Text(
               "Cancel",
               style: TextStyle(
-                color: Colors.grey.shade600, // Button text color
+
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.green.shade200, // Button background color
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10), // Rounded button corners
               ),
@@ -106,7 +106,7 @@ updateImage(BuildContext context) async {
             child: Text(
               "Yes",
               style: TextStyle(
-                color: Colors.grey.shade600, // Button text color
+
                 fontWeight: FontWeight.bold,
               ),
             ),

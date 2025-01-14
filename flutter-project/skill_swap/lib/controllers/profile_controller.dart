@@ -90,8 +90,7 @@ class ProfileController extends GetxController{
           'Profile updated successfully.',
           'Updated profile',
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green.shade200,
-          colorText: Colors.grey.shade600,
+
         );
         
         
@@ -104,8 +103,7 @@ class ProfileController extends GetxController{
         'Error',
         'Failed to update profile: $error',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade200,
-        colorText: Colors.grey.shade600,
+
       );
     }
 

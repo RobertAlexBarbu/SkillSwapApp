@@ -135,13 +135,19 @@ Future<List<Skill>?> retrieveSkills(String uid) async {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green.shade200,
-        title: const Text(
+        automaticallyImplyLeading: false,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        title:
+        Center(
+        child:
+        Text(
           "Notifications",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          style: TextStyle(color: theme.primaryColor, fontWeight: FontWeight.w600),
         ),
+        )
       ),
       body: _requestNotifications.isEmpty
           ? const Center(child: Text('No pending notifications'))
@@ -157,13 +163,11 @@ Future<List<Skill>?> retrieveSkills(String uid) async {
                       request.title,  
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade600,
                       ),
                     ),
                     subtitle: Text(
                       "${request.requester?.name} wants to exchange ${request.offeredSkill?.skillName} for ${request.requestedSkill?.skillName}",   // Notification body
                       style: TextStyle(
-                        color: Colors.grey.shade600,
                       ),
                     ),
                     trailing: request.status == Status.pending
@@ -171,13 +175,13 @@ Future<List<Skill>?> retrieveSkills(String uid) async {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.check, color: Colors.green),
+                                icon: const Icon(Icons.check),
                                 onPressed: () {
                                   _acceptRequest(request);
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.cancel, color: Colors.red),
+                                icon: const Icon(Icons.cancel),
                                 onPressed: () {
                                   _declineRequest(request);
                                 },
@@ -190,7 +194,7 @@ Future<List<Skill>?> retrieveSkills(String uid) async {
                                 },
                                 child: const Text(
                                   'See profile',
-                                  style: TextStyle(color: Colors.grey),
+
                                 ),
                               ),
                             ],

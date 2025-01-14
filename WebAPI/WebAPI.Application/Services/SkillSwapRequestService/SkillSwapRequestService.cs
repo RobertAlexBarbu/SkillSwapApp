@@ -89,4 +89,33 @@ public class SkillSwapRequestService(AppDbContext context, FirebaseService fb) :
             .ToListAsync();
         return skillSwapRequests;
     }
+
+    public async Task<SkillSwapRequestMessage> CreateMessage(SkillSwapRequestMessage skillSwapRequestMessage)
+    {
+        context.SkillSwapRequestMessages.Add(skillSwapRequestMessage);
+        await context.SaveChangesAsync();
+        var addedMessage = await context.SkillSwapRequestMessages
+            .Include(m => m.SkillSwapRequest)
+            .Include(m => m.User)
+            .FirstOrDefaultAsync(m => m.Id == skillSwapRequestMessage.Id);
+
+        if (addedMessage != null)
+        {
+            return addedMessage;
+        }
+        else
+        {
+            throw new NotFoundException("Message");
+        }
+        
+    }
+
+    public async Task<List<SkillSwapRequestMessage>> GetMessagesBySwapRequestId(int swapRequestId)
+    {
+        var messages = await context.SkillSwapRequestMessages.Where(m => m.SkillSwapRequestId == swapRequestId)
+            .Include(m => m.User)
+            .OrderBy(m => m.CreatedAt)
+            .ToListAsync();
+        return messages;
+    }
 }

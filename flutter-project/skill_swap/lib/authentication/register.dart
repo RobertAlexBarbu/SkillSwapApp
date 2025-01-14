@@ -30,6 +30,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -49,7 +50,7 @@ class _RegisterState extends State<Register> {
                   height:60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey,
+
                     image: DecorationImage(
                       fit: BoxFit.cover,
                       image: FileImage(
@@ -79,7 +80,7 @@ class _RegisterState extends State<Register> {
                     }, 
                     icon: const Icon(
                       Icons.image_outlined,
-                      color: Colors.grey,
+
                       size: 30,
                     )
                   ),
@@ -98,7 +99,7 @@ class _RegisterState extends State<Register> {
                     }, 
                     icon: const Icon(
                       Icons.camera_alt_outlined,
-                      color: Colors.grey,
+
                       size: 30,
                     )
                   )
@@ -118,23 +119,15 @@ class _RegisterState extends State<Register> {
                   textAlignVertical: TextAlignVertical.center,
                   obscureText: false,
                   style: TextStyle(
-                    color: Colors.grey.shade600,
+
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.person_outline,
-                          color: Colors.orange.shade600),
-                      hintText: 'Name',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Name',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               ),
@@ -156,20 +149,12 @@ class _RegisterState extends State<Register> {
                     color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.email_outlined,
-                          color: Colors.orange.shade600),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Email',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               ),
@@ -190,20 +175,12 @@ class _RegisterState extends State<Register> {
                     color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.lock_open_outlined,
-                          color: Colors.orange.shade600),
-                      hintText: 'Password',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Password',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               ),
@@ -224,20 +201,12 @@ class _RegisterState extends State<Register> {
                     color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.calendar_month,
-                          color: Colors.orange.shade600),
-                      hintText: 'Age',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Age',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               ),
@@ -258,20 +227,12 @@ class _RegisterState extends State<Register> {
                     color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.phone,
-                          color: Colors.orange.shade600),
-                      hintText: 'Phone Number',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Phone',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               ),
@@ -292,20 +253,12 @@ class _RegisterState extends State<Register> {
                     color: Colors.grey.shade600,
                   ),
                   decoration: InputDecoration(
-                      constraints: const BoxConstraints(
-                        maxWidth: 360,
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(255, 198, 0, 1).withOpacity(0.3),
+
                       prefixIcon:  Icon(Icons.edit,
-                          color: Colors.orange.shade600),
-                      hintText: 'Description of you',
-                      hintStyle: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w400),
+                          color: theme.primaryColor),
+                      labelText: 'Description',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
+
                       )),
                 ),
               ),
@@ -319,7 +272,7 @@ class _RegisterState extends State<Register> {
                 width: 180,
                 height: 50,
                 decoration:  BoxDecoration(
-                  color: Colors.orange.shade600,
+                  color: theme.primaryColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(12)
                   )

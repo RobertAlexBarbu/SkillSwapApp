@@ -23,5 +23,8 @@ public class MappingProfile : Profile
         CreateMap<SkillSwapRequest, SkillSwapRequestDto>();
         CreateMap<CreateSkillSwapRequestDto, SkillSwapRequest>();
 
+        CreateMap<SkillSwapRequestMessage, SkillSwapRequestMessageDto>();
+        CreateMap<CreateSkillSwapRequestMessageDto, SkillSwapRequestMessage>();
+
     }
 }

@@ -76,6 +76,24 @@ public class SkillSwapRequestController(IMapper mapper, ISkillSwapRequestService
         var skillSwapRequestDtos = skillSwapRequests.Select(mapper.Map<SkillSwapRequestDto>).ToList();
         return Ok(skillSwapRequestDtos);
     }
-    
-    
+
+    [HttpGet]
+    [Route("{swapRequestId}")]
+    public async Task<ActionResult<List<SkillSwapRequestMessageDto>>> GetMessagesBySwapRequestId(int swapRequestId)
+    {
+        var messages = await skillSwapRequestService.GetMessagesBySwapRequestId(swapRequestId);
+        var messagesDto = messages.Select(mapper.Map<SkillSwapRequestMessageDto>).ToList();
+        return messagesDto;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<SkillSwapRequestMessageDto>> CreateSkillSwapRequestMessage(
+        CreateSkillSwapRequestMessageDto createSkillSwapRequestMessageDto)
+    {
+        var skillSwapRequestMessage = mapper.Map<SkillSwapRequestMessage>(createSkillSwapRequestMessageDto);
+        var createdMessage = await skillSwapRequestService.CreateMessage(skillSwapRequestMessage);
+        return mapper.Map<SkillSwapRequestMessageDto>(createdMessage);
+    }
+
+
 }

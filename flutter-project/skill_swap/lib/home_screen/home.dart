@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Access the theme
     return  Scaffold(
       bottomNavigationBar: BottomNavigationBar( 
         onTap: (indexNumber){
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
             });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor:   Colors.green.shade200,
+        backgroundColor:   theme.primaryColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
         currentIndex: screenIndex,
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> {
           //swapping screen
           BottomNavigationBarItem( 
             icon: Icon(
-              Icons.home,
+              Icons.home_rounded,
               size: 30,
             ),
             label: ""
@@ -52,7 +53,7 @@ class _HomeState extends State<Home> {
           // search  button
          BottomNavigationBarItem(
             icon: Icon(
-              Icons.search_outlined,
+              Icons.search_rounded,
               size: 30,
               
             ), 
@@ -61,7 +62,7 @@ class _HomeState extends State<Home> {
         // user detail screen button
          BottomNavigationBarItem(
             icon: Icon(
-              Icons.person,
+              Icons.person_rounded,
               size: 30,
             ), 
             label: ""
@@ -69,14 +70,14 @@ class _HomeState extends State<Home> {
         // user detail screen button
          BottomNavigationBarItem(
             icon: Icon(
-              Icons.notifications,
+              Icons.notifications_rounded,
               size: 30,
             ),
             label: ""
           ),
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.check,
+                Icons.message_rounded,
                 size: 30,
               ),
               label: ""

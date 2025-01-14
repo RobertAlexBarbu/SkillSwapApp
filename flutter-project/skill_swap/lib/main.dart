@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:skill_swap/authentication/login.dart';
 import 'package:skill_swap/controllers/authentication_controller.dart';
@@ -53,8 +54,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Skill Swap',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.white
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.green
       ),
       debugShowCheckedModeBanner: false ,
       home: const Login(), 

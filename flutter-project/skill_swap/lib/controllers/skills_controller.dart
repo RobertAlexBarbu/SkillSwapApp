@@ -117,8 +117,7 @@ class SkillsController extends GetxController{
           'Skill updated successfully.',
           'Updated skill',
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green.shade200,
-          colorText: Colors.grey.shade600,
+
         );
         
         
@@ -131,8 +130,7 @@ class SkillsController extends GetxController{
         'Error',
         'Failed to update skill: $error',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade200,
-        colorText: Colors.grey.shade600,
+
       );
     }
 }
@@ -152,8 +150,6 @@ class SkillsController extends GetxController{
           'Success',
           'Skill deleted successfully',
           snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green.shade200,
-          colorText: Colors.grey.shade600,
         );
       } else {
         throw Exception('Failed to delete skill');
@@ -163,8 +159,7 @@ class SkillsController extends GetxController{
         'Error',
         'Failed to delete skill: $error',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade200,
-        colorText: Colors.grey.shade600,
+
       );
     }
   }
