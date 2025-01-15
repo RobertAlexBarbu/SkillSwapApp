@@ -106,6 +106,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
     final theme = Theme.of(context); // Access the theme
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Chat'),
       ),
       body: Column(
         children: [
@@ -123,7 +124,6 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     widget.skill1 ?? 'Skill 1',
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-
                   Icon(Icons.swap_horiz, size: 24, color: theme.primaryColor),
                   Text(
                     widget.skill2 ?? 'Skill 2',
@@ -136,17 +136,58 @@ class _MessagesScreenState extends State<MessagesScreen> {
           // Messages List
           Expanded(
             child: _isLoading && _messages.isEmpty
-                ? const Center()
+                ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final message = _messages[index];
-                return ListTile(
-                  title: Text(message['message'] ?? 'No message'),
-                  subtitle: Text('Sent by: ${message['user']['name']}'),
-                  leading: CircleAvatar(
-                    child: Text(
-                      message['user']?['name'][0]?.toUpperCase() ?? '?',
+                final isCurrentUser = message['userId'] == widget.userId;
+
+                return Align(
+                  alignment:
+                  isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                    padding: const EdgeInsets.all(10.0),
+                    constraints: const BoxConstraints(maxWidth: 250),
+                    decoration: BoxDecoration(
+                      color: isCurrentUser
+                          ? theme.primaryColor.withOpacity(0.8)
+                          : Colors.grey.shade200,
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(12.0),
+                        topRight: const Radius.circular(12.0),
+                        bottomLeft: isCurrentUser
+                            ? const Radius.circular(12.0)
+                            : Radius.zero,
+                        bottomRight: isCurrentUser
+                            ? Radius.zero
+                            : const Radius.circular(12.0),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          message['user']['name'] ?? 'Unknown User',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.0,
+                            color: isCurrentUser
+                                ? Colors.white
+                                : Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(height: 5.0),
+                        Text(
+                          message['message'] ?? '',
+                          style: TextStyle(
+                            color: isCurrentUser
+                                ? Colors.white
+                                : Colors.black87,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -171,8 +212,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ElevatedButton(
                   onPressed: _sendMessage,
                   child: const Text('Send'),
-                  style: ElevatedButton.styleFrom(
-                  ),
+                  style: ElevatedButton.styleFrom(),
                 ),
               ],
             ),

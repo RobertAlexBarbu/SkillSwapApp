@@ -55,7 +55,7 @@ class _AcceptedRequestsScreenState extends State<AcceptedRequestsScreen> {
         automaticallyImplyLeading: false,
         title:  Center(
           child: Text(
-            "Accepted Requests",
+            "Swap Chats",
             style: TextStyle(
               color: theme.primaryColor,
               fontWeight: FontWeight.w600,

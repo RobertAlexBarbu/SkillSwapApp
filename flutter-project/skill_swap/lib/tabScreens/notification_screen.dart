@@ -156,7 +156,7 @@ Future<List<Skill>?> retrieveSkills(String uid) async {
               itemBuilder: (context, index) {
                 final request = _requestNotifications[index];
                 return Card(
-                  color: Colors.yellow.shade100,
+                  elevation: 4,
                   margin: const EdgeInsets.all(8),
                   child: ListTile(
                     title: Text(
